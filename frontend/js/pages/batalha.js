@@ -1,6 +1,7 @@
-import verificarSessao from "./verificarSessao.js";
+import verificarSessao from "../services/verificarSessao.js";
 import Time from "./Time.js";
 import batalhaView from "./batalhaView.js"
+
 
 async function iniciarBatalha(){
     try{
@@ -17,11 +18,11 @@ iniciarBatalha();
 /*
 async function carregaTime(){
     try{
-        const promiseTime = await fetch(`http://localhost:8080/api/treinador/time`);
+        const promiseTime = await fetch(`/api/treinador/time`);
         const time = await promiseTime.json();
 
         //consultar o pokemon especifico e retornar hp
-        const pokemonUser = await fetch(`http://localhost:8080/api/pokemon?id=${time[0].pokemon}`);
+        const pokemonUser = await fetch(`/api/pokemon?id=${time[0].pokemon}`);
         const pokeUser = await pokemonUser.json();
 
         //pega da api e poe na tela
