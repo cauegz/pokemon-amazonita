@@ -1,12 +1,13 @@
-<?php>
-class Produto extends ModelGeral implements JsonSerializable{
+<?php
+class Produto implements \JsonSerializable
+{
     private static $pdo;
     private ?int $id = null;
     private string $nome;
     private float $preco;
     private int  $estoque;
     private int  $categoria_id;
-    privte int   $id_item_pokeapi
+    private int   $id_item_pokeapi;
 
     private static function getPDO()
     {
