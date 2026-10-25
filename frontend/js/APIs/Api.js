@@ -1,6 +1,5 @@
-
 export default class Api {
-    static url = "http://localhost:8080/api";
+    static url = "/api";
 
     // Método geral para fazer requisições
     static async requisicao(endpoint, opcoes = {}) {
@@ -36,8 +35,8 @@ export default class Api {
         return await this.requisicao(`/pokemon?id=${id}`);
     }
 
-    static async buscarTime() {
-        return await this.requisicao("/treinador/time");
+    static async buscarTime(id) {
+        return await this.requisicao(`/treinador/time?id=${id}`);
     }
 }
 
