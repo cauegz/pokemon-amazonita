@@ -98,6 +98,9 @@ class ControladorTime extends ControladorGeral{
      */
     public function time(){
         session_start();
+        if(!isset($_GET['id'])){
+            $this->responseError("id do treinador vazio", 400);
+        }
         $treinador = $_GET['id'];
         $posicao = 1;
         $time = [];
