@@ -1,5 +1,5 @@
 import Api from "./Api.js";
-export default class batalhaView{
+export default class BatalhaView{
     #time
     construct(time){
         this.#time = time;

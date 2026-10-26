@@ -1,11 +1,14 @@
 import PokeApi from "../../APIs/PokeApi.js";
+import Time from "../Time.js";
 
 export default class BuilderView {
     #time;
+    #treinador;
     #posicao;
 
-    constructor(time) {
+    constructor(time, treinador) {
         this.#time = time;
+        this.#treinador = treinador;
         this.#posicao = null;
 
         this.selecionarPoke = document.getElementById("selecionar-poke"); //modal
@@ -15,13 +18,11 @@ export default class BuilderView {
     }
 
     configurarEventos() {
-        
         const botoes = document.querySelectorAll(".btn-selecionar-poke"); //pega o espaço do time
 
         botoes.forEach(botao => {
             botao.addEventListener("click", () => {
                 this.#posicao = botao.dataset.poke;
-
                 this.selecionarPoke.showModal(); //abre o dialog
                 this.carregarPokemons();
             });
@@ -51,6 +52,7 @@ export default class BuilderView {
                 console.error("Erro ao selecionar Pokémon:", erro);
             }
         });
+        this.carregaTimeBanco();
     }
 
     async carregarPokemons() {
@@ -88,6 +90,7 @@ export default class BuilderView {
     }
 
     mostrarPokemon(pokemon) {
+        console.log(this.#posicao)
         const div = document.getElementById(
             `pokemon-${this.#posicao}`
         );
@@ -99,5 +102,18 @@ export default class BuilderView {
             <p>${nome}</p>
             <img src="${pokemon.sprites.front_default}">
         `;
+    }
+
+    async carregaTimeBanco() {
+        this.#posicao = 1;
+        for(const idPokeBanco of this.#time.pokemon){
+            if(!idPokeBanco) {
+                this.#posicao++;
+                continue;
+            }
+            const pokeApi = await PokeApi.buscarPokemon(idPokeBanco);
+            this.mostrarPokemon(pokeApi);
+            this.#posicao++;
+        }
     }
 }

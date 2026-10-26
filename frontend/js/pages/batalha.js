@@ -1,6 +1,6 @@
 import verificarSessao from "../services/verificarSessao.js";
-import Time from "./Time.js";
-import batalhaView from "./batalhaView.js"
+import Time from "../entities/Time.js";
+import batalhaView from "../../../public/frontend/js/BatalhaView.js"
 
 
 async function iniciarBatalha(){
