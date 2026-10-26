@@ -1,14 +1,11 @@
 import PokeApi from "../../APIs/PokeApi.js";
-import Time from "../Time.js";
 
 export default class BuilderView {
     #time;
-    #treinador;
     #posicao;
 
-    constructor(time, treinador) {
+    constructor(time) {
         this.#time = time;
-        this.#treinador = treinador;
         this.#posicao = null;
 
         this.selecionarPoke = document.getElementById("selecionar-poke"); //modal

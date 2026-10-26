@@ -12,7 +12,7 @@ async function iniciarBuilder() {
 
         // Carrega o time 
         const objTime = await Time.carregarTime(usuario.treinador);
-        new BuilderView(objTime, usuario.treinador);
+        new BuilderView(objTime);
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
