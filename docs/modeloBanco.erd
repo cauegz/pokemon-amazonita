@@ -40,7 +40,8 @@
       "g7EZwS9-TOE2gtJoDXBiH",
       "bgd6svgA1saljhQk_WQVb",
       "SNWq7E71gjDZQgaWrZNs7",
-      "03h1e8uagbh75rkirlrcwtqpe"
+      "03h1e8uagbh75rkirlrcwtqpe",
+      "03h4lt9ixu5j6j58kuo87ghyg"
     ],
     "relationshipIds": [
       "mS3aGZh1BUnRK_B7WZlEa",
@@ -56,7 +57,8 @@
       "fPIFcVcHVv-JXF8mm8wm_",
       "03h1e8ynygraobe9afi6um61o",
       "03h1e9wgvtusbshrpvzw5v0ep",
-      "03h4ljzwu1oepq8bm9enqhi2t"
+      "03h4ljzwu1oepq8bm9enqhi2t",
+      "03h4ltqxu0u196vejfom40azs"
     ]
   },
   "collections": {
@@ -73,6 +75,19 @@
         "ui": {
           "x": 1733.884,
           "y": 349.7478
+        }
+      },
+      "03h4lt9ixu5j6j58kuo87ghyg": {
+        "id": "03h4lt9ixu5j6j58kuo87ghyg",
+        "name": "ataque",
+        "columnIds": [
+          "03h4ltaedssi0s4eg0m1o6sus",
+          "03h4ltmsnvizjjno5j6gyizxf",
+          "03h4ltqxtke4n4wbn7dlt1q52"
+        ],
+        "ui": {
+          "x": 1826.6268,
+          "y": 80.2303
         }
       },
       "40HWuW87rxuEfSF3k1a8v": {
@@ -270,6 +285,27 @@
         "id": "03h1ki11iego7yl0i7dvtci3s",
         "tableId": "03h1e8uagbh75rkirlrcwtqpe",
         "name": "posicao",
+        "dataType": "INT",
+        "options": 8
+      },
+      "03h4ltaedssi0s4eg0m1o6sus": {
+        "id": "03h4ltaedssi0s4eg0m1o6sus",
+        "tableId": "03h4lt9ixu5j6j58kuo87ghyg",
+        "name": "id",
+        "dataType": "INT",
+        "options": 10
+      },
+      "03h4ltmsnvizjjno5j6gyizxf": {
+        "id": "03h4ltmsnvizjjno5j6gyizxf",
+        "tableId": "03h4lt9ixu5j6j58kuo87ghyg",
+        "name": "poke_api",
+        "dataType": "INT",
+        "options": 8
+      },
+      "03h4ltqxtke4n4wbn7dlt1q52": {
+        "id": "03h4ltqxtke4n4wbn7dlt1q52",
+        "tableId": "03h4lt9ixu5j6j58kuo87ghyg",
+        "name": "pokemon_id",
         "dataType": "INT",
         "options": 8
       },
@@ -670,6 +706,24 @@
           "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
           "columnIds": [
             "03h4ljzwtlbad0lbe4myr4x2v"
+          ]
+        }
+      },
+      "03h4ltqxu0u196vejfom40azs": {
+        "id": "03h4ltqxu0u196vejfom40azs",
+        "relationshipType": 16,
+        "onDelete": 1,
+        "onUpdate": 1,
+        "start": {
+          "tableId": "5gyhgjfTof-u_Ip9Nq2iR",
+          "columnIds": [
+            "22WEqZgUR6h2v-SLHOJsZ"
+          ]
+        },
+        "end": {
+          "tableId": "03h4lt9ixu5j6j58kuo87ghyg",
+          "columnIds": [
+            "03h4ltqxtke4n4wbn7dlt1q52"
           ]
         }
       },

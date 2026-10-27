@@ -3,12 +3,14 @@ class Pokemon{
     #nome;
     #urlImagem;
     #pokeApi;
+    #isActive;
 
-    constructor(id, nome, urlImagem, pokeApi) {
+    constructor(id, nome, urlImagem, pokeApi, isActive) {
         this.id = id;
         this.nome = nome;
         this.urlImagem = urlImagem;
         this.pokeApi = pokeApi;
+        this.isActive = false;
     }
 }
 

@@ -71,6 +71,26 @@ class ControladorTime extends ControladorGeral{
                 }
                 $pokemon->save();
 
+                $ataques = $pokeApi->moves;
+
+                foreach ($ataques as $ataque) {
+                    $detalhes = $ataque->version_group_details;
+
+                    foreach ($detalhes as $detalhe) {
+                        if (
+                            $detalhe->move_learn_method->name == "level-up" &&
+                            $detalhe->level_learned_at == 1
+                        ) {
+                            $objAtaque = new Ataque();
+                            $objAtaque->pokemonId = $pokemon->id;
+                            $objAtaque->pokeApi = $ataque->id;
+
+                            $objAtaque->save();
+                            break;
+                        }
+                    }
+                }
+
                 $time = Time::findByTreinadorAndPosicao($pokemon->treinador, $indice+1);
                 
                 if ($time) {

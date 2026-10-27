@@ -6,7 +6,6 @@ import BatalhaView from "../entities/view/BatalhaView.js"
 async function iniciarBatalha(){
     try{
         const usuario = await verificarSessao();
-        if(!usuario) return
         const objTime = await Time.carregarTime(usuario.treinador);
         new BatalhaView(objTime);
     }catch(error){
