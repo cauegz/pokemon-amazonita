@@ -47,7 +47,7 @@ export default class BatalhaView{
                 continue;
             }
 
-            ataques.push(await PokeAPI.buscarAtaque(ataquesBanco[i].id));
+            ataques.push(await PokeAPI.buscarAtaque(ataquesBanco[i].pokeApi));
 
             opcoes[i].innerHTML = ataques[i].name;
         }
