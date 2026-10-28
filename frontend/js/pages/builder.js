@@ -16,14 +16,9 @@ async function iniciarBuilder() {
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
-                try {
-                    console.log(objTime)
                     await Api.enviarTime(objTime);
 
-                    console.log("time enviado ");
-                } catch (erro) {
-                    console.error("erro ao enviar o time:", erro);
-                }
+                    console.log("time enviado");
             });
 
     } catch (erro) {

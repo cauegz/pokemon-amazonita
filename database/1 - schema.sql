@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS ataque
+(
+  id         INT NOT NULL  GENERATED ALWAYS AS IDENTITY,
+  poke_api   INT NOT NULL,
+  pokemon_id INT NOT NULL,
+  PRIMARY KEY (id)
+);
 
 CREATE TABLE IF NOT EXISTS efeito
 (
@@ -201,4 +208,10 @@ ALTER TABLE time DROP CONSTRAINT IF EXISTS FK_pokemon_TO_time;
 ALTER TABLE time
   ADD CONSTRAINT FK_pokemon_TO_time
     FOREIGN KEY (id_pokemon)
+    REFERENCES pokemon (id);
+
+ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_pokemon_TO_ataque;
+ALTER TABLE ataque
+  ADD CONSTRAINT FK_pokemon_TO_ataque
+    FOREIGN KEY (pokemon_id)
     REFERENCES pokemon (id);

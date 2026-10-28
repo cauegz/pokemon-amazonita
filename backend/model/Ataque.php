@@ -81,6 +81,20 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
         }
     }
 
+    public static function findByPokemon($pokemon){
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId"
+                FROM ataque
+                WHERE pokemon_id = :pokemon';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam("pokemon", $pokemon);
+
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
     public function jsonSerialize(): mixed
     {
         return [

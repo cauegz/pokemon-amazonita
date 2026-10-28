@@ -25,7 +25,7 @@ export default class Api {
         return await this.requisicao("/builder", {
             method: "POST",
             body: JSON.stringify({
-                pokemon: time.pokemon
+                pokemon: time.pokemon['api']
             })
         });
     }
@@ -37,6 +37,10 @@ export default class Api {
 
     static async buscarTime(id) {
         return await this.requisicao(`/treinador/time?id=${id}`);
+    }
+
+    static async buscarAtaques(id) {
+        return await this.requisicao(`/ataques?id=${id}`);
     }
 }
 

@@ -103,7 +103,7 @@ export default class BuilderView {
 
     async carregaTimeBanco() {
         this.#posicao = 1;
-        for(const idPokeBanco of this.#time.pokemon){
+        for(const idPokeBanco of this.#time.pokemon['api']){
             if(!idPokeBanco) {
                 this.#posicao++;
                 continue;

@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/../autoload.php';
 
+error_reporting(0);
+ini_set('display_errors', 0);
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: *");
 
@@ -19,4 +22,14 @@ $router->add("/api/treinador/time",    "Time@time");
 $router->add("/api/pokemon",    "Pokemon@pokemonById");
 $router->add("/api/produto/criar",  "Loja@criarProduto");
 
-$router->executar($url);
+$router->add("/api/ataques",  "Batalha@ataque");
+
+
+try {
+    $router->executar($url);
+} catch (\Throwable $th) {
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(500);
+    echo json_encode(["ok" => false, "mensagem" => "erro desconhecido", "stacktrace" => $th->getMessage()]);
+    die();
+}

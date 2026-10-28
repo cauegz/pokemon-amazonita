@@ -72,20 +72,29 @@ class ControladorTime extends ControladorGeral{
                 $pokemon->save();
 
                 $ataques = $pokeApi->moves;
-
+                
+                $max = 0;
                 foreach ($ataques as $ataque) {
                     $detalhes = $ataque->version_group_details;
 
                     foreach ($detalhes as $detalhe) {
                         if (
                             $detalhe->move_learn_method->name == "level-up" &&
-                            $detalhe->level_learned_at == 1
+                            $detalhe->level_learned_at == 1 &&
+                            $max < 4
                         ) {
                             $objAtaque = new Ataque();
                             $objAtaque->pokemonId = $pokemon->id;
-                            $objAtaque->pokeApi = $ataque->id;
+                            $url = $ataque->move->url;
+                            //a partir da url extrai o id, como a url tem um v2, ele retira o primeiro caractere
+                            $id = (int)substr(preg_replace('/[^0-9]/', '', $url), 1);
+
+                            $objAtaque->pokeApi = $id;
 
                             $objAtaque->save();
+                            $max++;
+                            //como o pokemon tem varios campos nesse version_group_details, assim que acha um ataque
+                            //possivel de se aprender no nivel 1 (temporario), ele pula para o proximo ataque
                             break;
                         }
                     }
