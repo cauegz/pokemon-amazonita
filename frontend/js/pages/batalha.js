@@ -28,10 +28,11 @@ class Batalha{
     }
     async executarTurno(idMove){
         try{
-            await this.atacar(this.#jogador,this.#oponente,idMove);
+            this.atacar(this.#jogador,this.#oponente,idMove);
              
         }catch(error){}
     }
-    atacar(atacante,defensor,idMove){}
-    calcularDano(){}
+    atacar(atacante,defensor,idMove){
+
+    }
 }
