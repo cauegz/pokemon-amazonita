@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS pokemon
 (
   id              INT NOT NULL GENERATED ALWAYS AS IDENTITY,
   id_pokeapi      INT NOT NULL,
-  hp              INT NOT NULL,
+  hp              INT NOT NULL DEFAULT 0,
+  hp_atual        INT NOT NULL DEFAULT 0,
   ataque          INT NOT NULL DEFAULT 0,
   defesa          INT NOT NULL DEFAULT 0,
   ataque_especial INT NOT NULL DEFAULT 0,

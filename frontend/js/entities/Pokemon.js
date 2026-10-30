@@ -1,28 +1,38 @@
 class Pokemon{
+    #id;
     #nome;
     #urlImagem;
     #pokeApi;
     #nivel;
     #hp;
+    #hpAtual;
     #ataque;
     #defesa;
     #ataqueEspecial;
     #defesaEspecial;
     #velocidade;
     #ataques;
+    #efeito;
 
-    constructor(nome, urlImagem, pokeApi, nivel = 40, hp, ataque, defesa, ataqueEspecial, defesaEspecial, velocidade) {
+    constructor(id, nome, urlImagem, pokeApi, nivel = 40, hp, hpAtual, ataque, defesa, ataqueEspecial, defesaEspecial, velocidade, efeito) {
+        this.#id = id;
         this.#nome = nome;
         this.#urlImagem = urlImagem;
         this.#pokeApi = pokeApi;
         this.#nivel = nivel;
         this.#hp = hp;
+        this.#hpAtual = hpAtual;
         this.#ataque = ataque;
         this.#defesa = defesa;
         this.#ataqueEspecial = ataqueEspecial;
         this.#defesaEspecial = defesaEspecial;
         this.#velocidade = velocidade;
         this.#ataques = new Array(4).fill(null);
+        this.#efeito = efeito;
+    }
+
+    get id() {
+        return this.#id;
     }
 
     get nome() {
@@ -65,6 +75,14 @@ class Pokemon{
         this.#hp = hp;
     }
 
+    get hpAtual() {
+        return this.#hpAtual;
+    }
+
+    set hpAtual(hpAtual) {
+        this.#hpAtual = hpAtual;
+    }
+
     get ataque() {
         return this.#ataque;
     }
@@ -105,8 +123,16 @@ class Pokemon{
         this.#velocidade = velocidade;
     }
 
+    get efeito(){
+        return this.#efeito;
+    }
+
+    set efeito(efeito){
+        this.#efeito = efeito;
+    }
+
     adicionarAtaque(ataque, posicao) {
-        this.#ataques[posicao - 1] = ataque;
+        this.#ataques[posicao] = ataque;
     }
 }
 

@@ -69,6 +69,7 @@ class ControladorTime extends ControladorGeral{
                             break;
                     }
                 }
+                $pokemon->hpAtual = $pokemon->hp;
                 $pokemon->save();
 
                 $ataques = $pokeApi->moves;

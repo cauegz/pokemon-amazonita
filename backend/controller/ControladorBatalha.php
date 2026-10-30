@@ -15,4 +15,16 @@ class ControladorBatalha extends ControladorGeral {
 
         $this->responseJSON(Ataque::findByPokemon($id));
     }
+
+    /**
+     * Retorna as informações do efeito com base no id
+     */
+    public function efeito(){
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
+        }
+        $id = $_GET['id'];
+
+        $this->responseJSON(Efeito::find($id));
+    }
 }
