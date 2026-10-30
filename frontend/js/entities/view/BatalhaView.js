@@ -12,6 +12,7 @@ export default class BatalhaView{
     }
 
     configurarEventos(){
+        console.log(this.#opcoes)
         this.#opcoes.forEach(opcao => 
             opcao.addEventListener('click', ()=>{
                 let escolha = opcao.id;
@@ -49,10 +50,11 @@ export default class BatalhaView{
 
             ataques.push(await PokeAPI.buscarAtaque(ataquesBanco[i].pokeApi));
 
+            opcoes[i].id = ataques[i].name;
+
+            //tratar o nome aqui dps pra tirar o - e por a letra maiuscula
             opcoes[i].innerHTML = ataques[i].name;
         }
-        console.log(ataques);
-        
     }
 
     trocar(){
