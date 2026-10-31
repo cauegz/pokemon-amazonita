@@ -4,10 +4,11 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
 {
     protected int $pokeApi;
     protected int $pokemonId;
+    protected int $tipoId;
 
     public static function find($id)
     {
-        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId"
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId", tipo_id as "tipoId"
                 FROM ataque
                 WHERE id = :id';
 
@@ -22,7 +23,7 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
 
     public static function all($filter = null)
     {
-        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId"
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId", tipo_id as "tipoId"
                 FROM ataque';
 
         if ($filter) {
@@ -52,13 +53,14 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
     {
         if ($this->id == null) {
 
-            $sql = "INSERT INTO ataque (poke_api, pokemon_id)
-                    VALUES (:pokeApi, :pokemonId)";
+            $sql = "INSERT INTO ataque (poke_api, pokemon_id, tipo_id)
+                    VALUES (:pokeApi, :pokemonId, :tipoId)";
 
             $result = self::getPDO()->prepare($sql);
 
             $result->bindParam(":pokeApi", $this->pokeApi);
             $result->bindParam(":pokemonId", $this->pokemonId);
+            $result->bindParam(":tipoId", $this->tipoId);
 
             $result->execute();
 
@@ -68,13 +70,15 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
 
             $sql = "UPDATE ataque
                     SET pokeApi = :pokeApi,
-                        pokemon_id = :pokemonId
+                        pokemon_id = :pokemonId,
+                        tipo_id = :tipoId
                     WHERE id = :id";
 
             $result = self::getPDO()->prepare($sql);
 
             $result->bindParam(":pokeApi", $this->pokeApi);
             $result->bindParam(":pokemonId", $this->pokemonId);
+            $result->bindParam(":tipoId", $this->tipoId);
             $result->bindParam(":id", $this->id);
 
             $result->execute();
@@ -82,7 +86,7 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
     }
 
     public static function findByPokemon($pokemon){
-        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId"
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId", tipo_id as "tipoId"
                 FROM ataque
                 WHERE pokemon_id = :pokemon';
 
@@ -100,7 +104,8 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
         return [
             "id" => $this->id,
             "pokeApi" => $this->pokeApi,
-            "pokemonId" => $this->pokemonId
+            "pokemonId" => $this->pokemonId,
+            "tipoId" => $this->tipoId
         ];
     }
 }

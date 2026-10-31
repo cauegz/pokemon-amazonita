@@ -106,3 +106,24 @@ INSERT INTO log_usuario (usuario_id, mensagem) VALUES
 (1, 'Pokébolas compradas'),
 (2, 'Login realizado'),
 (3, 'Poção comprada');
+
+-- tipos de pokemon
+INSERT INTO tipo (poke_api, nome) VALUES
+(1, 'Normal'),
+(2, 'Lutador'),
+(3, 'Voador'),
+(4, 'Veneno'),
+(5, 'Terra'),
+(6, 'Pedra'),
+(7, 'Inseto'),
+(8, 'Fantasma'),
+(9, 'Aço'),
+(10, 'Fogo'),
+(11, 'Água'),
+(12, 'Grama'),
+(13, 'Elétrico'),
+(14, 'Psíquico'),
+(15, 'Gelo'),
+(16, 'Dragão'),
+(17, 'Sombrio'),
+(18, 'Fada');

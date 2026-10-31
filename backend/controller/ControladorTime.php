@@ -87,10 +87,12 @@ class ControladorTime extends ControladorGeral{
                             $objAtaque = new Ataque();
                             $objAtaque->pokemonId = $pokemon->id;
                             $url = $ataque->move->url;
-                            //a partir da url extrai o id, como a url tem um v2, ele retira o primeiro caractere
-                            $id = (int)substr(preg_replace('/[^0-9]/', '', $url), 1);
+                            $ataqueApi = json_decode(file_get_contents($url));
+
+                            $id = $ataqueApi->id;
 
                             $objAtaque->pokeApi = $id;
+                            $objAtaque->tipoId = $ataqueApi->type;
 
                             $objAtaque->save();
                             $max++;

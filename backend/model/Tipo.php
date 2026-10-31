@@ -3,10 +3,11 @@
 class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
 {
     protected string $nome;
+    protected int $pokeApi;
 
     public static function find($id)
     {
-        $sql = 'SELECT id, nome
+        $sql = 'SELECT id, poke_api as "pokeApi", nome
                 FROM tipo
                 WHERE id = :id';
 
@@ -21,7 +22,7 @@ class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
 
     public static function all($filter = null)
     {
-        $sql = 'SELECT id, nome
+        $sql = 'SELECT id, poke_api as "pokeApi", nome
                 FROM tipo';
 
         if ($filter) {
@@ -51,12 +52,13 @@ class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
     {
         if ($this->id == null) {
 
-            $sql = "INSERT INTO tipo (nome)
-                    VALUES (:nome)";
+            $sql = "INSERT INTO tipo (nome, poke_api)
+                    VALUES (:nome, :pokeApi)";
 
             $result = self::getPDO()->prepare($sql);
 
             $result->bindParam(":nome", $this->nome);
+            $result->bindParam(":pokeApi", $this->pokeApi);
 
             $result->execute();
 
@@ -65,12 +67,13 @@ class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
         } else {
 
             $sql = "UPDATE tipo
-                    SET nome = :nome
+                    SET nome = :nome, poke_api = :pokeApi
                     WHERE id = :id";
 
             $result = self::getPDO()->prepare($sql);
 
             $result->bindParam(":nome", $this->nome);
+            $result->bindParam(":pokeApi", $this->pokeApi);
             $result->bindParam(":id", $this->id);
 
             $result->execute();
@@ -78,7 +81,7 @@ class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
     }
 
     public static function findByNome($nome){
-        $sql = 'SELECT id, nome
+        $sql = 'SELECT id, poke_api as "pokeApi", nome
                 FROM tipo
                 WHERE nome = :nome';
 
@@ -95,7 +98,8 @@ class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
     {
         return [
             "id" => $this->id,
-            "nome" => $this->nome
+            "nome" => $this->nome,
+            "pokeApi" => $this->pokeApi
         ];
     }
 }
