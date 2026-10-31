@@ -12,6 +12,10 @@ async function iniciarBuilder() {
 
         // Carrega o time 
         const objTime = await Time.carregarTime(usuario.treinador);
+        console.log("time: ")
+        console.log(objTime)
+
+        
         new BuilderView(objTime);
 
         document.getElementById("enviar")

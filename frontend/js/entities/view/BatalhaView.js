@@ -36,7 +36,7 @@ export default class BatalhaView{
 
     async atacar(){
         let opcoes = this.#opcoes;
-        let pokemon = await Api.buscarPokemon(this.#time.pokemon['banco'][this.#posicaoAtual]);
+        let pokemon = await Api.buscarPokemon(this.#time.pokemon[this.#posicaoAtual].id);
         let ataques = [];
         let ataquesBanco = await Api.buscarAtaques(pokemon.id);
         

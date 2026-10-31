@@ -1,3 +1,6 @@
+import Api from "../APIs/Api.js";
+import PokeApi from "../APIs/PokeApi.js";
+
 class Pokemon{
     #id;
     #nome;
@@ -133,6 +136,45 @@ class Pokemon{
 
     adicionarAtaque(ataque, posicao) {
         this.#ataques[posicao] = ataque;
+    }
+
+
+    static async carregaPokemon(idPokeBanco) {
+        const pokeBanco = await Api.buscarPokemon(idPokeBanco);
+        const pokemonPokeApi = await PokeApi.buscarPokemon(pokeBanco.pokeApi);
+        const ataquesBanco = await Api.buscarAtaques(pokeBanco.id);
+
+        const efeito = null;
+        if(pokeBanco.efeito){
+            efeito = await Api.buscarEfeito(pokeBanco.efeito);
+        }
+
+        let pokemon = new Pokemon(
+            pokeBanco.id,
+            //depois pegar o nome do banco aqui
+            pokemonPokeApi.name,
+            `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonPokeApi.id}.png`,
+            pokemonPokeApi.id,
+            50,
+            pokeBanco.hp,
+            pokeBanco.hpAtual,
+            pokeBanco.ataque,
+            pokeBanco.defesa,
+            pokeBanco.ataqueEspecial,
+            pokeBanco.defesaEspecial,
+            pokeBanco.velocidade,
+            efeito
+        );
+
+        let posicao = 0;
+        for(const ataqueBanco of ataquesBanco){
+            if(!ataqueBanco) continue;
+            const ataque = await PokeApi.buscarAtaque(ataqueBanco.pokeApi);
+            pokemon.adicionarAtaque(ataque, posicao);
+            posicao++;
+        }
+
+        return pokemon;
     }
 }
 

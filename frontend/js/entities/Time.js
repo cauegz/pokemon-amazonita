@@ -1,12 +1,12 @@
 import Api from "../APIs/Api.js";
 import PokeApi from "../APIs/PokeApi.js";
+import Pokemon from "./Pokemon.js";
 
 class Time {
-    #pokemon = {};
+    #pokemon;
 
     constructor() {
-        this.#pokemon['api'] = new Array(6).fill(null);
-        this.#pokemon['banco'] = new Array(6).fill(null);
+        this.#pokemon = new Array(6).fill(null);
     }
 
     get pokemon() {
@@ -14,35 +14,25 @@ class Time {
     }
 
     //metodo utilizado antes do pokemon ser salvo no banco
-    adicionarPokemon(posicao, idPokeApi) {
-        this.#pokemon[posicao - 1]['api'] = idPokeApi;
-        this.#pokemon[posicao - 1]['banco'] = false;
-    }
-
-    //metodo utilizado depois do pokemon ser salvo no banco
-    adicionarPokemon(posicao, idPokeApi, idBanco) {
-        this.#pokemon['api'][posicao - 1] = idPokeApi;
-        this.#pokemon['banco'][posicao - 1] = idBanco;
+    adicionarPokemon(posicao, pokemon) {
+        this.#pokemon[posicao - 1] = pokemon;
     }
 
     static async carregarTime(idTreinador) {
         let objTime = new Time();
 
         const timeBanco = await Api.buscarTime(idTreinador);
-        console.log(timeBanco)
 
         var index = 1;
-        for(const pokemon of timeBanco){
-            if(!pokemon){
+        for(const pokeBanco of timeBanco){
+            if(!pokeBanco){
                 index++;
                 continue;
             }
 
-            const pokeBanco = await Api.buscarPokemon(pokemon.pokemon);
-
-            const pokeSelecionado = await PokeApi.buscarPokemon(pokeBanco.pokeApi);
+            const pokemon = await Pokemon.carregaPokemon(pokeBanco.pokemon);
             
-            objTime.adicionarPokemon(index, pokeSelecionado.id, pokemon.pokemon);
+            objTime.adicionarPokemon(index, pokemon);
             index++;
         }
         return objTime;
