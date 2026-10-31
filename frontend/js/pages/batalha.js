@@ -12,8 +12,6 @@ async function iniciarBatalha() {
     const time = await Time.carregarTime(user.treinador);
     console.log(time)
 
-    const jogador = await preparaPoke(time.pokemon.banco[0]);
-
     //const oponente = await preparaPoke(1);//substituir pelo id real posteriormente
 }
 

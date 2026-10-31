@@ -2,16 +2,19 @@ import BatalhaView from "../entities/view/BatalhaView.js"
 
 class Batalha{
     #jogador;
+    #posicaoPokeJogador;
     #oponente;
+    #posicaoPokeOponente;
     #view;
     #emAndamento
-    #turnoEmAndamento
+    #turnoEmAndamento;
+    
     constructor(pokeJogador,pokeOponente){
         this.#jogador = pokeJogador;
-        this.#oponente =pokeOponente
+        this.#oponente = pokeOponente
         this.#view = new BatalhaView;
         this.#emAndamento = true;
-        this.#turnoEmAndamento =false;
+        this.#turnoEmAndamento = false;
 
         this.configurarEventos();
     }
