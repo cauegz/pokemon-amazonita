@@ -4,5 +4,7 @@ class Ataque {
     #prioridade;
     #classe;
     #poder;
-    
+    #tipo;
 }
+
+export default Ataque;

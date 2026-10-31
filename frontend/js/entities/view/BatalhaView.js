@@ -9,6 +9,7 @@ export default class BatalhaView{
     constructor(time){
         this.#opcoesBatalha = document.querySelectorAll('.btn-opc');
         this.#opcoesPopUp = document.getElementById('opcoesPopUp');
+
         this.#time = time;
         //this.configurarEventos();
     }
@@ -66,7 +67,7 @@ export default class BatalhaView{
                 let escolha = opcao.id;
                 switch(escolha){
                     case "atacar":
-                        this.atacar();
+                        this.botoesAtacar();
                         break;
                     case "trocar":
                         this.trocar();
@@ -82,26 +83,20 @@ export default class BatalhaView{
         );
     }
 
-    async atacar(){
-        let opcoes = this.#opcoes;
-        let pokemon = await Api.buscarPokemon(this.#time.pokemon['banco'][this.#posicaoAtual]);
-        let ataques = [];
-        let ataquesBanco = await Api.buscarAtaques(pokemon.id);
-        
-        for(let i = 0; i < opcoes.length; i++){
-            if(!ataquesBanco[i]){
-                opcoes[i].id = "";
-                opcoes[i].disabled = true;
-                opcoes[i].innerHTML = "";
-                continue;
-            }
+    async botoesAtacar(){
+        let opcoes = this.#divOpcoes;
+        let pokemon = this.#time[this.#posicaoAtual];
 
-            ataques.push(await PokeAPI.buscarAtaque(ataquesBanco[i].pokeApi));
+        let html = '';
 
-            opcoes[i].id = ataques[i].name;
+        let contador = 1;
+        while(contador <= 4){
+            html += `
+                <button id = "" class = "btn-opc" data-ataque = "${pokemon.ataque[contador - 1]}">
 
-            //tratar o nome aqui dps pra tirar o - e por a letra maiuscula
-            opcoes[i].innerHTML = ataques[i].name;
+                </button>
+            `;
+            contador++;
         }
     }*/
 }

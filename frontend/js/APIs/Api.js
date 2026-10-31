@@ -22,10 +22,18 @@ export default class Api {
 
  
     static async enviarTime(time) {
+        console.log(time)
+        let ids = new Array;
+        for(const pokemon of time.pokemon){
+            if(!pokemon)
+                continue;
+            
+            ids.push(pokemon.pokeApi)
+        }
         return await this.requisicao("/builder", {
             method: "POST",
             body: JSON.stringify({
-                pokemon: time.pokemon['api']
+                pokemon: ids
             })
         });
     }

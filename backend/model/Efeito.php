@@ -2,7 +2,7 @@
 
 class Efeito extends ModelGeral implements JsonSerializable, ModelInterface
 {
-    protected int $nome;
+    protected string $nome;
 
     public static function find($id)
     {
