@@ -92,7 +92,8 @@ class ControladorTime extends ControladorGeral{
                             $id = $ataqueApi->id;
 
                             $objAtaque->pokeApi = $id;
-                            $objAtaque->tipoId = $ataqueApi->type;
+                            $idTipo = $this->extraiIdUrl($ataqueApi->type->url);
+                            $objAtaque->tipoId = $idTipo;
 
                             $objAtaque->save();
                             $max++;

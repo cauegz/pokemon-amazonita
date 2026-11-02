@@ -1,5 +1,7 @@
 import Time from "../entities/Time.js";
 import verificarSessao from "../services/verificarSessao.js";
+import Batalha from "../entities/Batalha.js";
+import BatalhaView from "../entities/view/BatalhaView.js";
 
 //deixa essa parte responsavel por inicializar os pokemons e tudo o
 //que precisa pra batalha, se não vamos ficar fazendo requisção desnecessaria
@@ -10,9 +12,11 @@ async function iniciarBatalha() {
     
     //time e pokemons
     const time = await Time.carregarTime(user.treinador);
-    console.log(time)
+    
+    const pokemonJogador = time.pokemon[0];
+    const pokemonOponente = time.pokemon[1];
 
-    //const oponente = await preparaPoke(1);//substituir pelo id real posteriormente
+    new Batalha(pokemonJogador, pokemonOponente, new BatalhaView(time));
 }
 
 iniciarBatalha();

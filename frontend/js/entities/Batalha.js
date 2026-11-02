@@ -9,12 +9,11 @@ class Batalha{
     #emAndamento
     #turnoEmAndamento;
     
-    constructor(pokeJogador,pokeOponente){
+    constructor(pokeJogador,pokeOponente, view){
         this.#jogador = pokeJogador;
-        this.#oponente =pokeOponente;
-
-        this.#view = new BatalhaView;
-        this.#view.mostrarPokemon(this.#jogador,this.#oponente);
+        this.#oponente = pokeOponente;
+        this.#view = view;
+        this.#view.mostrarPokemon(this.#jogador, this.#oponente);
         this.#view.mostrarMenuPrincipal();
 
         this.#emAndamento = true;
@@ -25,19 +24,25 @@ class Batalha{
 
     configurarEventos(){
         document.getElementById('atacar').addEventListener('click', async event => {
-           if(!this.#emAndamento)return;
-           this.#view.mostrarAtaques(this.#jogador, ataque =>this.executarTurno(ataque));
+           if(!this.#emAndamento) return;
+           this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
         })
     }
 
-    executarTurno(idMove){
+    executarTurno(ataque){
         try{
-            this.atacar(this.#jogador,this.#oponente,idMove);
-             
-        }catch(error){}
+            this.atacar(this.#jogador,this.#oponente, ataque);
+
+        }catch(error){
+
+        }
     }
 
-    atacar(atacante,defensor,idMove){
-        
+    atacar(atacante,defensor,ataque){
+        console.log(atacante)
+        console.log(defensor)
+        console.log(ataque)
     }
 }
+
+export default Batalha;

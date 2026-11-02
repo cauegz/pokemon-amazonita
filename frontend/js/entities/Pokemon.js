@@ -86,12 +86,8 @@ class Pokemon{
         this.#hpAtual = hpAtual;
     }
 
-    get ataque() {
-        return this.#ataque;
-    }
-
-    set ataque(ataque) {
-        this.#ataque = ataque;
+    get ataques() {
+        return this.#ataques;
     }
 
     get defesa() {

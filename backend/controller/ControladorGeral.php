@@ -49,4 +49,8 @@ abstract class ControladorGeral{
         }
         return $dados;
     }
+
+    protected static function extraiIdUrl(string $url): int{
+        return (int)substr(preg_replace('/[^0-9]/', '', $url), 1);
+    }
 }
