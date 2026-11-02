@@ -11,8 +11,12 @@ class Batalha{
     
     constructor(pokeJogador,pokeOponente){
         this.#jogador = pokeJogador;
-        this.#oponente = pokeOponente
+        this.#oponente =pokeOponente;
+
         this.#view = new BatalhaView;
+        this.#view.mostrarPokemon(this.#jogador,this.#oponente);
+        this.#view.mostrarMenuPrincipal();
+
         this.#emAndamento = true;
         this.#turnoEmAndamento = false;
 
@@ -20,15 +24,13 @@ class Batalha{
     }
 
     configurarEventos(){
-        document.getElementById('ataques').addEventListener('click', async event => {
-            const botao = event.target.closest('.btn-ataque');
-            if(!botao) return;
-            const idMove = botao.dataset.move;
-            await this.executarTurno(idMove);
+        document.getElementById('atacar').addEventListener('click', async event => {
+           if(!this.#emAndamento)return;
+           this.#view.mostrarAtaques(this.#jogador, ataque =>this.executarTurno(ataque));
         })
     }
 
-    async executarTurno(idMove){
+    executarTurno(idMove){
         try{
             this.atacar(this.#jogador,this.#oponente,idMove);
              
