@@ -27,4 +27,16 @@ class ControladorBatalha extends ControladorGeral {
 
         $this->responseJSON(Efeito::find($id));
     }
+
+    /**
+     * Retorna as informações do tipo com base no id
+     */
+    public function tipo(){
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
+        }
+        $id = $_GET['id'];
+
+        $this->responseJSON(Tipo::findByPokeApi($id)[0]);
+    }
 }

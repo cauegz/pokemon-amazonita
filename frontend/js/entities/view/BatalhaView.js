@@ -43,6 +43,11 @@ export default class BatalhaView{
         let posicao = 1
         for(const ataque of ataques){
             if(!ataque || ataque == 'undefined'){
+                html += `
+                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>
+                        
+                    </button>
+                `;
                 continue;
             }
 

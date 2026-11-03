@@ -105,6 +105,8 @@ class ControladorTime extends ControladorGeral{
                 }
 
                 $time = Time::findByTreinadorAndPosicao($pokemon->treinador, $indice+1);
+
+                
                 
                 if ($time) {
                     $time->pokemon = $pokemon->id;

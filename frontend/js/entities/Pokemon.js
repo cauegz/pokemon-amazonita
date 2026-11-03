@@ -16,6 +16,7 @@ class Pokemon{
     #velocidade;
     #ataques;
     #efeito;
+    #tipos;
 
     constructor(id, nome, urlImagem, pokeApi, nivel = 40, hp, hpAtual, ataque, defesa, ataqueEspecial, defesaEspecial, velocidade, efeito) {
         this.#id = id;
@@ -31,6 +32,7 @@ class Pokemon{
         this.#defesaEspecial = defesaEspecial;
         this.#velocidade = velocidade;
         this.#ataques = new Array(4).fill(null);
+        this.#tipos = new Array(2).fill(null);
         this.#efeito = efeito;
     }
 
@@ -76,6 +78,14 @@ class Pokemon{
 
     set hp(hp) {
         this.#hp = hp;
+    }
+
+    get ataque() {
+        return this.#ataque;
+    }
+
+    set ataque(ataque) {
+        this.#ataque = ataque;
     }
 
     get hpAtual() {
@@ -130,8 +140,16 @@ class Pokemon{
         this.#efeito = efeito;
     }
 
+    get tipos(){
+        return this.#tipos;
+    }
+
     adicionarAtaque(ataque, posicao) {
         this.#ataques[posicao] = ataque;
+    }
+
+    adicionarTipo(tipo, posicao) {
+        this.#tipos[posicao] = tipo;
     }
 
 
@@ -163,6 +181,15 @@ class Pokemon{
         );
 
         let posicao = 0;
+        let tipoBanco;
+        for(const tipo of pokemonPokeApi.types){
+            tipoBanco = await Api.buscarTipoPokeApi(tipo.type.url.slice(-5).replace(/[^0-9]/g, '')); 
+            
+            pokemon.adicionarTipo(tipoBanco, posicao)
+            posicao++;
+        }
+
+        posicao = 0;
         for(const ataqueBanco of ataquesBanco){
             if(!ataqueBanco) continue;
             const ataque = await PokeApi.buscarAtaque(ataqueBanco.pokeApi);
@@ -170,6 +197,7 @@ class Pokemon{
             posicao++;
         }
 
+        console.log(pokemon)
         return pokemon;
     }
 }

@@ -94,6 +94,20 @@ class Tipo extends ModelGeral implements JsonSerializable, ModelInterface
         return $result->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
+    public static function findByPokeApi($pokeApi){
+        $sql = 'SELECT id, poke_api as "pokeApi", nome
+                FROM tipo
+                WHERE poke_api = :pokeApi';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam("pokeApi", $pokeApi);
+
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
     public function jsonSerialize(): mixed
     {
         return [

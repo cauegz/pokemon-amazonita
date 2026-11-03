@@ -1,4 +1,5 @@
 import BatalhaView from "../entities/view/BatalhaView.js"
+import CalculadoraDano from "./CalculadoraDano.js";
 
 class Batalha{
     #jogador;
@@ -38,10 +39,12 @@ class Batalha{
         }
     }
 
-    atacar(atacante,defensor,ataque){
-        console.log(atacante)
-        console.log(defensor)
-        console.log(ataque)
+    atacar(atacante, defensor, ataque){
+        try{
+            console.log(CalculadoraDano.ataque(atacante, defensor, ataque))
+        } catch(e){
+            console.error(e)
+        }
     }
 }
 

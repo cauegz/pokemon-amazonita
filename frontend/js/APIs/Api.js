@@ -54,6 +54,10 @@ export default class Api {
     static async buscarEfeito(id) {
         return await this.requisicao(`/efeito?id=${id}`);
     }
+
+    static async buscarTipoPokeApi(id) {
+        return await this.requisicao(`/tipo?id=${id}`);
+    }
 }
 
 
