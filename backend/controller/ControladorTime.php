@@ -82,7 +82,7 @@ class ControladorTime extends ControladorGeral{
                         if (
                             $detalhe->move_learn_method->name == "level-up" &&
                             $detalhe->level_learned_at == 1 &&
-                            $max < 4
+                            $max < 4 
                         ) {
                             $objAtaque = new Ataque();
                             $objAtaque->pokemonId = $pokemon->id;

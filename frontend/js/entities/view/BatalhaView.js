@@ -9,10 +9,9 @@ export default class BatalhaView{
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
 
         this.#time = time;
-        //this.configurarEventos();
     }
 
-    mostrarPokemon(jogador,oponente){
+    mostrarPokemon(jogador, oponente){
         //mostrar jogador
         document.getElementById('pokeNome').innerHTML = jogador.nome;
         document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.urlImagem}'/>`;
@@ -31,7 +30,7 @@ export default class BatalhaView{
 
     mostrarMenuPrincipal(addJs){
         this.#opcoesBatalha.innerHTML = this.#menuPrincipal;
-        
+
         addJs()
     }
 
@@ -84,5 +83,9 @@ export default class BatalhaView{
 
     mochila(){
         console.log("mochilou")
+    }
+
+    turnoInimigo(){
+        this.#opcoesBatalha.innerHTML = "Esperando inimigo jogar...";
     }
 }

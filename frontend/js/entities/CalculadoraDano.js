@@ -31,11 +31,9 @@ class CalculadoraDano{
     static resolveStab(tiposPoke, ataqueTipo){
         for(const tipo of tiposPoke){
             if(tipo.nome == ataqueTipo.nome){
-                console.log("deu stab")
                 return 1.5;
             }
         }
-        console.log("não deu stab")
         return 1;
     }
 
@@ -46,21 +44,18 @@ class CalculadoraDano{
         for (const tipo of tiposPoke) {
             for (const semDano of relacoes.no_damage_to) {
                 if(this.extrairIdUrl(semDano.url) == tipo.pokeApi){
-                    console.log("x0 no dano");
                     multiplicador *= 0;
                 }
             }
             
             for (const meioDano of relacoes.half_damage_to) {
                 if(this.extrairIdUrl(meioDano.url) == tipo.pokeApi){
-                    console.log("x0.5 no dano");
                     multiplicador *= 0.5;
                 }
             }
 
             for (const dobroDano of relacoes.double_damage_to) {
                 if(this.extrairIdUrl(dobroDano.url) == tipo.pokeApi){
-                    console.log("x2 no dano");
                     multiplicador *= 2;
                 }
             }
