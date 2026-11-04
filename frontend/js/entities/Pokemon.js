@@ -1,5 +1,7 @@
 import Api from "../APIs/Api.js";
 import PokeApi from "../APIs/PokeApi.js";
+import Ataque from "./Ataque.js";
+import Tipo from "./Tipo.js";
 
 class Pokemon{
     #id;
@@ -182,22 +184,56 @@ class Pokemon{
 
         let posicao = 0;
         let tipoBanco;
+        let tipoApi;
         for(const tipo of pokemonPokeApi.types){
-            tipoBanco = await Api.buscarTipoPokeApi(tipo.type.url.slice(-5).replace(/[^0-9]/g, '')); 
-            
-            pokemon.adicionarTipo(tipoBanco, posicao)
+            let idPokeTipo = tipo.type.url.slice(-5).replace(/[^0-9]/g, '');
+
+            tipoApi = await PokeApi.buscarTipo(idPokeTipo); 
+            tipoBanco = await Api.buscarTipoPokeApi(idPokeTipo); 
+
+            let tipoObj = new Tipo(
+                tipoBanco.id,
+                tipoBanco.pokeApi,
+                tipoBanco.nome,
+                tipoApi.damage_relations
+            );
+            pokemon.adicionarTipo(tipoObj, posicao)
             posicao++;
         }
 
         posicao = 0;
         for(const ataqueBanco of ataquesBanco){
             if(!ataqueBanco) continue;
-            const ataque = await PokeApi.buscarAtaque(ataqueBanco.pokeApi);
+
+            const ataqueApi = await PokeApi.buscarAtaque(ataqueBanco.pokeApi);
+
+            let idPokeTipo = ataqueApi.type.url.slice(-5).replace(/[^0-9]/g, '');
+
+            tipoApi = await PokeApi.buscarTipo(idPokeTipo); 
+            tipoBanco = await Api.buscarTipoPokeApi(idPokeTipo); 
+            
+            let tipoObj = new Tipo(
+                tipoBanco.id,
+                tipoBanco.pokeApi,
+                tipoBanco.nome,
+                tipoApi.damage_relations
+            );
+
+            const ataque = new Ataque(
+                ataqueBanco.id,
+                ataqueBanco.pokeApi,
+                ataqueApi.name,
+                ataqueApi.pp,
+                ataqueApi.priority,
+                ataqueApi.damage_class.name,
+                ataqueApi.power,
+                tipoObj
+            );
+
             pokemon.adicionarAtaque(ataque, posicao);
             posicao++;
         }
 
-        console.log(pokemon)
         return pokemon;
     }
 }

@@ -1,27 +1,27 @@
-import Api from "../../APIs/Api.js";
-import PokeAPI from "../../APIs/PokeApi.js";
 export default class BatalhaView{
+    #menuPrincipal;
     #opcoesBatalha;
     #time
     #posicaoAtual = 0;
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
+        this.#menuPrincipal = document.getElementById('opcoesBatalha');
 
         this.#time = time;
         //this.configurarEventos();
     }
 
     mostrarPokemon(jogador,oponente){
-        console.log(jogador);
         //mostrar jogador
         document.getElementById('pokeNome').innerHTML = jogador.nome;
-        document.getElementById('pokeSelecionado').innerHTML =`<img src='${jogador.urlImagem}'/>`;
+        document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.urlImagem}'/>`;
+
         //mostrar oponente
         document.getElementById('pokeNomeInimigo').innerHTML = oponente.nome;
-        document.getElementById('pokeInimigo').innerHTML =`<img src='${oponente.urlImagem}'/>`;
+        document.getElementById('pokeInimigo').innerHTML = `<img src='${oponente.urlImagem}'/>`;
 
-        this.atualizarHp(jogador,oponente);
+        this.atualizarHp(jogador, oponente);
     }
 
     atualizarHp(jogador, oponente){
@@ -30,10 +30,11 @@ export default class BatalhaView{
     }
 
     mostrarMenuPrincipal(){
-        this.#opcoesBatalha.hidden = false;
+        console.log(this.#menuPrincipal)
+        this.#opcoesBatalha.innerHTML = this.#menuPrincipal.innerHTML;
     }
 
-    mostrarAtaques(pokemon,escolheAtaque){
+    mostrarAtaques(pokemon, escolheAtaque){
         let opcoesBatalha = this.#opcoesBatalha;
         opcoesBatalha.innerHTML = "";
 
@@ -53,7 +54,7 @@ export default class BatalhaView{
 
             html += `
                 <button class = 'btn-opc' id = 'ataque-${posicao}' data-ataque = '${ataque.id}'>
-                    ${ataque.name}
+                    ${ataque.nome}
                 </button>
             `;
 

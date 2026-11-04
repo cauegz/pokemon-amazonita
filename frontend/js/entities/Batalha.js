@@ -15,7 +15,6 @@ class Batalha{
         this.#oponente = pokeOponente;
         this.#view = view;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
-        this.#view.mostrarMenuPrincipal();
 
         this.#emAndamento = true;
         this.#turnoEmAndamento = false;
@@ -27,6 +26,10 @@ class Batalha{
         document.getElementById('atacar').addEventListener('click', async event => {
            if(!this.#emAndamento) return;
            this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
+        })
+
+        document.getElementById('voltar').addEventListener('click', e => {
+            this.#view.mostrarMenuPrincipal();
         })
     }
 
@@ -41,7 +44,16 @@ class Batalha{
 
     atacar(atacante, defensor, ataque){
         try{
-            console.log(CalculadoraDano.ataque(atacante, defensor, ataque))
+            let dano = CalculadoraDano.ataque(atacante, defensor, ataque);
+
+            if(defensor.hpAtual -= dano <= 0) {
+                defensor.hpAtual = 0
+            } else {
+                defensor.hpAtual -= dano;
+            }
+
+            this.#view.atualizarHp(atacante, defensor)
+
         } catch(e){
             console.error(e)
         }
