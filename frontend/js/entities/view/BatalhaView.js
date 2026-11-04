@@ -6,7 +6,7 @@ export default class BatalhaView{
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
-        this.#menuPrincipal = document.getElementById('opcoesBatalha');
+        this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
 
         this.#time = time;
         //this.configurarEventos();
@@ -29,9 +29,10 @@ export default class BatalhaView{
         document.getElementById('hpInimigo').innerHTML = `${oponente.hpAtual}/${oponente.hp}`; 
     }
 
-    mostrarMenuPrincipal(){
-        console.log(this.#menuPrincipal)
-        this.#opcoesBatalha.innerHTML = this.#menuPrincipal.innerHTML;
+    mostrarMenuPrincipal(addJs){
+        this.#opcoesBatalha.innerHTML = this.#menuPrincipal;
+        
+        addJs()
     }
 
     mostrarAtaques(pokemon, escolheAtaque){

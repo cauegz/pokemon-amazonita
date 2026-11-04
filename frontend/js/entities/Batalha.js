@@ -23,13 +23,15 @@ class Batalha{
     }
 
     configurarEventos(){
+        console.log("configurou")
+
         document.getElementById('atacar').addEventListener('click', async event => {
            if(!this.#emAndamento) return;
            this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
         })
 
         document.getElementById('voltar').addEventListener('click', e => {
-            this.#view.mostrarMenuPrincipal();
+            this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
     }
 
@@ -46,7 +48,7 @@ class Batalha{
         try{
             let dano = CalculadoraDano.ataque(atacante, defensor, ataque);
 
-            if(defensor.hpAtual -= dano <= 0) {
+            if(defensor.hpAtual - dano < 0) {
                 defensor.hpAtual = 0
             } else {
                 defensor.hpAtual -= dano;
