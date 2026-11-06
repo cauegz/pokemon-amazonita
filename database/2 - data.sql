@@ -2,7 +2,6 @@
 -- =========================================
 -- 1. Efeitos
 -- =========================================
-
 INSERT INTO efeito (nome) VALUES
 ('Paralisia'),
 ('Sono'),
@@ -52,8 +51,9 @@ INSERT INTO tipo (poke_api, nome) VALUES
 
 
 -- =========================================
--- 4. Usuários
--- Senhas fictícias para testes
+-- 3. Usuários
+-- Senhas fictícias para testes.
+-- Em produção, use password_hash() no PHP.
 -- =========================================
 
 INSERT INTO usuario (login, senha, nome) VALUES
@@ -61,9 +61,18 @@ INSERT INTO usuario (login, senha, nome) VALUES
 ('jogador02', '$2y$10$hCUnAIwf9B2KkIOZ9QsP9OjaXB1mU/u1vPRGFUr2slLip82f0tBj.', 'Bruno'),
 ('jogador03', '$2y$10$bD0y42R3Lwd8vHC7bhRXMuQWsoU49YccvLJRHVae7DYRwa7UNyO82', 'Carla');
 
+-- =========================================
+-- 4. NPCs
+-- =========================================
+INSERT INTO npc (nome, id_tipo_npc) VALUES
+('Professor Carvalho', 1),
+('Mercador de Itens', 2),
+('Líder Rochoso', 3);
 
 -- =========================================
--- 5. Lojas
+-- 5. Treinadores
+-- IDs 1 a 3 pertencem aos jogadores.
+-- IDs 4 a 6 são treinadores NPC.
 -- =========================================
 
 INSERT INTO loja (nome) VALUES
@@ -95,24 +104,43 @@ INSERT INTO treinador (id_npc, id_usuario) VALUES
 (2, NULL),
 (3, NULL);
 
+-- =========================================
+-- 6. Pokémon
+-- id_pokeapi representa o ID da espécie na PokéAPI.
+-- =========================================
+-- INSERT INTO pokemon (id_pokeapi, hp, id_efeito, id_treinador) VALUES
+-- (25, 35, 2, 1),   -- Pikachu, Ana
+-- (1, 45, 4, 1),    -- Bulbasaur, Ana
+-- (4, 39, 1, 1),    -- Charmander, Ana
+-- (7, 44, 5, 2),    -- Squirtle, Bruno
+-- (10, 45, 3, 2),   -- Caterpie, Bruno
+-- (133, 55, 4, 3),  -- Eevee, Carla
+-- (74, 40, 1, 4),   -- Geodude, NPC
+-- (95, 35, 2, 6);   -- Onix, NPC
 
 -- =========================================
--- 8. Produtos da loja
--- IDs oficiais dos itens da PokéAPI
+-- 7. Times
 -- =========================================
+
+-- =========================================
+-- 8. Lojas e produtos
+-- IDs fictícios de itens da PokéAPI para testes.
+-- =========================================
+INSERT INTO loja (nome) VALUES
+('l1'),
+('l2'),
+('l3');
 
 INSERT INTO produto
 (id_item_pokeapi, nome, preco, estoque, loja_id) VALUES
-(4, 'Pokébola', 200.00, 100, 1),
-(17, 'Poção', 300.00, 50, 2),
-(18, 'Superpoção', 700.00, 25, 3),
-(19, 'Antídoto', 100.00, 40, 1);
-
+(17, 'Pokébola', 200.00, 100, 1),
+(26, 'Poção', 300.00, 50, 2),
+(19, 'Superpoção', 700.00, 25, 2),
+(23, 'Antídoto', 100.00, 40, 3);
 
 -- =========================================
 -- 9. Inventários dos treinadores
 -- =========================================
-
 INSERT INTO inventario
 (id_item_pokeapi, id_treinador, quantidade) VALUES
 (4, 1, 5),
@@ -151,7 +179,6 @@ INSERT INTO venda (id_itens_compra, id_loja) VALUES
 -- =========================================
 -- 12. Logs de usuários
 -- =========================================
-
 INSERT INTO log_usuario (usuario_id, acao, mensagem) VALUES
 (1, 'cadastro', 'Conta criada'),
 (1, 'compra', 'Pokébolas compradas'),

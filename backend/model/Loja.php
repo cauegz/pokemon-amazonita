@@ -5,7 +5,6 @@ class Loja implements \JsonSerializable
     private static $pdo;
     private ?int $id = null;
     private string $nome;
-    private int $categoria_id;
 
     private static function getPDO()
     {
@@ -49,13 +48,12 @@ class Loja implements \JsonSerializable
         return [
             'id'           => $this->id,
             'nome'         => $this->nome,
-            'categoria_id' => $this->categoria_id
         ];
     }
 
     public static function find($id)
     {
-        $sql = "SELECT id, nome, categoria_id FROM public.loja WHERE id = :id";
+        $sql = "SELECT id, nome FROM public.loja WHERE id = :id";
         $result = self::getPDO()->prepare($sql);
         $result->bindParam(":id", $id);
         $result->execute();
@@ -93,24 +91,18 @@ class Loja implements \JsonSerializable
 
     public function save()
     {
-        
         if ($this->isNovo()) {
-            $sql = "INSERT INTO public.loja (nome, categoria_id) VALUES (:nome, :categoria_id)";
-            
+            $sql = "INSERT INTO public.loja (nome) VALUES (:nome)";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":nome", $this->nome);
-            $result->bindParam(":categoria_id", $this->categoria_id);
             $result->execute();
 
             $this->id = (int)self::getPDO()->lastInsertId();
         } else {
-            $sql = "UPDATE public.loja SET nome = :nome, categoria_id = :categoria_id WHERE id = :id";
-
+            $sql = "UPDATE public.loja SET nome = :nome WHERE id = :id";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":nome", $this->nome);
-            $result->bindParam(":categoria_id", $this->categoria_id);
-            $result->bindParam(":id", $this->id); // CORRIGIDO: Vinculação do ID que faltava
-            
+            $result->bindParam(":id", $this->id);
             $result->execute();
         }
     }
