@@ -1,5 +1,6 @@
 import Api from "../APIs/Api.js";
 import PokeApi from "../APIs/PokeApi.js";
+import Pokemon from "./Pokemon.js";
 
 class Time {
     #pokemon;
@@ -12,43 +13,26 @@ class Time {
         return this.#pokemon;
     }
 
-    adicionarPokemon(posicao, idPokemon) {
-        this.#pokemon[posicao - 1] = idPokemon;
-    }
-
-    obterTime() {
-        
-    }
-
-    estaCompleto() {
-        
+    //metodo utilizado antes do pokemon ser salvo no banco
+    adicionarPokemon(posicao, pokemon) {
+        this.#pokemon[posicao - 1] = pokemon;
     }
 
     static async carregarTime(idTreinador) {
         let objTime = new Time();
 
-        //pega o time do usuário logado atualmente
         const timeBanco = await Api.buscarTime(idTreinador);
 
         var index = 1;
-        for(const pokemon of timeBanco){
-            if(!pokemon){
+        for(const pokeBanco of timeBanco){
+            if(!pokeBanco){
                 index++;
                 continue;
             }
-            //codigo porco tem um jeito melhor de fazer isso nao sei como
-            const div = document.getElementById(`pokemon-${index}`);
 
-            const pokeBanco = await Api.buscarPokemon(pokemon.pokemon);
-
-            const pokeSelecionado = await PokeApi.buscarPokemon(pokeBanco.pokeApi);
-
-            const imgUrl = pokeSelecionado.sprites.front_default;
-
-            div.innerHTML += `<p>${pokeSelecionado.name.charAt(0).toUpperCase() + pokeSelecionado.name.slice(1)}</p><img src=${imgUrl} />`; 
-            // retorna o nome do pokemon com a primeira letra maiúscula e a imagem do dele
-
-            objTime.adicionarPokemon(index, pokeSelecionado.id);
+            const pokemon = await Pokemon.carregaPokemon(pokeBanco.pokemon);
+            
+            objTime.adicionarPokemon(index, pokemon);
             index++;
         }
         return objTime;

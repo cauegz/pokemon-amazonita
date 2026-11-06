@@ -1,0 +1,83 @@
+import BatalhaView from "../entities/view/BatalhaView.js"
+import CalculadoraDano from "./CalculadoraDano.js";
+
+class Batalha{
+    #jogador;
+    #posicaoPokeJogador;
+    #oponente;
+    #posicaoPokeOponente;
+    #view;
+    #emAndamento
+    #turnoJogador;
+    
+    constructor(pokeJogador,pokeOponente, view){
+        this.#jogador = pokeJogador;
+        this.#oponente = pokeOponente;
+        this.#view = view;
+        this.#view.mostrarPokemon(this.#jogador, this.#oponente);
+
+        this.#emAndamento = true;
+        this.#turnoJogador = true;
+
+        this.configurarEventos();
+    }
+
+    configurarEventos(){
+        //passar isso pra uma função depois
+        if(!this.#turnoJogador){
+            this.ataqueBot();
+        }
+        //ate aqui
+
+        document.getElementById('atacar').addEventListener('click', async event => {
+           this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
+        })
+
+        document.getElementById('voltar').addEventListener('click', e => {
+            this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+        })
+    }
+
+    executarTurno(ataque){
+        try{
+            this.atacar(this.#jogador, this.#oponente, ataque);
+
+            this.#view.atualizarHp(this.#jogador, this.#oponente)
+            
+            this.#turnoJogador = false;
+
+            this.configurarEventos();
+        }catch(error){
+
+        }
+    }
+
+    atacar(atacante, defensor, ataque){
+        try{
+            let dano = CalculadoraDano.ataque(atacante, defensor, ataque);
+            console.log(atacante.nome + " deu " + dano + " de dano no " + defensor.nome);
+
+            if(defensor.hpAtual - dano < 0) {
+                defensor.hpAtual = 0
+            } else {
+                defensor.hpAtual -= dano;
+            }
+
+        } catch(e){
+            console.error(e)
+        }
+    }
+
+    ataqueBot(){
+        let numeroAtaque = Math.floor(Math.random() * 3) + 1;
+
+        this.#view.turnoInimigo();
+        this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
+        this.#view.atualizarHp(this.#jogador, this.#oponente)
+
+        this.#turnoJogador = true;
+        this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+    }
+}
+
+export default Batalha;

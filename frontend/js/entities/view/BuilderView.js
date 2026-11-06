@@ -1,4 +1,5 @@
 import PokeApi from "../../APIs/PokeApi.js";
+import Pokemon from "../Pokemon.js";
 
 export default class BuilderView {
     #time;
@@ -15,13 +16,11 @@ export default class BuilderView {
     }
 
     configurarEventos() {
-        
         const botoes = document.querySelectorAll(".btn-selecionar-poke"); //pega o espaço do time
 
         botoes.forEach(botao => {
             botao.addEventListener("click", () => {
                 this.#posicao = botao.dataset.poke;
-
                 this.selecionarPoke.showModal(); //abre o dialog
                 this.carregarPokemons();
             });
@@ -39,18 +38,27 @@ export default class BuilderView {
             if (!botao) return;
 
             try {
-                const pokemon = await PokeApi.buscarPokemon(botao.value); //busca na api com o valor do botao (id do pokemon)
+                const pokemonApi = await PokeApi.buscarPokemon(botao.value); //busca na api com o valor do botao (id do pokemon)
 
-                // Atualiza a posição correspondente no objeto Time.
-                this.#time.adicionarPokemon(this.#posicao,pokemon.id);
+                let pokemon = new Pokemon(
+                    null,
+                    pokemonApi.name,
+                    pokemonApi.sprites.front_default,
+                    pokemonApi.id,
+                    50,
+                )
+                console.log("pokemon temporario")
+                console.log(pokemon)
 
-               
+                this.#time.adicionarPokemon(this.#posicao, pokemon);
+
                 this.mostrarPokemon(pokemon);
                 this.selecionarPoke.close();
             } catch (erro) {
                 console.error("Erro ao selecionar Pokémon:", erro);
             }
         });
+        this.carregaTimeBanco();
     }
 
     async carregarPokemons() {
@@ -87,17 +95,30 @@ export default class BuilderView {
         }
     }
 
+    //ta vindo promise
     mostrarPokemon(pokemon) {
         const div = document.getElementById(
             `pokemon-${this.#posicao}`
         );
 
         //deixar a primeira letra maiuscula
-        const nome = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1); 
+        const nome = pokemon.nome.charAt(0).toUpperCase() + pokemon.nome.slice(1); 
 
         div.innerHTML = `
             <p>${nome}</p>
-            <img src="${pokemon.sprites.front_default}">
+            <img src="${pokemon.urlImagem}">
         `;
+    }
+
+    async carregaTimeBanco() {
+        this.#posicao = 1;
+        for(const pokemon of this.#time.pokemon){
+            if(!pokemon) {
+                this.#posicao++;
+                continue;
+            }
+            this.mostrarPokemon(pokemon);
+            this.#posicao++;
+        }
     }
 }

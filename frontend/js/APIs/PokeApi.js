@@ -13,6 +13,26 @@ export default class PokeAPI{
         return await response.json();
     }
 
+    static async buscarAtaque(numAtaque) {
+        const response = await fetch(
+            `${this.URL}/move/${numAtaque}`
+        );
+        if(!response.ok){
+            throw new Error("Erro ao buscar equipe");
+        }
+        return await response.json();
+    }
+
+    static async buscarTipo(id) {
+        const response = await fetch(
+            `${this.URL}/type/${id}`
+        );
+        if(!response.ok){
+            throw new Error("Erro ao buscar tipo");
+        }
+        return await response.json();
+    }
+
     static async buscarGeracao(numero) {
         const response = await fetch(
             `${this.URL}/generation/${numero}`

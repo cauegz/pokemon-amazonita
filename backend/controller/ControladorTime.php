@@ -69,9 +69,44 @@ class ControladorTime extends ControladorGeral{
                             break;
                     }
                 }
+                $pokemon->hpAtual = $pokemon->hp;
                 $pokemon->save();
 
+                $ataques = $pokeApi->moves;
+                
+                $max = 0;
+                foreach ($ataques as $ataque) {
+                    $detalhes = $ataque->version_group_details;
+
+                    foreach ($detalhes as $detalhe) {
+                        if (
+                            $detalhe->move_learn_method->name == "level-up" &&
+                            $detalhe->level_learned_at == 1 &&
+                            $max < 4 
+                        ) {
+                            $objAtaque = new Ataque();
+                            $objAtaque->pokemonId = $pokemon->id;
+                            $url = $ataque->move->url;
+                            $ataqueApi = json_decode(file_get_contents($url));
+
+                            $id = $ataqueApi->id;
+
+                            $objAtaque->pokeApi = $id;
+                            $idTipo = $this->extraiIdUrl($ataqueApi->type->url);
+                            $objAtaque->tipoId = $idTipo;
+
+                            $objAtaque->save();
+                            $max++;
+                            //como o pokemon tem varios campos nesse version_group_details, assim que acha um ataque
+                            //possivel de se aprender no nivel 1 (temporario), ele pula para o proximo ataque
+                            break;
+                        }
+                    }
+                }
+
                 $time = Time::findByTreinadorAndPosicao($pokemon->treinador, $indice+1);
+
+                
                 
                 if ($time) {
                     $time->pokemon = $pokemon->id;
@@ -98,6 +133,11 @@ class ControladorTime extends ControladorGeral{
      */
     public function time(){
         session_start();
+        
+        if(!isset($_GET['id'])){
+            $this->responseError("id do treinador vazio", 400);
+        }
+
         $treinador = $_GET['id'];
         $posicao = 1;
         $time = [];
