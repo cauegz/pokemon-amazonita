@@ -32,7 +32,9 @@ class Batalha{
         document.getElementById('atacar').addEventListener('click', async event => {
            this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
         })
-
+        document.getElementById('trocar').addEventListener('click', e => {
+            this.#view.trocar();
+        })
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })

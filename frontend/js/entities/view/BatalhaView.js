@@ -7,7 +7,7 @@ export default class BatalhaView{
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
-
+        
         this.#time = time;
     }
 
@@ -45,8 +45,7 @@ export default class BatalhaView{
         for(const ataque of ataques){
             if(!ataque || ataque == 'undefined'){
                 html += `
-                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>
-                        
+                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>  
                     </button>
                 `;
                 continue;
@@ -74,7 +73,19 @@ export default class BatalhaView{
    
 
     trocar(){
-        console.log("trocou")
+        console.log(this.#time);
+        let time= document.getElementById('time');
+        for(const poke of this.#time.pokemon){
+            if(poke === null) continue;
+            time.innerHTML += `
+                <div id=${poke.id}>
+                    <img src=${poke.urlImagem} />
+                    <button>${poke.nome}</button>
+                </div>
+            `;
+            console.log(time);
+        }
+        console.log("trocou");
     }
 
     fugir(){

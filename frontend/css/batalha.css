@@ -61,3 +61,11 @@
 #ataques{
     border: 1px solid black;
 }
+#trocaPokeAtivo{
+    width: 40%;
+    height: 50%;
+    align-self: center;
+    justify-self: center;
+    background-color: var(--cor-input-text);
+    border-radius: 10px;
+}
