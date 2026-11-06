@@ -5,8 +5,8 @@ class Produto extends ModelGeral implements JsonSerializable{
     private string $nome;
     private float $preco;
     private int  $estoque;
-    private int  $categoria_id;
-    privte int   $id_item_pokeapi
+    private int $loja_id;
+    private int $id_item_pokeapi;
 
     private static function getPDO()
     {
@@ -43,7 +43,7 @@ class Produto extends ModelGeral implements JsonSerializable{
             'nome' => $this->nome,
             'preco' => $this->preco,
             'estoque' => $this->estoque,
-            'categoria_id' => $this->categoria_id,
+            'loja_id' => $this->loja_id,
             'id_item_pokeapi' => $this->id_item_pokeapi
         ];
     }
@@ -87,32 +87,26 @@ class Produto extends ModelGeral implements JsonSerializable{
 
     public function save()
     {
-        
-        if ($this->isNovo()) { 
-            $sql = "INSERT INTO public.produto (id_tem_pokeapi, nome, preco, estoque, categoria_id) VALUES (:id_tem_pokeapi, :nome, :preco, :estoque, :categoria_id)";
-            
+        if ($this->isNovo()) {
+            $sql = "INSERT INTO public.produto (id_item_pokeapi, nome, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :nome, :preco, :estoque, :loja_id)";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
             $result->bindParam(":nome", $this->nome);
             $result->bindParam(":preco", $this->preco);
             $result->bindParam(":estoque", $this->estoque);
-            $result->bindParam(":cateoria_id", $this->categoria_id);
-
+            $result->bindParam(":loja_id", $this->loja_id);
             $result->execute();
 
             $this->id = (int)self::getPDO()->lastInsertId();
         } else {
-            
-            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, nome = :nome, preco = :preco, estoque = :estoque, categoria_id = :categoria_id,    WHERE id = :id"; 
-
+            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, nome = :nome, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
             $result->bindParam(":nome", $this->nome);
             $result->bindParam(":preco", $this->preco);
             $result->bindParam(":estoque", $this->estoque);
-            $result->bindParam(":cateoria_id", $this->categoria_id);
-            $result->bindParam(":id", $this->id); 
-            
+            $result->bindParam(":loja_id", $this->loja_id);
+            $result->bindParam(":id", $this->id);
             $result->execute();
         }
     }
