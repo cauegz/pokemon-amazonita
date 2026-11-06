@@ -57,7 +57,7 @@ class Produto extends ModelGeral implements JsonSerializable{
     public function save()
     {
         if ($this->isNovo()) {
-            $sql = "INSERT INTO public.produto (id_item_pokeapi, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :preco, :estoque, :loja_id)";
+            $sql = "INSERT INTO public.produto (id_item_pokeapi, nome, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :nome, :preco, :estoque, :loja_id)";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
             $result->bindParam(":preco", $this->preco);
@@ -67,7 +67,7 @@ class Produto extends ModelGeral implements JsonSerializable{
 
             $this->id = (int)self::getPDO()->lastInsertId();
         } else {
-            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
+            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, nome = :nome, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
             $result->bindParam(":preco", $this->preco);
