@@ -2,7 +2,6 @@
 
 class Npc extends ModelGeral implements JsonSerializable, ModelInterface
 {
-    protected ?int $id = null;
     protected string $nome;
     protected int $tipoNpc;
 

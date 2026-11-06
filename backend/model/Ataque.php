@@ -1,0 +1,111 @@
+<?php
+
+class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
+{
+    protected int $pokeApi;
+    protected int $pokemonId;
+    protected int $tipoId;
+
+    public static function find($id)
+    {
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId", tipo_id as "tipoId"
+                FROM ataque
+                WHERE id = :id';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam(":id", $id);
+
+        $result->execute();
+
+        return $result->fetchObject(self::class);
+    }
+
+    public static function all($filter = null)
+    {
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId", tipo_id as "tipoId"
+                FROM ataque';
+
+        if ($filter) {
+            $sql .= " WHERE " . $filter;
+        }
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    public static function delete($id)
+    {
+        $sql = "DELETE FROM ataque
+                WHERE id = :id";
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam(":id", $id);
+
+        $result->execute();
+    }
+
+    public function save()
+    {
+        if ($this->id == null) {
+
+            $sql = "INSERT INTO ataque (poke_api, pokemon_id, tipo_id)
+                    VALUES (:pokeApi, :pokemonId, :tipoId)";
+
+            $result = self::getPDO()->prepare($sql);
+
+            $result->bindParam(":pokeApi", $this->pokeApi);
+            $result->bindParam(":pokemonId", $this->pokemonId);
+            $result->bindParam(":tipoId", $this->tipoId);
+
+            $result->execute();
+
+            $this->id = self::getPDO()->lastInsertId();
+
+        } else {
+
+            $sql = "UPDATE ataque
+                    SET pokeApi = :pokeApi,
+                        pokemon_id = :pokemonId,
+                        tipo_id = :tipoId
+                    WHERE id = :id";
+
+            $result = self::getPDO()->prepare($sql);
+
+            $result->bindParam(":pokeApi", $this->pokeApi);
+            $result->bindParam(":pokemonId", $this->pokemonId);
+            $result->bindParam(":tipoId", $this->tipoId);
+            $result->bindParam(":id", $this->id);
+
+            $result->execute();
+        }
+    }
+
+    public static function findByPokemon($pokemon){
+        $sql = 'SELECT id, poke_api as "pokeApi", pokemon_id as "pokemonId", tipo_id as "tipoId"
+                FROM ataque
+                WHERE pokemon_id = :pokemon';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam("pokemon", $pokemon);
+
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id" => $this->id,
+            "pokeApi" => $this->pokeApi,
+            "pokemonId" => $this->pokemonId,
+            "tipoId" => $this->tipoId
+        ];
+    }
+}

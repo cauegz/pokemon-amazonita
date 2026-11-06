@@ -22,10 +22,18 @@ export default class Api {
 
  
     static async enviarTime(time) {
+        console.log(time)
+        let ids = new Array;
+        for(const pokemon of time.pokemon){
+            if(!pokemon)
+                continue;
+            
+            ids.push(pokemon.pokeApi)
+        }
         return await this.requisicao("/builder", {
             method: "POST",
             body: JSON.stringify({
-                pokemon: time.pokemon
+                pokemon: ids
             })
         });
     }
@@ -37,6 +45,18 @@ export default class Api {
 
     static async buscarTime(id) {
         return await this.requisicao(`/treinador/time?id=${id}`);
+    }
+
+    static async buscarAtaques(id) {
+        return await this.requisicao(`/ataques?id=${id}`);
+    }
+
+    static async buscarEfeito(id) {
+        return await this.requisicao(`/efeito?id=${id}`);
+    }
+
+    static async buscarTipoPokeApi(id) {
+        return await this.requisicao(`/tipo?id=${id}`);
     }
 }
 
