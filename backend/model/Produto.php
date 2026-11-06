@@ -1,6 +1,5 @@
-<?php
-class Produto implements \JsonSerializable
-{
+<?php>
+class Produto extends ModelGeral implements JsonSerializable{
     private static $pdo;
     private ?int $id = null;
     private string $nome;

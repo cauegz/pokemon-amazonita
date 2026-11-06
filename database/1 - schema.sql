@@ -1,12 +1,12 @@
 
-CREATE TABLE IF NOT EXISTS categoria
+CREATE TABLE IF NOT EXISTS ataque
 (
-  id   INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
-  tipo CHAR(1) NOT NULL UNIQUE,
+  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+  poke_api   INT NOT NULL,
+  pokemon_id INT NOT NULL,
+  tipo_id    INT NOT NULL,
   PRIMARY KEY (id)
 );
-
-COMMENT ON COLUMN categoria.tipo IS 'CHECK (tipo IN (''1'',''2'',''3''))';
 
 CREATE TABLE IF NOT EXISTS efeito
 (
@@ -45,9 +45,8 @@ CREATE TABLE IF NOT EXISTS log_usuario
 
 CREATE TABLE IF NOT EXISTS loja
 (
-  id           INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome         CHAR(2) NOT NULL UNIQUE,
-  categoria_id INT     NOT NULL,
+  id   INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
+  nome CHAR(2) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 
@@ -65,7 +64,8 @@ CREATE TABLE IF NOT EXISTS pokemon
 (
   id              INT NOT NULL GENERATED ALWAYS AS IDENTITY,
   id_pokeapi      INT NOT NULL,
-  hp              INT NOT NULL,
+  hp              INT NOT NULL DEFAULT 0,
+  hp_atual        INT NOT NULL DEFAULT 0,
   ataque          INT NOT NULL DEFAULT 0,
   defesa          INT NOT NULL DEFAULT 0,
   ataque_especial INT NOT NULL DEFAULT 0,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS produto
   nome            VARCHAR(100)  NOT NULL,
   preco           DECIMAL(10,2) NOT NULL,
   estoque         INT           NOT NULL,
-  categoria_id    INT           NOT NULL,
+  loja_id         INT           NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -96,10 +96,26 @@ CREATE TABLE IF NOT EXISTS time
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS tipo
+(
+  id       INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  nome     VARCHAR(100) NOT NULL UNIQUE,
+  poke_api INT          NOT NULL UNIQUE,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS tipo_npc
 (
   id   INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
   nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS tipo_pokemon
+(
+  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+  tipo_id    INT NOT NULL,
+  pokemon_id INT NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -158,18 +174,6 @@ ALTER TABLE inventario
     FOREIGN KEY (id_treinador)
     REFERENCES treinador (id);
 
-ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_categoria_TO_produto;
-ALTER TABLE produto
-  ADD CONSTRAINT FK_categoria_TO_produto
-    FOREIGN KEY (categoria_id)
-    REFERENCES categoria (id);
-
-ALTER TABLE loja DROP CONSTRAINT IF EXISTS FK_categoria_TO_loja;
-ALTER TABLE loja
-  ADD CONSTRAINT FK_categoria_TO_loja
-    FOREIGN KEY (categoria_id)
-    REFERENCES categoria (id);
-
 ALTER TABLE venda DROP CONSTRAINT IF EXISTS FK_loja_TO_venda;
 ALTER TABLE venda
   ADD CONSTRAINT FK_loja_TO_venda
@@ -216,4 +220,34 @@ ALTER TABLE time DROP CONSTRAINT IF EXISTS FK_pokemon_TO_time;
 ALTER TABLE time
   ADD CONSTRAINT FK_pokemon_TO_time
     FOREIGN KEY (id_pokemon)
+    REFERENCES pokemon (id);
+
+ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_loja_TO_produto;
+ALTER TABLE produto
+  ADD CONSTRAINT FK_loja_TO_produto
+    FOREIGN KEY (loja_id)
+    REFERENCES loja (id);
+
+ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_pokemon_TO_ataque;
+ALTER TABLE ataque
+  ADD CONSTRAINT FK_pokemon_TO_ataque
+    FOREIGN KEY (pokemon_id)
+    REFERENCES pokemon (id);
+
+ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_tipo_TO_ataque;
+ALTER TABLE ataque
+  ADD CONSTRAINT FK_tipo_TO_ataque
+    FOREIGN KEY (tipo_id)
+    REFERENCES tipo (id);
+
+ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_tipo_TO_tipo_pokemon;
+ALTER TABLE tipo_pokemon
+  ADD CONSTRAINT FK_tipo_TO_tipo_pokemon
+    FOREIGN KEY (tipo_id)
+    REFERENCES tipo (id);
+
+ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_pokemon_TO_tipo_pokemon;
+ALTER TABLE tipo_pokemon
+  ADD CONSTRAINT FK_pokemon_TO_tipo_pokemon
+    FOREIGN KEY (pokemon_id)
     REFERENCES pokemon (id);

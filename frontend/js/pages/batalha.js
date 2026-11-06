@@ -1,27 +1,22 @@
+import Time from "../entities/Time.js";
 import verificarSessao from "../services/verificarSessao.js";
-let usuario = await verificarSessao();
+import Batalha from "../entities/Batalha.js";
+import BatalhaView from "../entities/view/BatalhaView.js";
 
-async function carregaTime(){
-    try{
-        const promiseTime = await fetch(`/api/treinador/time`);
-        const time = await promiseTime.json();
+//deixa essa parte responsavel por inicializar os pokemons e tudo o
+//que precisa pra batalha, se não vamos ficar fazendo requisção desnecessaria
+async function iniciarBatalha() {
+    //verificação de sessão como no builder.js
+    const user = await verificarSessao();
+    if(!user) return;
+    
+    //time e pokemons
+    const time = await Time.carregarTime(user.treinador);
+    
+    const pokemonJogador = time.pokemon[0];
+    const pokemonOponente = time.pokemon[1];
 
-        //consultar o pokemon especifico e retornar hp
-        const pokemonUser = await fetch(`/api/pokemon?id=${time[0].pokemon}`);
-        const pokeUser = await pokemonUser.json();
-
-        //pega da api e poe na tela
-        console.log(pokeUser)
-        const pokeApi = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeUser.pokeApi}`);
-        const pokemon = await pokeApi.json();
-        document.getElementById('pokeSelecionado').innerHTML = `<img src=${pokemon.sprites.back_default} />`;
-        document.getElementById('pokeNome').innerHTML = `<p>${pokemon.name}</p>`;
-
-        console.log(pokeUser.hp);
-        document.getElementById('hp').innerHTML = `<p>HP: ${pokeUser.hp}</p>`;
-    }catch(error){
-        console.log("erro ao carregar poke primario: " + error);
-    }
+    new Batalha(pokemonJogador, pokemonOponente, new BatalhaView(time));
 }
 
-carregaTime();
+iniciarBatalha();
