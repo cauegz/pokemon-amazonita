@@ -12,11 +12,11 @@ async function iniciarBatalha() {
     
     //time e pokemons
     const time = await Time.carregarTime(user.treinador);
-    
+    const view = new BatalhaView(time);
     const pokemonJogador = time.pokemon[0];
     const pokemonOponente = time.pokemon[1];
 
-    new Batalha(pokemonJogador, pokemonOponente, new BatalhaView(time));
+    new Batalha(pokemonJogador, pokemonOponente, view);
 }
 
 iniciarBatalha();
