@@ -77,7 +77,7 @@
     padding: 10px;
 
     box-sizing: border-box;
-    background-color:var(--cor-card-pokemon);
+    background-color:var(--cor-card-pokemon-popup);
     border: 2px solid #303030;
     border-radius: 6px;
 

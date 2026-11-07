@@ -8,25 +8,25 @@
 </head>
 <body>
     <div id="gameContainer">
-        <div class="pokemon">
-            <span id="pokeInimigo"></span>
-            <div class="pokeInfo" id="pokeInimigoInfo">
-                <span id="pokeNomeInimigo"></span>
-                <span id="hpInimigo"></span>
+        <div class="pokemonsEmBatalha">
+            <div class="pokemon" id="pokeOponente">
+                <span id="pokeInimigo"></span>
+                <div class="pokeInfo" id="pokeInimigoInfo">
+                    <span id="pokeNomeInimigo"></span>
+                    <span id="hpInimigo"></span>
+                </div>
             </div>
-        </div>
-   
-
-        <div class="pokemon" id="pokeUser">
-            <span id="pokeSelecionado"></span>
-            <div class="pokeInfo" id="pokeUserInfo">
-                <span id="pokeNome"></span>
-                <span id="hp"></span>
-            </div>
-        </div>
         
+            <div class="pokemon" id="pokeUser">
+                <span id="pokeSelecionado"></span>
+                <div class="pokeInfo" id="pokeUserInfo">
+                    <span id="pokeNome"></span>
+                    <span id="hp"></span>
+                </div>
+            </div>
+        </div>
         <div id="menuBatalha">
-            <p> Em batalha! selecione o que você vai fazer</p>
+            <p id="mensagemBatalha"></p>
             <div id="opcoesBatalha">
                 <button class="btn-opc" id="atacar">Atacar</button>
                 <button class="btn-opc" id="fugir">Fugir</button>

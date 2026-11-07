@@ -41,6 +41,15 @@ class Batalha{
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
+
+        if(this.#jogador.hpAtual <= 0){
+            this.#emAndamento = false;
+            alert("Você perdeu a batalha");
+        } else if(this.#oponente.hpAtual <= 0){
+            this.#emAndamento = false;
+            alert("Você venceu a batalha");
+        }
+        console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
     }
 
     trocarPokemon(novoPokemon){
@@ -48,6 +57,7 @@ class Batalha{
         console.log(this.#jogador);
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
         this.#turnoJogador = false;
+        this.ataqueBot();
     }
 
     executarTurno(ataque){
@@ -84,11 +94,13 @@ class Batalha{
         let numeroAtaque = Math.floor(Math.random() * 3) + 1;
 
         this.#view.turnoInimigo();
-        this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
-        this.#view.atualizarHp(this.#jogador, this.#oponente)
-
-        this.#turnoJogador = true;
-        this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+        setTimeout(() => {
+            this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
+            this.#view.atualizarHp(this.#jogador, this.#oponente)
+            this.#turnoJogador = true;
+            this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+        }, 2000);
+       
     }
 }
 

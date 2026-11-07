@@ -3,11 +3,12 @@ export default class BatalhaView{
     #opcoesBatalha;
     #time
     #posicaoAtual = 0;
+    #mensagemBatalha = document.getElementById('mensagemBatalha');
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
-        
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
         this.#time = time;
     }
 
@@ -30,7 +31,7 @@ export default class BatalhaView{
 
     mostrarMenuPrincipal(addJs){
         this.#opcoesBatalha.innerHTML = this.#menuPrincipal;
-
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
         addJs()
     }
 
@@ -105,6 +106,6 @@ export default class BatalhaView{
     }
 
     turnoInimigo(){
-        this.#opcoesBatalha.innerHTML = "Esperando inimigo jogar...";
+        this.#mensagemBatalha.innerHTML = "Esperando inimigo jogar...";
     }
 }

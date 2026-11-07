@@ -23,7 +23,6 @@
     font-family: var(--fonte-principal);
 }
 #menuBatalha{
-
     width: 80%;
     height: 30%;
     
@@ -49,6 +48,8 @@
 .pokemon{
     display: flex;
     flex-direction: row;
+    width: 70%;
+    height: 70%;
 }
 .pokeInfo{
     background-color: var(--cor-input-text);
@@ -84,7 +85,7 @@
     justify-content: center;
     width: 100%;
     border: 1px solid #303030;
-    background-color: var(--cor-card-pokemon);
+    background-color: var(--cor-card-pokemon-popup);
 }
 .poke-time-container:hover{
     background-color: var(--cor-card-pokemon-hover);
@@ -113,4 +114,9 @@
 .poke-time:hover{
     background-color: var(--cor-hover-btn-menus);
     transform: scale(1.03);
+}
+.pokemonsEmBatalha{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
