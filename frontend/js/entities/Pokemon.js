@@ -157,6 +157,7 @@ class Pokemon{
 
     static async carregaPokemon(idPokeBanco) {
         const pokeBanco = await Api.buscarPokemon(idPokeBanco);
+        console.log(pokeBanco)
         const pokemonPokeApi = await PokeApi.buscarPokemon(pokeBanco.pokeApi);
         const ataquesBanco = await Api.buscarAtaques(pokeBanco.id);
 

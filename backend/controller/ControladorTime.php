@@ -77,7 +77,6 @@ class ControladorTime extends ControladorGeral{
                 $max = 0;
                 foreach ($ataques as $ataque) {
                     $detalhes = $ataque->version_group_details;
-
                     foreach ($detalhes as $detalhe) {
                         if (
                             $detalhe->move_learn_method->name == "level-up" &&
@@ -88,6 +87,10 @@ class ControladorTime extends ControladorGeral{
                             $objAtaque->pokemonId = $pokemon->id;
                             $url = $ataque->move->url;
                             $ataqueApi = json_decode(file_get_contents($url));
+
+                            if($ataqueApi->damage_class->name !== "physical" && $ataqueApi->damage_class->name !== "special"){
+                                continue 2;
+                            }
 
                             $id = $ataqueApi->id;
 
