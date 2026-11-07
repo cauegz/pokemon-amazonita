@@ -72,18 +72,26 @@ export default class BatalhaView{
     }
    
 
-    trocar(){
+    trocar(trocarPokemon){
         console.log(this.#time);
         let time= document.getElementById('time');
         for(const poke of this.#time.pokemon){
             if(poke === null) continue;
             time.innerHTML += `
-                <div id=${poke.id}>
+                <div class="poke-time-container" id=${poke.id}>
                     <img src=${poke.urlImagem} />
-                    <button>${poke.nome}</button>
+                    <button class="poke-time" data-posicao="${this.#time.pokemon.indexOf(poke)}">Escolher ${poke.nome}</button>
                 </div>
             `;
-            console.log(time);
+        }
+        let pokeSelecionado = document.querySelectorAll('.poke-time');
+        for(const poke of pokeSelecionado){
+            poke.addEventListener('click', ()=>{
+                this.#posicaoAtual = poke.dataset.posicao;
+                console.log(this.#posicaoAtual);
+                trocarPokemon(this.#time.pokemon[this.#posicaoAtual]);
+                document.getElementById('trocaPokeAtivo').hidePopover();
+            });
         }
         console.log("trocou");
     }

@@ -30,14 +30,24 @@ class Batalha{
         //ate aqui
 
         document.getElementById('atacar').addEventListener('click', async event => {
-           this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
+           this.#view.mostrarAtaques(this.#jogador, ataque => 
+            this.executarTurno(ataque));
         })
         document.getElementById('trocar').addEventListener('click', e => {
-            this.#view.trocar();
+            this.#view.trocar(novoPokemon => 
+                this.trocarPokemon(novoPokemon)
+            );
         })
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
+    }
+
+    trocarPokemon(novoPokemon){
+        this.#jogador = novoPokemon;
+        console.log(this.#jogador);
+        this.#view.mostrarPokemon(this.#jogador, this.#oponente);
+        this.#turnoJogador = false;
     }
 
     executarTurno(ataque){

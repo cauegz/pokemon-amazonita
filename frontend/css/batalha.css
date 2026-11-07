@@ -68,4 +68,49 @@
     justify-self: center;
     background-color: var(--cor-input-text);
     border-radius: 10px;
+    box-shadow: 6px 6px 0 #303030;
+    box-sizing: border-box;
+    padding: 10px;
+}
+#trocaPokeAtivo > p{
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.poke-time-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #303030;
+    background-color: var(--cor-card-pokemon);
+}
+.poke-time-container:hover{
+    background-color: var(--cor-card-pokemon-hover);
+}
+.poke-time{
+    font-family: var(--fonte-principal);
+    width: 70%;
+    height: 20%;
+    background-color: var(--cor-btn-menus);
+    color: var(--cor-fonte-btns);
+    border-radius: 6px;
+    border: 1px solid yellow;
+    padding: 5px 10px;
+    transition: 0.2s;
+}
+.close-popover{
+    all: unset;
+    cursor: pointer;
+    background-color: var(--cor-btn-menus);
+    color: var(--cor-fonte-btns);
+    border-radius: 6px;
+    border: 1px solid yellow;
+    padding: 5px 10px;
+    transition: 0.2s;
+}
+.poke-time:hover{
+    background-color: var(--cor-hover-btn-menus);
+    transform: scale(1.03);
 }
