@@ -154,3 +154,4 @@ INSERT INTO log_usuario (usuario_id, acao, mensagem) VALUES
 (1, 'compra', 'Pokébolas compradas'),
 (2, 'login', 'Login realizado'),
 (3, 'compra', 'Poção comprada');
+

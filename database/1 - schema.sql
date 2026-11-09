@@ -1,13 +1,4 @@
 
-CREATE TABLE IF NOT EXISTS ataque
-(
-  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  poke_api   INT NOT NULL,
-  pokemon_id INT NOT NULL,
-  tipo_id    INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS efeito
 (
   id   INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -45,8 +36,8 @@ CREATE TABLE IF NOT EXISTS log_usuario
 
 CREATE TABLE IF NOT EXISTS loja
 (
-  id   INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome CHAR(2) NOT NULL UNIQUE,
+  id           INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
+  nome         CHAR(2) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 
@@ -83,7 +74,7 @@ CREATE TABLE IF NOT EXISTS produto
   nome            VARCHAR(100)  NOT NULL,
   preco           DECIMAL(10,2) NOT NULL,
   estoque         INT           NOT NULL,
-  loja_id         INT           NOT NULL,
+  loja_id    INT           NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -174,6 +165,13 @@ ALTER TABLE inventario
     FOREIGN KEY (id_treinador)
     REFERENCES treinador (id);
 
+ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_loja_TO_produto;
+ALTER TABLE produto
+  ADD CONSTRAINT FK_loja_TO_produto
+    FOREIGN KEY (loja_id)
+    REFERENCES loja (id);
+
+
 ALTER TABLE venda DROP CONSTRAINT IF EXISTS FK_loja_TO_venda;
 ALTER TABLE venda
   ADD CONSTRAINT FK_loja_TO_venda
@@ -222,32 +220,10 @@ ALTER TABLE time
     FOREIGN KEY (id_pokemon)
     REFERENCES pokemon (id);
 
-ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_loja_TO_produto;
-ALTER TABLE produto
-  ADD CONSTRAINT FK_loja_TO_produto
-    FOREIGN KEY (loja_id)
-    REFERENCES loja (id);
+--VISUALIZA PRODUTOS DISPONÍVEIS 
+---SELECT p.nome, p.preco
+---FROM produto p
+--INNER JOIN loja l ON p.loja_id = l.id
+--WHERE p.estoque > 0;
 
-ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_pokemon_TO_ataque;
-ALTER TABLE ataque
-  ADD CONSTRAINT FK_pokemon_TO_ataque
-    FOREIGN KEY (pokemon_id)
-    REFERENCES pokemon (id);
 
-ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_tipo_TO_ataque;
-ALTER TABLE ataque
-  ADD CONSTRAINT FK_tipo_TO_ataque
-    FOREIGN KEY (tipo_id)
-    REFERENCES tipo (id);
-
-ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_tipo_TO_tipo_pokemon;
-ALTER TABLE tipo_pokemon
-  ADD CONSTRAINT FK_tipo_TO_tipo_pokemon
-    FOREIGN KEY (tipo_id)
-    REFERENCES tipo (id);
-
-ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_pokemon_TO_tipo_pokemon;
-ALTER TABLE tipo_pokemon
-  ADD CONSTRAINT FK_pokemon_TO_tipo_pokemon
-    FOREIGN KEY (pokemon_id)
-    REFERENCES pokemon (id);
