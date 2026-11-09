@@ -32,4 +32,7 @@ class ControladorLoja extends ControladorGeral{
         
 >>>>>>> 619203c (modifiquei retirando a tabela categoria e reorganizando as relações)
     }
+    public function listarProdutosByLojaId($loja_id){
+        $this->responseJSON(Produto::findByLojaId($loja_id));
+    }
 }

@@ -72,7 +72,18 @@ class Produto implements \JsonSerializable
 
         return $result->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
+    // procura produtos disponíveis de uma loja específica, com estoque maior que 0
+    public static function findByLojaId($loja_id)
+    {
+        $sql = "SELECT p.nome, p.preco FROM public.produto
+                INNER JOIN public.loja l ON p.loja_id = l.id 
+                WHERE p.estoque > 0 AND p.loja_id = :loja_id";
+        $result = self::getPDO()->prepare($sql);
+        $result->bindParam(":loja_id", $loja_id);
+        $result->execute();
 
+        return $result->fetchAll(\PDO::FETCH_CLASS, self::class);
+    }
     public static function delete(int $id)
     {
         $sql = "DELETE FROM public.produto WHERE id = :id";
