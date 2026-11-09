@@ -1,7 +1,7 @@
 <?php
-class ControladorInventarioItem extends ControladorGeral{
+class ControladorInventario extends ControladorGeral{
     public function createInventarioItem($idTreinador, $quantidade, $idPokeApi){
-        $inventarioItem = new InventarioItem();
+        $inventarioItem = new Inventario();
         $inventarioItem->idTreinador = $idTreinador;
         $inventarioItem->quantidade = $quantidade;
         $inventarioItem->idPokeApi = $idPokeApi;
@@ -13,7 +13,7 @@ class ControladorInventarioItem extends ControladorGeral{
         }
     }
     public function getInventarioItem($id){
-        $inventarioItem = InventarioItem::find($id);
+        $inventarioItem = Inventario::find($id);
         if ($inventarioItem) {
             $this->responseJSON($inventarioItem);
         } else {
@@ -21,11 +21,11 @@ class ControladorInventarioItem extends ControladorGeral{
         }
     }
     public function getAllInventarioItems($filter = null){
-        $inventarioItems = InventarioItem::all($filter);
+        $inventarioItems = Inventario::all($filter);
         $this->responseJSON($inventarioItems);
     }
     public function updateInventarioItem($id, $idTreinador, $quantidade, $idPokeApi){
-        $inventarioItem = InventarioItem::find($id);
+        $inventarioItem = Inventario::find($id);
         if ($inventarioItem) {
             $inventarioItem->idTreinador = $idTreinador;
             $inventarioItem->quantidade = $quantidade;
@@ -41,7 +41,7 @@ class ControladorInventarioItem extends ControladorGeral{
         }
     }
     public function deleteInventarioItem($id){
-        if (InventarioItem::delete($id)) {
+        if (Inventario::delete($id)) {
             $this->responseJSON(["message" => "Item de inventário deletado com sucesso"]);
         } else {
             $this->responseError("Erro ao deletar item de inventário", 500);

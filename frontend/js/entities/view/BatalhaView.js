@@ -101,8 +101,8 @@ export default class BatalhaView{
         console.log("fugiu")
     }
 
-    mochila(){
-        console.log("mochilou")
+    mostrarMochila(inventario){
+        console.log("mochilou", inventario);
     }
 
     turnoInimigo(){

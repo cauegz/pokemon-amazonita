@@ -7,13 +7,15 @@ class Batalha{
     #oponente;
     #posicaoPokeOponente;
     #view;
-    #emAndamento
+    #emAndamento;
     #turnoJogador;
+    #inventario;
     
-    constructor(pokeJogador,pokeOponente, view){
+    constructor(pokeJogador,pokeOponente, view, inventario){
         this.#jogador = pokeJogador;
         this.#oponente = pokeOponente;
         this.#view = view;
+        this.#inventario = inventario;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
 
         this.#emAndamento = true;
@@ -37,6 +39,9 @@ class Batalha{
             this.#view.trocar(novoPokemon => 
                 this.trocarPokemon(novoPokemon)
             );
+        })
+        document.addEventListener('mochila', e => {
+            this.#view.mostrarMochila(this.#inventario);
         })
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());

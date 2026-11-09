@@ -1,5 +1,5 @@
 <?php
-class InventarioItem extends ModelGeral implements JsonSerializable, ModelInterface{
+class Inventario extends ModelGeral implements JsonSerializable, ModelInterface{
     protected ?int $idTreinador = null;
     protected ?int $quantidade = null;
     protected ?int $idPokeApi = null;

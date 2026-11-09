@@ -25,6 +25,7 @@ $router->add("/api/produto/criar",  "Loja@criarProduto");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
+$router->add("/api/inventario",  "ControladorInventario@getAllInventarioItems");
 
 
 try {
