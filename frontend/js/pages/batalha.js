@@ -12,11 +12,14 @@ async function iniciarBatalha() {
     if(!user) return;
     
     //time e pokemons
-    const time = await Time.carregarTime(user.treinador);
     const inventario = await Api.buscarInventario(user.treinador);
-    const view = new BatalhaView(time);
-    const pokemonJogador = time.pokemon[0];
-    const pokemonOponente = time.pokemon[1];
+
+    const timeJogador = await Time.carregarTime(user.treinador);
+    const timeOponente = await Time.carregarTime(localStorage.getItem("idOponente"))
+
+    const view = new BatalhaView(timeJogador);
+    const pokemonJogador = timeJogador.pokemon[0];
+    const pokemonOponente = timeOponente.pokemon[0];
 
     new Batalha(pokemonJogador, pokemonOponente, view, inventario);
 }
