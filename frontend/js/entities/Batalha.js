@@ -24,7 +24,7 @@ class Batalha{
     }
 
     configurarEventos(){
-        if(!this.#turnoJogador){
+        if(!this.#turnoJogador && this.#oponente.hpAtual > 0){
             this.ataqueBot();
         }
 
@@ -52,10 +52,10 @@ class Batalha{
             this.#emAndamento = false;
             for(const oponente of this.#timeOponente.pokemon){
                 if(oponente.hpAtual > 0){
-                    this.trocarOponente(oponente);
+                    this.trocarOponente(oponente, true);
+                    continue;
                 }
             }
-            alert('voce venceu')
         }
         console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
     }
@@ -65,15 +65,17 @@ class Batalha{
         console.log(this.#jogador);
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
         this.#turnoJogador = turnoJogador;
-        this.ataqueBot();
+
+        this.configurarEventos();
     }
 
     trocarOponente(novoPokemon, turnoJogador){
-        console.log("trocou o oponente")
         console.log(novoPokemon)
         this.#oponente = novoPokemon;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
         this.#turnoJogador = turnoJogador;
+
+        this.configurarEventos();
     }
 
     executarTurno(ataque){
@@ -83,6 +85,12 @@ class Batalha{
             this.#view.atualizarHp(this.#jogador, this.#oponente)
             
             this.#turnoJogador = false;
+
+            if(this.#oponente.hpAtual == 0){
+                this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+            }
+
+
 
             this.configurarEventos();
         }catch(error){
@@ -109,13 +117,13 @@ class Batalha{
     ataqueBot(){
         let numeroAtaque = Math.floor(Math.random() * 3) + 1;
 
-        this.#view.turnoInimigo();
+        this.#view.turnoInimigo(this.#oponente.ataques[numeroAtaque], this.#oponente);
         setTimeout(() => {
             this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
-            this.#view.atualizarHp(this.#jogador, this.#oponente)
+            this.#view.atualizarHp(this.#jogador, this.#oponente);
             this.#turnoJogador = true;
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
-        }, 2000);
+        }, 3000);
        
     }
 }

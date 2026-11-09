@@ -77,6 +77,8 @@ export default class BatalhaView{
         let objTime = this.#time;
         
         let time = document.getElementById('time');
+
+        time.innerHTML = ``;
         for(const poke of objTime.pokemon){
             if(poke === null) continue;
             let disabled = "";
@@ -98,7 +100,6 @@ export default class BatalhaView{
         let pokeSelecionado = document.querySelectorAll('.poke-time');
         for(const poke of pokeSelecionado){
             poke.addEventListener('click', () => {
-                time.innerHTML = ``;
                 this.#posicaoAtual = poke.dataset.posicao;
                 trocarPokemon(objTime.pokemon[this.#posicaoAtual]);
                 document.getElementById('trocaPokeAtivo').hidePopover();
@@ -115,7 +116,7 @@ export default class BatalhaView{
         console.log("mochilou")
     }
 
-    turnoInimigo(){
-        this.#mensagemBatalha.innerHTML = "Esperando inimigo jogar...";
+    turnoInimigo(ataqueExecutado, inimigo){
+        this.#mensagemBatalha.innerHTML = `${inimigo.nome} usou ${ataqueExecutado.nome} em você!!!!`;
     }
 }
