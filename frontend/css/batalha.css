@@ -62,7 +62,7 @@
 #ataques{
     border: 1px solid black;
 }
-#trocaPokeAtivo{
+#trocaPokeAtivo, #abreMochila{
     width: 40%;
     height: 50%;
     align-self: center;

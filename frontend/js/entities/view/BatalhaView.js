@@ -103,12 +103,20 @@ export default class BatalhaView{
 
     mostrarMochila(inventario){
         let mochila = document.getElementById('itens');
-        for(const item of inventario){
+        for(const item of inventario.items){
             if(item === null) continue;
             mochila.innerHTML += `
                 <div class="item-container" id=${item.id}>
                     <img src=${item.urlImagem} />
-                    <button class="item" data-id="${item.id}">Usar ${item.nome}</button>`
+                    <button class="item" data-id="${item.id}">Usar ${item.nome}</button>
+                </div>`
+        }
+        let itemSelecionado = document.querySelectorAll('.item');
+        for(const item of itemSelecionado){
+            item.addEventListener('click', ()=>{
+                console.log("usou item", item.dataset.id);
+                document.getElementById('abreMochila').hidePopover();
+            });
         }
         console.log("mochilou", inventario);
     }
