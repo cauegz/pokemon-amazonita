@@ -3,11 +3,12 @@ export default class BatalhaView{
     #opcoesBatalha;
     #time
     #posicaoAtual = 0;
+    #mensagemBatalha = document.getElementById('mensagemBatalha');
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
-
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
         this.#time = time;
     }
 
@@ -30,7 +31,7 @@ export default class BatalhaView{
 
     mostrarMenuPrincipal(addJs){
         this.#opcoesBatalha.innerHTML = this.#menuPrincipal;
-
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
         addJs()
     }
 
@@ -45,8 +46,7 @@ export default class BatalhaView{
         for(const ataque of ataques){
             if(!ataque || ataque == 'undefined'){
                 html += `
-                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>
-                        
+                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>  
                     </button>
                 `;
                 continue;
@@ -73,19 +73,47 @@ export default class BatalhaView{
     }
    
 
-    trocar(){
-        console.log("trocou")
+    trocar(trocarPokemon){
+        console.log(this.#time);
+        let time=document.getElementById('time');
+        for(const poke of this.#time.pokemon){
+            if(poke === null) continue;
+            time.innerHTML += `
+                <div class="poke-time-container" id=${poke.id}>
+                    <img src=${poke.urlImagem} />
+                    <button class="poke-time" data-posicao="${this.#time.pokemon.indexOf(poke)}">Escolher ${poke.nome}</button>
+                </div>
+            `;
+        }
+        let pokeSelecionado = document.querySelectorAll('.poke-time');
+        for(const poke of pokeSelecionado){
+            poke.addEventListener('click', ()=>{
+                this.#posicaoAtual = poke.dataset.posicao;
+                console.log(this.#posicaoAtual);
+                trocarPokemon(this.#time.pokemon[this.#posicaoAtual]);
+                document.getElementById('trocaPokeAtivo').hidePopover();
+            });
+        }
+        console.log("trocou");
     }
 
     fugir(){
         console.log("fugiu")
     }
 
-    mochila(){
-        console.log("mochilou")
+    mostrarMochila(inventario){
+        let mochila = document.getElementById('itens');
+        for(const item of inventario){
+            if(item === null) continue;
+            mochila.innerHTML += `
+                <div class="item-container" id=${item.id}>
+                    <img src=${item.urlImagem} />
+                    <button class="item" data-id="${item.id}">Usar ${item.nome}</button>`
+        }
+        console.log("mochilou", inventario);
     }
 
     turnoInimigo(){
-        this.#opcoesBatalha.innerHTML = "Esperando inimigo jogar...";
+        this.#mensagemBatalha.innerHTML = "Esperando inimigo jogar...";
     }
 }

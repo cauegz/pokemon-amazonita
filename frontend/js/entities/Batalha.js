@@ -1,19 +1,18 @@
-import BatalhaView from "../entities/view/BatalhaView.js"
 import CalculadoraDano from "./CalculadoraDano.js";
 
 class Batalha{
     #jogador;
-    #posicaoPokeJogador;
     #oponente;
-    #posicaoPokeOponente;
     #view;
-    #emAndamento
+    #emAndamento;
     #turnoJogador;
+    #inventario;
     
-    constructor(pokeJogador,pokeOponente, view){
+    constructor(pokeJogador,pokeOponente, view, inventario){
         this.#jogador = pokeJogador;
         this.#oponente = pokeOponente;
         this.#view = view;
+        this.#inventario = inventario;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
 
         this.#emAndamento = true;
@@ -23,19 +22,42 @@ class Batalha{
     }
 
     configurarEventos(){
-        //passar isso pra uma função depois
         if(!this.#turnoJogador){
             this.ataqueBot();
         }
-        //ate aqui
 
         document.getElementById('atacar').addEventListener('click', async event => {
-           this.#view.mostrarAtaques(this.#jogador, ataque => this.executarTurno(ataque));
+           this.#view.mostrarAtaques(this.#jogador, ataque => 
+            this.executarTurno(ataque));
         })
-
+        document.getElementById('trocar').addEventListener('click', e => {
+            this.#view.trocar(novoPokemon => 
+                this.trocarPokemon(novoPokemon)
+            );
+        })
+        document.getElementById('mochila').addEventListener('click', e => {
+            this.#view.mostrarMochila(this.#inventario);
+        })
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
+
+        if(this.#jogador.hpAtual <= 0){
+            this.#emAndamento = false;
+            alert("Você perdeu a batalha");
+        } else if(this.#oponente.hpAtual <= 0){
+            this.#emAndamento = false;
+            alert("Você venceu a batalha");
+        }
+        console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
+    }
+
+    trocarPokemon(novoPokemon){
+        this.#jogador = novoPokemon;
+        console.log(this.#jogador);
+        this.#view.mostrarPokemon(this.#jogador, this.#oponente);
+        this.#turnoJogador = false;
+        this.ataqueBot();
     }
 
     executarTurno(ataque){
@@ -72,11 +94,13 @@ class Batalha{
         let numeroAtaque = Math.floor(Math.random() * 3) + 1;
 
         this.#view.turnoInimigo();
-        this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
-        this.#view.atualizarHp(this.#jogador, this.#oponente)
-
-        this.#turnoJogador = true;
-        this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+        setTimeout(() => {
+            this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
+            this.#view.atualizarHp(this.#jogador, this.#oponente)
+            this.#turnoJogador = true;
+            this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+        }, 2000);
+       
     }
 }
 

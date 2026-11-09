@@ -14,7 +14,7 @@ export default class Api {
         });
 
         if (!resposta.ok) {
-            throw new Error(`erro na API: ${resposta.status}`);
+            throw new Error(`erro na API: ${resposta}`);
         }
 
         return await resposta.json();
@@ -57,6 +57,23 @@ export default class Api {
 
     static async buscarTipoPokeApi(id) {
         return await this.requisicao(`/tipo?id=${id}`);
+    }
+
+    static async buscarInventario(id) {
+        return await this.requisicao(`/inventario?id=${id}`);
+    }
+
+    static async buscarItem(id) {
+        return await this.requisicao(`/item?id=${id}`);
+    }
+
+    static async buscarTreinadorByNpc(idNpc) {
+        return await this.requisicao(`/treinador?idNpc=${idNpc}`);
+    }
+
+    static async buscarNpcByNome(nome) {
+        return await this.requisicao(`/npc?nome=${nome}`);
+
     }
 }
 
