@@ -84,6 +84,7 @@ class Produto implements \JsonSerializable
 
         return $result->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
+    
     public static function delete(int $id)
     {
         $sql = "DELETE FROM public.produto WHERE id = :id";
