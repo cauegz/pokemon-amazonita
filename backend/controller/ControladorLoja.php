@@ -37,5 +37,6 @@ class ControladorLoja extends ControladorGeral{
     }
     public function listarProdutosByLojaId($loja_id){
         $this->responseJSON(Produto::findByLojaId($loja_id));
+    
     }
 }
