@@ -2,6 +2,7 @@
 -- =========================================
 -- 1. Efeitos
 -- =========================================
+
 INSERT INTO efeito (nome) VALUES
 ('Paralisia'),
 ('Sono'),
@@ -109,25 +110,14 @@ INSERT INTO treinador (id_npc, id_usuario) VALUES
 -- IDs oficiais dos itens da PokéAPI
 -- =========================================
 
--- =========================================
--- 8. Lojas e produtos
--- IDs fictícios de itens da PokéAPI para testes.
--- =========================================
-INSERT INTO loja (nome) VALUES
-('l1'),
-('l2'),
-('l3');
-
 INSERT INTO produto
 (id_item_pokeapi, nome, preco, estoque, loja_id) VALUES
-(17, 'Pokébola', 200.00, 100, 1),
-(26, 'Poção', 300.00, 50, 2),
-(19, 'Superpoção', 700.00, 25, 2),
-(23, 'Antídoto', 100.00, 40, 3);
+(4, 'Pokébola', 200.00, 100, 1),
+(17, 'Poção', 300.00, 50, 2),
+(18, 'Superpoção', 700.00, 25, 3),
+(19, 'Antídoto', 100.00, 40, 1);
 
--- =========================================
--- 10. Lojas
--- =========================================
+
 -- =========================================
 -- 9. Inventários dos treinadores
 -- =========================================
@@ -169,6 +159,7 @@ INSERT INTO venda (id_itens_compra, id_loja) VALUES
 -- =========================================
 -- 12. Logs de usuários
 -- =========================================
+
 INSERT INTO log_usuario (usuario_id, acao, mensagem) VALUES
 (1, 'cadastro', 'Conta criada'),
 (1, 'compra', 'Pokébolas compradas'),
