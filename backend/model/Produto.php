@@ -1,52 +1,10 @@
-<?php>
+<?php
 class Produto extends ModelGeral implements JsonSerializable{
-    private static $pdo;
-    private ?int $id = null;
     private string $nome;
     private float $preco;
     private int  $estoque;
     private int $loja_id;
     private int $id_item_pokeapi;
-
-    private static function getPDO()
-    {
-        if (self::$pdo === null) {
-            self::$pdo = Conexao::getPDO();
-        }
-        return self::$pdo;
-    }
-
-    public function __get(string $nome)
-    {
-        return $this->$nome;
-    }
-
-    public function __set(string $nome, $valor)
-    {
-        if (!trim((string)$valor)) {
-            throw new \InvalidArgumentException('Credenciais inválidas');
-        }
-
-        $metodo = 'set' . ucfirst($nome);
-
-        if (method_exists($this, $metodo)) {
-            $this->$metodo($valor);
-            return;
-        }
-        $this->$nome = $valor;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id'   => $this->id,
-            'nome' => $this->nome,
-            'preco' => $this->preco,
-            'estoque' => $this->estoque,
-            'loja_id' => $this->loja_id,
-            'id_item_pokeapi' => $this->id_item_pokeapi
-        ];
-    }
 
     public static function find($id)
     {
@@ -121,5 +79,17 @@ class Produto extends ModelGeral implements JsonSerializable{
             $result->bindParam(":id", $this->id);
             $result->execute();
         }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id'   => $this->id,
+            'nome' => $this->nome,
+            'preco' => $this->preco,
+            'estoque' => $this->estoque,
+            'loja_id' => $this->loja_id,
+            'id_item_pokeapi' => $this->id_item_pokeapi
+        ];
     }
 }
