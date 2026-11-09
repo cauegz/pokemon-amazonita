@@ -12,7 +12,6 @@ class ControladorLoja extends ControladorGeral{
         $loja = new Loja();
 
         $loja->nome = "l1";
-        $loja->id_categoria = 1;
 
         $loja->save();
         $this->responseJSON(Loja::all());
@@ -23,9 +22,10 @@ class ControladorLoja extends ControladorGeral{
         $produto->nome = "banana";
         $produto->preco = 5;
         $produto->estoque = 200;
-        $produto->categoria_id = 1;
+        $produto->loja_id = 1;
         $produto->id_item_pokeapi = 1;
         $produto-save();
+    $produto->save();
 
         $this->responseJSON(Produto::all());
 
@@ -34,5 +34,9 @@ class ControladorLoja extends ControladorGeral{
         $itensCompra = new ItensCompra();
         $venda = new Venda();
         
+    }
+    public function listarProdutosByLojaId($loja_id){
+        $this->responseJSON(Produto::findByLojaId($loja_id));
+    
     }
 }
