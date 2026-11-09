@@ -20,8 +20,8 @@ class ControladorInventario extends ControladorGeral{
             $this->responseError("Item de inventário não encontrado", 404);
         }
     }
-    public function getAllInventarioItems($filter = null){
-        $inventarioItems = Inventario::all($filter);
+    public function getAllInventarioItems(){
+        $inventarioItems = Inventario::all();
         $this->responseJSON($inventarioItems);
     }
     public function updateInventarioItem($id, $idTreinador, $quantidade, $idPokeApi){

@@ -14,7 +14,7 @@ export default class Api {
         });
 
         if (!resposta.ok) {
-            throw new Error(`erro na API: ${resposta.status}`);
+            throw new Error(`erro na API: ${resposta}`);
         }
 
         return await resposta.json();

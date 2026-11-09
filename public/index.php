@@ -27,7 +27,7 @@ $router->add("/api/npc",  "Batalha@npc");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
-$router->add("/api/inventario",  "ControladorInventario@getAllInventarioItems");
+$router->add("/api/inventario",  "Inventario@getAllInventarioItems");
 
 
 try {

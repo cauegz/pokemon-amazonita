@@ -35,7 +35,7 @@ class Batalha{
                 this.trocarPokemon(novoPokemon)
             );
         })
-        document.addEventListener('mochila', e => {
+        document.getElementById('mochila').addEventListener('click', e => {
             this.#view.mostrarMochila(this.#inventario);
         })
         document.getElementById('voltar').addEventListener('click', e => {
