@@ -6,6 +6,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
 
     //status
     protected int $hp = 0;
+    protected int $hpAtual = 0;
     protected int $ataque = 0;
     protected int $ataqueEspecial = 0;
     protected int $defesa = 0;
@@ -19,6 +20,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
     public static function find($id)
     {
         $sql = 'SELECT id, hp, ataque, defesa, velocidade,
+                    hp_atual as "hpAtual",
                     id_pokeapi AS "pokeApi",
                     id_efeito AS "efeito",
                     id_treinador AS "treinador",
@@ -39,6 +41,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
     public static function all($filter = null)
     {
         $sql = 'SELECT id, hp, ataque, defesa, velocidade, 
+                    hp_atual as "hpAtual",
                     id_pokeapi as "pokeApi", 
                     id_efeito as "efeito",
                     id_treinador as "treinador",
@@ -74,13 +77,13 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
         if ($this->id == null) {
 
             $sql = "INSERT INTO pokemon (
-                        id_pokeapi, hp, ataque, 
+                        id_pokeapi, hp, hp_atual, ataque, 
                         defesa, ataque_especial, 
                         defesa_especial, velocidade, 
                         id_efeito, id_treinador
                     )
                     VALUES (
-                        :pokeApi, :hp, :ataque, 
+                        :pokeApi, :hp, :hpAtual, :ataque, 
                         :defesa, :ataqueEspecial, 
                         :defesaEspecial, :velocidade, 
                         :efeito, :treinador
@@ -90,6 +93,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
 
             $result->bindParam(":pokeApi", $this->pokeApi);
             $result->bindParam(":hp", $this->hp);
+            $result->bindParam(":hpAtual", $this->hpAtual);
             $result->bindParam(":ataque", $this->ataque);
             $result->bindParam(":defesa", $this->defesa);
             $result->bindParam(":ataqueEspecial", $this->ataqueEspecial);
@@ -107,6 +111,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
             $sql = "UPDATE pokemon
                     SET id_pokeapi = :pokeApi, 
                         hp = :hp, 
+                        hp_atual = :hpAtual,
                         ataque = :ataque, 
                         defesa = :defesa, 
                         ataque_especial = :ataqueEspecial, 
@@ -120,6 +125,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
 
             $result->bindParam(":pokeApi", $this->pokeApi);
             $result->bindParam(":hp", $this->hp);
+            $result->bindParam(":hpAtual", $this->hpAtual);
             $result->bindParam(":ataque", $this->ataque);
             $result->bindParam(":defesa", $this->defesa);
             $result->bindParam(":ataqueEspecial", $this->ataqueEspecial);
@@ -135,6 +141,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
 
     public static function findByPokeApiAndTreinador($pokeApi, $treinador){
         $sql = 'SELECT id, hp, ataque, defesa, velocidade, 
+                    hp_atual as "hpAtual",
                     id_pokeapi as "pokeApi", 
                     id_efeito as "efeito",
                     id_treinador as "treinador",
@@ -160,6 +167,7 @@ class Pokemon extends ModelGeral implements JsonSerializable, ModelInterface
             "id" => $this->id,
             "pokeApi" => $this->pokeApi,
             "hp" => $this->hp,
+            "hpAtual" => $this->hpAtual,
             "ataque" => $this->ataque,
             "defesa" => $this->defesa,
             "ataqueEspecial" => $this->ataqueEspecial,

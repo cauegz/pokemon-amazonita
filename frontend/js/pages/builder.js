@@ -12,18 +12,17 @@ async function iniciarBuilder() {
 
         // Carrega o time 
         const objTime = await Time.carregarTime(usuario.treinador);
+        console.log("time: ")
+        console.log(objTime)
+
+        
         new BuilderView(objTime);
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
-                try {
-                    console.log(objTime)
                     await Api.enviarTime(objTime);
 
-                    console.log("time enviado ");
-                } catch (erro) {
-                    console.error("erro ao enviar o time:", erro);
-                }
+                    console.log("time enviado");
             });
 
     } catch (erro) {

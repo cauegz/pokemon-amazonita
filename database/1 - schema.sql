@@ -55,7 +55,8 @@ CREATE TABLE IF NOT EXISTS pokemon
 (
   id              INT NOT NULL GENERATED ALWAYS AS IDENTITY,
   id_pokeapi      INT NOT NULL,
-  hp              INT NOT NULL,
+  hp              INT NOT NULL DEFAULT 0,
+  hp_atual        INT NOT NULL DEFAULT 0,
   ataque          INT NOT NULL DEFAULT 0,
   defesa          INT NOT NULL DEFAULT 0,
   ataque_especial INT NOT NULL DEFAULT 0,
@@ -86,10 +87,26 @@ CREATE TABLE IF NOT EXISTS time
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS tipo
+(
+  id       INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  nome     VARCHAR(100) NOT NULL UNIQUE,
+  poke_api INT          NOT NULL UNIQUE,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS tipo_npc
 (
   id   INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
   nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS tipo_pokemon
+(
+  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+  tipo_id    INT NOT NULL,
+  pokemon_id INT NOT NULL,
   PRIMARY KEY (id)
 );
 
