@@ -202,3 +202,11 @@ ALTER TABLE time
   ADD CONSTRAINT FK_pokemon_TO_time
     FOREIGN KEY (id_pokemon)
     REFERENCES pokemon (id);
+
+--VISUALIZA PRODUTOS DISPONÍVEIS 
+---SELECT p.nome, p.preco
+---FROM produto p
+--INNER JOIN loja l ON p.loja_id = l.id
+--WHERE p.estoque > 0;
+
+
