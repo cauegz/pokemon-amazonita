@@ -3,12 +3,16 @@
 -- 1. Efeitos
 -- =========================================
 
-INSERT INTO efeito (nome) VALUES
-('Queimadura'),
-('Paralisia'),
-('Envenenamento'),
-('Sono'),
-('Congelamento');
+INSERT INTO efeito (id, nome) VALUES
+(1, 'Paralisia'),
+(2, 'Sono'),
+(3, 'Congelamento'),
+(4, 'Queimadura'),
+(5, 'Envenenamento'),
+(6, 'Confusão'),
+(7, 'Atração'),
+(8, 'Armadilha'),
+(9, 'Pesadelo');
 
 
 -- =========================================

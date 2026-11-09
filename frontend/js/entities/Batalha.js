@@ -2,14 +2,18 @@ import CalculadoraDano from "./CalculadoraDano.js";
 
 class Batalha{
     #jogador;
+    #timeJogador;
     #oponente;
+    #timeOponente;
     #view;
     #emAndamento
     #turnoJogador;
     
-    constructor(pokeJogador,pokeOponente, view){
+    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view){
         this.#jogador = pokeJogador;
+        this.#timeJogador = timeJogador;
         this.#oponente = pokeOponente;
+        this.#timeOponente = timeOponente;
         this.#view = view;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
 
@@ -29,8 +33,8 @@ class Batalha{
             this.executarTurno(ataque));
         })
         document.getElementById('trocar').addEventListener('click', e => {
-            this.#view.trocar(novoPokemon => 
-                this.trocarPokemon(novoPokemon)
+            this.#view.trocar(funcaoTimePokemon => 
+                this.trocarPokemon(funcaoTimePokemon, false)
             );
         })
         document.getElementById('voltar').addEventListener('click', e => {
@@ -39,20 +43,37 @@ class Batalha{
 
         if(this.#jogador.hpAtual <= 0){
             this.#emAndamento = false;
-            alert("Você perdeu a batalha");
+            this.#view.trocar(funcaoTimePokemon => 
+                this.trocarPokemon(funcaoTimePokemon, true)
+            );
+            document.getElementById("trocaPokeAtivo").showPopover();
+
         } else if(this.#oponente.hpAtual <= 0){
             this.#emAndamento = false;
-            alert("Você venceu a batalha");
+            for(const oponente of this.#timeOponente.pokemon){
+                if(oponente.hpAtual > 0){
+                    this.trocarOponente(oponente);
+                }
+            }
+            alert('voce venceu')
         }
         console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
     }
 
-    trocarPokemon(novoPokemon){
+    trocarPokemon(novoPokemon, turnoJogador){
         this.#jogador = novoPokemon;
         console.log(this.#jogador);
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
-        this.#turnoJogador = false;
+        this.#turnoJogador = turnoJogador;
         this.ataqueBot();
+    }
+
+    trocarOponente(novoPokemon, turnoJogador){
+        console.log("trocou o oponente")
+        console.log(novoPokemon)
+        this.#oponente = novoPokemon;
+        this.#view.mostrarPokemon(this.#jogador, this.#oponente);
+        this.#turnoJogador = turnoJogador;
     }
 
     executarTurno(ataque){
