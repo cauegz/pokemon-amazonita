@@ -1,11 +1,8 @@
-import BatalhaView from "../entities/view/BatalhaView.js"
 import CalculadoraDano from "./CalculadoraDano.js";
 
 class Batalha{
     #jogador;
-    #posicaoPokeJogador;
     #oponente;
-    #posicaoPokeOponente;
     #view;
     #emAndamento
     #turnoJogador;
@@ -23,11 +20,9 @@ class Batalha{
     }
 
     configurarEventos(){
-        //passar isso pra uma função depois
         if(!this.#turnoJogador){
             this.ataqueBot();
         }
-        //ate aqui
 
         document.getElementById('atacar').addEventListener('click', async event => {
            this.#view.mostrarAtaques(this.#jogador, ataque => 
