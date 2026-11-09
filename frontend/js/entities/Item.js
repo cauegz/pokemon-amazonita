@@ -7,17 +7,22 @@ class Item{
     #descricao;
     #efeito;
     #urlImagem;
+    #categoria;
 
-    constructor(id, idPokeApi, nome, descricao, efeito,urlImagem){
+    constructor(id, idPokeApi, nome, descricao, efeito,urlImagem,categoria){
         this.#id = id;
         this.#idPokeApi = idPokeApi;
         this.#nome = nome;
         this.#descricao = descricao;
         this.#efeito = efeito;
         this.#urlImagem = urlImagem;
+        this.#categoria = categoria;
     }
     get id() {
         return this.#id;
+    }
+    get categoria(){
+        return this.#categoria;   
     }
     get idPokeApi() {
         return this.#idPokeApi;
@@ -40,6 +45,9 @@ class Item{
     set efeito(efeito) {
         this.#efeito = efeito;
     }
+    set categoria(categoria) {
+        this.#categoria = categoria;
+    }
     set idPokeApi(idPokeApi) {
         this.#idPokeApi = idPokeApi;
     }
@@ -61,7 +69,8 @@ class Item{
             itemData.name,
             itemData.flavor_text_entries[0].text,
             itemData.effect_entries[0].effect,
-            itemData.sprites.default
+            itemData.sprites.default,
+            itemData.category.name
         )
         return item;
     }

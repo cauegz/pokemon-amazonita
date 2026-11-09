@@ -101,8 +101,9 @@ export default class BatalhaView{
         console.log("fugiu")
     }
 
-    mostrarMochila(inventario){
+    mostrarMochila(inventario, calculadoraStats){
         let mochila = document.getElementById('itens');
+        mochila.innerHTML = ``;
         for(const item of inventario.items){
             if(item === null) continue;
             mochila.innerHTML += `
@@ -115,6 +116,8 @@ export default class BatalhaView{
         for(const item of itemSelecionado){
             item.addEventListener('click', ()=>{
                 console.log("usou item", item.dataset.id);
+                
+                calculadoraStats(this.#time.pokemon[this.#posicaoAtual], item.dataset.id);
                 document.getElementById('abreMochila').hidePopover();
             });
         }

@@ -1,5 +1,5 @@
 import CalculadoraDano from "./CalculadoraDano.js";
-
+import CalculadoraStats from "./CalculadoraStats.js";
 class Batalha{
     #jogador;
     #oponente;
@@ -36,7 +36,9 @@ class Batalha{
             );
         })
         document.getElementById('mochila').addEventListener('click', e => {
-            this.#view.mostrarMochila(this.#inventario);
+            this.#view.mostrarMochila(this.#inventario, item =>
+                CalculadoraStats.usarItem(this.#jogador, item)
+            );
         })
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
