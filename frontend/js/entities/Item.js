@@ -1,4 +1,5 @@
 import pokeApi from "../APIs/PokeApi.js";
+import Api from "../APIs/Api.js";
 class Item{
     #id;
     #idPokeApi;
@@ -51,13 +52,18 @@ class Item{
         this.#id = id;
     }
 
-    async carregarItem(id){
-        const itemData = await pokeApi.buscarItem(id);
-        this.#id = itemData.id;
-        this.#nome = itemData.name;
-        this.#descricao = itemData.flavor_text_entries[0].text;
-        this.#efeito = itemData.effect_entries[0].effect;
-        this.#urlImagem = itemData.sprites.default;
+    static async carregarItem(idPokeApi,idBanco ){
+        const itemData = await pokeApi.buscarItem(idPokeApi);
+        const itemBanco = await Api.buscarItem(idBanco);
+        const item = new Item(
+            itemData.id,
+            itemBanco.id,
+            itemData.name,
+            itemData.flavor_text_entries[0].text,
+            itemData.effect_entries[0].effect,
+            itemData.sprites.default
+        )
+        return item;
     }
 }
 export default Item;

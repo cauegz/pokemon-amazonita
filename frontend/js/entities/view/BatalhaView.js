@@ -75,7 +75,7 @@ export default class BatalhaView{
 
     trocar(trocarPokemon){
         console.log(this.#time);
-        let time= document.getElementById('time');
+        let time=document.getElementById('time');
         for(const poke of this.#time.pokemon){
             if(poke === null) continue;
             time.innerHTML += `
@@ -102,6 +102,14 @@ export default class BatalhaView{
     }
 
     mostrarMochila(inventario){
+        let mochila = document.getElementById('itens');
+        for(const item of inventario){
+            if(item === null) continue;
+            mochila.innerHTML += `
+                <div class="item-container" id=${item.id}>
+                    <img src=${item.urlImagem} />
+                    <button class="item" data-id="${item.id}">Usar ${item.nome}</button>`
+        }
         console.log("mochilou", inventario);
     }
 

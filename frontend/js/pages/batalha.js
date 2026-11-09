@@ -11,13 +11,13 @@ async function iniciarBatalha() {
     //verificação de sessão como no builder.js
     const user = await verificarSessao();
     if(!user) return;
-    
+    const inventario = new Inventario();
     //time e pokemons
-    const inventario = await Inventario.carregarInventario(user.treinador);
+    inventario.carregarInventario(user.treinador);
     console.log("Inventário carregado:", inventario);
     const timeJogador = await Time.carregarTime(user.treinador);
     const timeOponente = await Time.carregarTime(localStorage.getItem("idOponente"))
-
+    
     const view = new BatalhaView(timeJogador);
     const pokemonJogador = timeJogador.pokemon[0];
     const pokemonOponente = timeOponente.pokemon[0];

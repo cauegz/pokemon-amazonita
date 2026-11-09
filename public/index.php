@@ -28,7 +28,7 @@ $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
 $router->add("/api/inventario",  "Inventario@getAllInventarioItems");
-
+$router->add("/api/item",  "Inventario@getInventarioItem");
 
 try {
     $router->executar($url);

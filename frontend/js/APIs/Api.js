@@ -63,6 +63,10 @@ export default class Api {
         return await this.requisicao(`/inventario?id=${id}`);
     }
 
+    static async buscarItem(id) {
+        return await this.requisicao(`/item?id=${id}`);
+    }
+
     static async buscarTreinadorByNpc(idNpc) {
         return await this.requisicao(`/treinador?idNpc=${idNpc}`);
     }

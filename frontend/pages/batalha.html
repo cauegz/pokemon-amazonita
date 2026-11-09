@@ -30,8 +30,8 @@
             <div id="opcoesBatalha">
                 <button class="btn-opc" id="atacar">Atacar</button>
                 <button class="btn-opc" id="fugir">Fugir</button>
-                <button class="btn-opc" popovertarget="trocaPokeAtivo" id="trocar">Trocar</button>
-                <button class="btn-opc" id="mochila">Mochila</button>
+                <button class="btn-opc" id="trocar" popovertarget="trocaPokeAtivo" >Trocar</button>
+                <button class="btn-opc" id="mochila" popovertarget="abreMochila">Mochila</button>
             </div>
             <button id="voltar">voltar</button>
         </div>
@@ -40,6 +40,13 @@
             <p>Escolha um Pokémon para entrar na batalha</p>
             <div id="time"></div>
         </div>
+        <div id="abreMochila" popover="auto">
+            <button class="close-popover" popovertargetaction="hide"  popovertarget="abreMochila" id="fecharPopover">Fechar</button>
+            <p>Escolha um item para usar</p>
+            <div id="itens"></div>
+
+        </div>
+
     </div>
    
     <script src="../js/pages/batalha.js" type="module"></script>

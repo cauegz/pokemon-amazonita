@@ -8,12 +8,14 @@ class Inventario {
     get items() {
         return this.#items;
     }
-    static async carregarInventario(idTreinador) {
+    async carregarInventario(idTreinador) {
         const inventarioData = await Api.buscarInventario(idTreinador);
-        console.log(inventarioData);
-        const items = inventarioData.map(itemData => {
-            return new Item(itemData.id, itemData.idPokeApi, itemData.nome, itemData.descricao, itemData.efeito, itemData.urlImagem);
-        });
+        let items = new Array(20).fill(null);
+    
+        for(let i=0; i < inventarioData.length; i++){
+           this.items[i] = await Item.carregarItem(inventarioData[i].idPokeApi,inventarioData[i].id);
+        }
+        console.log(items);
         return items;
     }
 }
