@@ -1,4 +1,13 @@
 
+CREATE TABLE IF NOT EXISTS ataque
+(
+  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+  poke_api   INT NOT NULL,
+  pokemon_id INT NOT NULL,
+  tipo_id    INT NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS efeito
 (
   id   INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -226,4 +235,7 @@ ALTER TABLE time
 --INNER JOIN loja l ON p.loja_id = l.id
 --WHERE p.estoque > 0;
 
+alter table usuario 
+  add column saldo decimal(10,2) not null default 0
+  check(saldo >=0);
 
