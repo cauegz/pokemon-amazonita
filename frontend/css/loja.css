@@ -21,20 +21,7 @@ h3{
 
 #placaImg{
     margin-top: -100px;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-#placaTxt{
-    position: absolute;
-    height: 50%;
     width: 40%;
-    top: -0.5%;
-    left: 4.5%;       
-}
-
-#placa{
-    width: 440px;
-    height: 293px;
+    height: auto;
+    object-fit: cover;
 }
