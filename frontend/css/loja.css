@@ -6,10 +6,11 @@ body{
     font-family: var(--fonte-principal);
 }
 main{
-    background-color: var(--cor-menus);
+    display: flex;
+    background-image: url(../images/background/background.png);
+    background-size: cover;
     height: var(--main-height);
     width: var(--main-width);
-    overflow: hidden;
 }
 
 h3{
@@ -18,10 +19,33 @@ h3{
      -webkit-text-stroke-width: 0.75px; /* Espessura do contorno */
   -webkit-text-stroke-color: black; /* Cor do contorno */
 }
-
-#placaImg{
-    margin-top: -100px;
+#menuLateral{
+    display: block;
     width: 40%;
-    height: auto;
+    height: 100%;
+    overflow: hidden;
+}
+#menuCima{
+    height: 30%;
+    width: 100%
+}
+
+#menuBaixo{
+    height: 70%;
+    width: 100%;
+}
+#menuBaixo img{
+    height: 90%;
+    width: auto;
+
+}
+#principal{
+    height: 100%;
+    width: 60%;
+}
+#placaImg{
+    margin-top: -20%;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
 }
