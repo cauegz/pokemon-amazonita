@@ -32,23 +32,28 @@ class Batalha{
            this.#view.mostrarAtaques(this.#jogador, ataque => 
             this.executarTurno(ataque));
         })
+
         document.getElementById('trocar').addEventListener('click', e => {
             this.#view.trocar(funcaoTimePokemon => 
                 this.trocarPokemon(funcaoTimePokemon, false)
             );
         })
+
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
 
-        if(this.#jogador.hpAtual <= 0){
+        if(this.#jogador.hpAtual == 0){
+            console.log("jogador desmaiou");
             this.#emAndamento = false;
             this.#view.trocar(funcaoTimePokemon => 
                 this.trocarPokemon(funcaoTimePokemon, true)
             );
             document.getElementById("trocaPokeAtivo").showPopover();
+        } 
 
-        } else if(this.#oponente.hpAtual <= 0){
+        if(this.#oponente.hpAtual <= 0){
+            console.log("oponente desmaiou");
             this.#emAndamento = false;
             for(const oponente of this.#timeOponente.pokemon){
                 if(oponente.hpAtual > 0){
@@ -56,6 +61,7 @@ class Batalha{
                     continue;
                 }
             }
+            console.log("voce venceu")
         }
         console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
     }
@@ -70,6 +76,7 @@ class Batalha{
     }
 
     trocarOponente(novoPokemon, turnoJogador){
+        console.log("executou trocar oponente")
         console.log(novoPokemon)
         this.#oponente = novoPokemon;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
@@ -89,8 +96,6 @@ class Batalha{
             if(this.#oponente.hpAtual == 0){
                 this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
             }
-
-
 
             this.configurarEventos();
         }catch(error){
