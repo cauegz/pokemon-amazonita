@@ -78,5 +78,9 @@ export default class Api {
     static async buscarNpcByNome(nome) {
         return await this.requisicao(`/npc?nome=${nome}`);
     }
+
+    static async buscarProdutos(loja_id) {
+        return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
+    }
 }
 
