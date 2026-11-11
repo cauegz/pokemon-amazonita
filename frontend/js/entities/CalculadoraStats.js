@@ -2,7 +2,9 @@ class CalculadoraStats{
     static usarItem(pokemon, item){
         console.log(pokemon)
         console.log(item);
-        //o item ta virando pokemon(juro q vou decsobrir)
+        if(item.categoria == "healing"){
+            console.log("curou")
+        }
     }
 }
 export default CalculadoraStats;

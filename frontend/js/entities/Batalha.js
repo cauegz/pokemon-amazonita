@@ -36,7 +36,7 @@ class Batalha{
             );
         })
         document.getElementById('mochila').addEventListener('click', e => {
-            this.#view.mostrarMochila(this.#inventario, item =>
+            this.#view.mostrarMochila(this.#inventario, (pokemon, item) =>
                 CalculadoraStats.usarItem(this.#jogador, item)
             );
         })
