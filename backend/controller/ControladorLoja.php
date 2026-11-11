@@ -26,7 +26,13 @@ class ControladorLoja extends ControladorGeral{
     }
 
     public function realizaVenda($id_usuario) {
+        $dados = $this->receiveJSON();
+        $id_usuario = $dados["id_usuario"] ?? null;
 
+        if (!$id_usuario) {
+            $this->responseError("id_usuario é obrigatório", 400);
+            return;
+        }
         $pdo = Conexao::getPDO();
 
         try {
