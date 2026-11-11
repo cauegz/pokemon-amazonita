@@ -19,6 +19,7 @@ $router->add("/api/logout",   "Auth@logout");
 $router->add("/api/teste",    "Npc@createNpc");
 $router->add("/api/builder",    "Time@criarTime");
 $router->add("/api/produto/criar",  "Loja@criarProduto");
+$router->add("/api/loja/realizaVenda", "Loja@realizaVenda");
 $router->add("/api/treinador/time",    "Time@time");
 $router->add("/api/pokemon",    "Pokemon@pokemonById");
 $router->add("/api/produto/criar",  "Loja@criarProduto");
