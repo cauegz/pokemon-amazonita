@@ -115,7 +115,7 @@ class ControladorLoja extends ControladorGeral{
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
             }
-            $this->responseError($e->getMessage(), 400);
+            $this->responseError($e->getMessage(), 404);
         }
     }
 }
