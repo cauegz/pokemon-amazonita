@@ -38,8 +38,8 @@ class Venda implements \JsonSerializable
     {
         return [
             'id'   => $this->id,
-            'id_tens_compra' => $this->id_tens_compra,
-            'id_loja' => $this->id_itens_comppra
+            'id_itens_compra' => $this->id_itens_compra,
+            'id_loja' => $this->id_loja
         ];
     }
 
