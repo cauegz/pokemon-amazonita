@@ -4,6 +4,7 @@ class Usuario extends ModelGeral implements JsonSerializable, ModelInterface
     protected string $login;
     protected string $senha;
     protected string $nome;
+    protected int $dinheiro = 100;
 
     public static function find($id)
     {
@@ -52,14 +53,15 @@ class Usuario extends ModelGeral implements JsonSerializable, ModelInterface
     {
         if ($this->id == null) {
 
-            $sql = "INSERT INTO usuario (login, senha, nome)
-                    VALUES (:login, :senha, :nome)";
+            $sql = "INSERT INTO usuario (login, senha, nome, dinheiro)
+                    VALUES (:login, :senha, :nome, :dinheiro)";
 
             $result = self::getPDO()->prepare($sql);
 
             $result->bindParam(":login", $this->login);
             $result->bindParam(":senha", $this->senha);
             $result->bindParam(":nome", $this->nome);
+            $result->bindParam(":dinheiro", $this->dinheiro);
 
             $result->execute();
 
@@ -70,7 +72,8 @@ class Usuario extends ModelGeral implements JsonSerializable, ModelInterface
             $sql = "UPDATE usuario
                     SET login = :login,
                         senha = :senha,
-                        nome = :nome
+                        nome = :nome,
+                        dinheiro = :dinheiro
                     WHERE id = :id";
 
             $result = self::getPDO()->prepare($sql);
@@ -78,6 +81,7 @@ class Usuario extends ModelGeral implements JsonSerializable, ModelInterface
             $result->bindParam(":login", $this->login);
             $result->bindParam(":senha", $this->senha);
             $result->bindParam(":nome", $this->nome);
+            $result->bindParam(":dinheiro", $this->dinheiro);
             $result->bindParam(":id", $this->id);
 
             $result->execute();

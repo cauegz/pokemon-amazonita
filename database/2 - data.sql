@@ -64,10 +64,10 @@ INSERT INTO usuario (login, senha, nome) VALUES
 -- =========================================
 -- 4. NPCs
 -- =========================================
-INSERT INTO npc (nome, id_tipo_npc) VALUES
-('Professor Carvalho', 1),
-('Mercador de Itens', 2),
-('Líder Rochoso', 3);
+INSERT INTO npc (nome, id_tipo_npc, recompensa) VALUES
+('Marcio Bigolin', 1, 1000),
+('Raissa Scheeren', 2, 1000),
+('Jaqueline Akazaki', 3, 1000);
 
 -- =========================================
 -- 5. Treinadores

@@ -24,6 +24,7 @@ $router->add("/api/pokemon",    "Pokemon@pokemonById");
 $router->add("/api/produto/criar",  "Loja@criarProduto");
 $router->add("/api/treinador",  "Batalha@treinador");
 $router->add("/api/npc",  "Batalha@npc");
+$router->add("/api/usuario/recompensa", "Batalha@recompensa");
 
 $router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
 $router->add("/api/efeito", "Batalha@efeito");

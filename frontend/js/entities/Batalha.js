@@ -48,6 +48,7 @@ class Batalha{
             this.#emAndamento = false;
             if(this.timeDerrotado(this.#timeJogador)){
                 alert('voce perdeu');
+                Api.aumentarDinheiro(localStorage.getItem("recompensa"));
 
                 Api.atualizarTime(this.#timeJogador);
             } else {

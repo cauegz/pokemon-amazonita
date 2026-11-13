@@ -82,5 +82,9 @@ export default class Api {
     static async buscarProdutos(loja_id) {
         return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
     }
+
+    static async aumentarDinheiro(recompensa) {
+        return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
+    }
 }
 

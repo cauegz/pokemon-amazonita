@@ -33,7 +33,8 @@ async function batalhar(nome){
     console.log("Treinador:")
     console.log(oponente)
 
-    localStorage.setItem("idOponente", oponente.id)
+    localStorage.setItem("idOponente", oponente.id);
+    localStorage.setItem("recompensa", npc.recompensa);
 
-    window.location.href = "./batalha.html";
+    // window.location.href = "./batalha.html";
 }

@@ -55,6 +55,7 @@ COMMENT ON COLUMN loja.nome IS 'CHECK (nome IN (''l1'',''l2'',''l3''))';
 CREATE TABLE IF NOT EXISTS npc
 (
   id          INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  recompensa  INT          NOT NULL DEFAULT 100,
   nome        VARCHAR(100) NOT NULL,
   id_tipo_npc INT          NOT NULL,
   PRIMARY KEY (id)
@@ -128,10 +129,11 @@ CREATE TABLE IF NOT EXISTS treinador
 
 CREATE TABLE IF NOT EXISTS usuario
 (
-  id    INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
-  login VARCHAR(100) NOT NULL UNIQUE,
-  senha VARCHAR(255) NOT NULL,
-  nome  VARCHAR(100),
+  id       INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  login    VARCHAR(100) NOT NULL UNIQUE,
+  senha    VARCHAR(255) NOT NULL,
+  nome     VARCHAR(100),
+  dinheiro INT          DEFAULT 100,
   PRIMARY KEY (id)
 );
 
