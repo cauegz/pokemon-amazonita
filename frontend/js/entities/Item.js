@@ -1,63 +1,63 @@
 import pokeApi from "../APIs/PokeApi.js";
 import Api from "../APIs/Api.js";
 class Item{
-    #id;
-    #idPokeApi;
-    #nome;
-    #descricao;
-    #efeito;
-    #urlImagem;
-    #categoria;
+    _id;
+    _idPokeApi;
+    _nome;
+    _descricao;
+    _efeito;
+    _urlImagem;
+    _categoria;
 
     constructor(id, idPokeApi, nome, descricao, efeito,urlImagem,categoria){
-        this.#id = id;
-        this.#idPokeApi = idPokeApi;
-        this.#nome = nome;
-        this.#descricao = descricao;
-        this.#efeito = efeito;
-        this.#urlImagem = urlImagem;
-        this.#categoria = categoria;
+        this._id = id;
+        this._idPokeApi = idPokeApi;
+        this._nome = nome;
+        this._descricao = descricao;
+        this._efeito = efeito;
+        this._urlImagem = urlImagem;
+        this._categoria = categoria;
     }
     get id() {
-        return this.#id;
+        return this._id;
     }
     get categoria(){
-        return this.#categoria;   
+        return this._categoria;
     }
     get idPokeApi() {
-        return this.#idPokeApi;
+        return this._idPokeApi;
     }
     get nome() {
-        return this.#nome;
+        return this._nome;
     }
     get descricao() {
-        return this.#descricao;
+        return this._descricao;
     }
     get efeito() {
-        return this.#efeito;
+        return this._efeito;
     }
     get urlImagem() {
-        return this.#urlImagem;
+        return this._urlImagem;
     }
     set urlImagem(urlImagem) {
-        this.#urlImagem = urlImagem;
+        this._urlImagem = urlImagem;
     }
     set efeito(efeito) {
-        this.#efeito = efeito;
+        this._efeito = efeito;
     }
     set categoria(categoria) {
-        this.#categoria = categoria;
+        this._categoria = categoria;
     }
     set idPokeApi(idPokeApi) {
-        this.#idPokeApi = idPokeApi;
+        this._idPokeApi = idPokeApi;
     }
     set descricao(descricao) {
-        this.#descricao = descricao;
+        this._descricao = descricao;
     }set nome(nome) {
-        this.#nome = nome;
+        this._nome = nome;
     }
     set id(id) {
-        this.#id = id;
+        this._id = id;
     }
 
     static async carregarItem(idPokeApi,idBanco ){

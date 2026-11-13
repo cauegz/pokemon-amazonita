@@ -1,32 +1,14 @@
 import Api from "../APIs/Api.js";
 import PokeApi from "../APIs/PokeApi.js";
-export default class Produto{
-    #id;
-    #idPokeApi;
-    #nome;
+import Item from "./Item.js";
+export default class Produto extends Item{
     #preco;
     #estoque;
-    #urlImagem;
 
-    constructor(id, idPokeApi, preco, estoque, nome){
-        this.#id = id;
-        this.#idPokeApi = idPokeApi;
+    constructor(id, idPokeApi, nome, descricao, efeito,urlImagem,categoria, preco, estoque){
+        super(id, idPokeApi, nome, descricao, efeito,urlImagem,categoria);
         this.#preco = preco;
         this.#estoque = estoque;
-        this.#nome = nome;
-        this.#urlImagem = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${nome}.png`;
-    }
-
-    get id(){
-        return this.#id;
-    }
-
-    get idPokeApi(){
-        return this.#idPokeApi;
-    }
-
-    get nome(){
-        return this.#nome;
     }
 
     get preco(){
@@ -37,28 +19,12 @@ export default class Produto{
         return this.#estoque;
     }
 
-    get urlImagem(){
-        return this.#urlImagem;
-    }
-
     set estoque(estoque){
         this.#estoque = estoque;
     }
 
     set preco(preco){
         this.#preco = preco;
-    }
-
-    set nome(nome){
-        this.#nome = nome;
-    }
-
-    set idPokeApi(idPokeApi){
-        this.#idPokeApi = idPokeApi;
-    }
-
-    set urlImagem(urlImagem){
-        this.#urlImagem = urlImagem;
     }
 
     static async listaProdutosByLojaId(id){
@@ -70,6 +36,11 @@ export default class Produto{
             return new Produto(
                 produto.id,
                 produto.id_item_pokeapi,
+                item.name,
+                item.flavor_text_entries[0].text,
+                item.effect_entries[0].effect,
+                item.sprites.default,
+                item.category.name,
                 produto.preco,
                 produto.estoque,
                 item.name
