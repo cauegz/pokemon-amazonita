@@ -111,11 +111,11 @@ INSERT INTO treinador (id_npc, id_usuario) VALUES
 -- =========================================
 
 INSERT INTO produto
-(id_item_pokeapi, nome, preco, estoque, loja_id) VALUES
-(4, 'Pokébola', 200.00, 100, 1),
-(17, 'Poção', 300.00, 50, 2),
-(18, 'Superpoção', 700.00, 25, 3),
-(19, 'Antídoto', 100.00, 40, 1);
+(id_item_pokeapi, preco, estoque, loja_id) VALUES
+(4, 200.00, 100, 1),
+(17, 300.00, 50, 2),
+(18, 700.00, 25, 3),
+(19, 100.00, 40, 1);
 
 
 -- =========================================
