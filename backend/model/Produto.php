@@ -1,6 +1,5 @@
 <?php
 class Produto extends ModelGeral implements JsonSerializable{
-    private string $nome;
     private float $preco;
     private int  $estoque;
     private int $loja_id;
@@ -32,7 +31,7 @@ class Produto extends ModelGeral implements JsonSerializable{
     // procura produtos disponíveis de uma loja específica, com estoque maior que 0
     public static function findByLojaId($loja_id)
     {
-        $sql = "SELECT p.id, id_item_pokeapi, p.nome, preco, estoque, loja_id
+        $sql = "SELECT p.id, id_item_pokeapi, preco, estoque, loja_id
                 FROM public.produto p INNER JOIN public.loja l ON p.loja_id = l.id 
                 WHERE p.estoque > 0 AND p.loja_id = :loja_id";
         $result = self::getPDO()->prepare($sql);
@@ -58,10 +57,9 @@ class Produto extends ModelGeral implements JsonSerializable{
     public function save()
     {
         if ($this->isNovo()) {
-            $sql = "INSERT INTO public.produto (id_item_pokeapi, nome, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :nome, :preco, :estoque, :loja_id)";
+            $sql = "INSERT INTO public.produto (id_item_pokeapi, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :preco, :estoque, :loja_id)";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
-            $result->bindParam(":nome", $this->nome);
             $result->bindParam(":preco", $this->preco);
             $result->bindParam(":estoque", $this->estoque);
             $result->bindParam(":loja_id", $this->loja_id);
@@ -69,10 +67,9 @@ class Produto extends ModelGeral implements JsonSerializable{
 
             $this->id = (int)self::getPDO()->lastInsertId();
         } else {
-            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, nome = :nome, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
+            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
-            $result->bindParam(":nome", $this->nome);
             $result->bindParam(":preco", $this->preco);
             $result->bindParam(":estoque", $this->estoque);
             $result->bindParam(":loja_id", $this->loja_id);
@@ -85,7 +82,6 @@ class Produto extends ModelGeral implements JsonSerializable{
     {
         return [
             'id'   => $this->id,
-            'nome' => $this->nome,
             'preco' => $this->preco,
             'estoque' => $this->estoque,
             'loja_id' => $this->loja_id,

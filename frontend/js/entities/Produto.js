@@ -1,18 +1,20 @@
 import Api from "../APIs/Api.js";
-
-class Produto{
+import PokeApi from "../APIs/PokeApi.js";
+export default class Produto{
     #id;
     #idPokeApi;
     #nome;
     #preco;
     #estoque;
+    #urlImagem;
 
-    constructor(id, idPokeApi, nome, preco, estoque){
+    constructor(id, idPokeApi, preco, estoque, nome){
         this.#id = id;
         this.#idPokeApi = idPokeApi;
-        this.#nome = nome;
         this.#preco = preco;
         this.#estoque = estoque;
+        this.#nome = nome;
+        this.#urlImagem = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${nome}.png`;
     }
 
     get id(){
@@ -35,6 +37,10 @@ class Produto{
         return this.#estoque;
     }
 
+    get urlImagem(){
+        return this.#urlImagem;
+    }
+
     set estoque(estoque){
         this.#estoque = estoque;
     }
@@ -51,9 +57,23 @@ class Produto{
         this.#idPokeApi = idPokeApi;
     }
 
-    static async listaProdutosByLojaId(id){
-        let produtos = await Api.buscarProdutos(id);
+    set urlImagem(urlImagem){
+        this.#urlImagem = urlImagem;
+    }
 
-        return produtos;
+    static async listaProdutosByLojaId(id){
+        let produtosBanco = await Api.buscarProdutos(id);
+
+        //O .map() vai retornar uma lista de Promises e o Promise.all() vai esperar todas as Promises serem resolvidas e retornar uma lista de Produtos
+        return await Promise.all(produtosBanco.map(async (produto) => {
+            const item = await PokeApi.buscarItem(produto.id_item_pokeapi);
+            return new Produto(
+                produto.id,
+                produto.id_item_pokeapi,
+                produto.preco,
+                produto.estoque,
+                item.name
+            );
+        }));
     }
 }
