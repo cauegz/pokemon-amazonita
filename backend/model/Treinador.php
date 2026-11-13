@@ -98,6 +98,24 @@ class Treinador extends ModelGeral implements JsonSerializable, ModelInterface
         return $stmt->fetchObject(self::class); // false se não existir
     }
 
+    public static function findByNpc($idNpc)
+    {
+        $sql = 'SELECT 
+                    id,
+                    id_npc as "npc",
+                    id_usuario as "usuario"
+                FROM treinador
+                WHERE id_npc = :idNpc';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam(":idNpc", $idNpc);
+
+        $result->execute();
+
+        return $result->fetchObject(self::class);
+    }
+
     public function jsonSerialize(): mixed
     {
         return [

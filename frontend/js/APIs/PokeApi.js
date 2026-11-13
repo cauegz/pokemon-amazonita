@@ -57,15 +57,22 @@ export default class PokeAPI{
         ];
     }
 
+    static async buscarItens() {
+        const response = await fetch(
+            `${this.URL}/item?limit=1000`
+        );
+        if(!response.ok){
+            throw new Error("Erro ao buscar itens");
+        }
+        return await response.json();
+    }
     static async buscarItem(id) {
         const response = await fetch(
             `${this.URL}/item/${id}`
         );
-
-        if (!response.ok) {
-            throw new Error("Erro ao buscar item.");
+        if(!response.ok){
+            throw new Error("Erro ao buscar item");
         }
-
         return await response.json();
     }
 }

@@ -30,6 +30,10 @@ class CalculadoraDano{
 
     static resolveStab(tiposPoke, ataqueTipo){
         for(const tipo of tiposPoke){
+            if(tipo === null){
+                console.log("é nulo")
+                continue;
+            }
             if(tipo.nome == ataqueTipo.nome){
                 return 1.5;
             }
@@ -42,6 +46,10 @@ class CalculadoraDano{
 
         let multiplicador = 1;
         for (const tipo of tiposPoke) {
+            if(tipo === null){
+                console.log("é nulo")
+                continue;
+            }
             for (const semDano of relacoes.no_damage_to) {
                 if(this.extrairIdUrl(semDano.url) == tipo.pokeApi){
                     multiplicador *= 0;

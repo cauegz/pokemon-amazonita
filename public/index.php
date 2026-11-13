@@ -22,11 +22,14 @@ $router->add("/api/produto/criar",  "Loja@criarProduto");
 $router->add("/api/treinador/time",    "Time@time");
 $router->add("/api/pokemon",    "Pokemon@pokemonById");
 $router->add("/api/produto/criar",  "Loja@criarProduto");
+$router->add("/api/treinador",  "Batalha@treinador");
+$router->add("/api/npc",  "Batalha@npc");
 $router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
-
+$router->add("/api/inventario",  "Inventario@getAllInventarioItems");
+$router->add("/api/item",  "Inventario@getInventarioItem");
 
 try {
     $router->executar($url);
