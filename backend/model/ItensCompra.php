@@ -3,7 +3,7 @@ class ItensCompra implements \JsonSerializable
     {
         private static $pdo;
         private ?int $id = null;
-        private int $quantidade
+        private int $quantidade;
         private int $id_produto;
         private int $id_usuario;
 
