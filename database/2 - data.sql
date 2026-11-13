@@ -167,7 +167,7 @@ INSERT INTO pokemon
 (id_pokeapi, hp, hp_atual, ataque, defesa, ataque_especial, defesa_especial, velocidade, id_efeito, id_treinador) 
 VALUES
 -- Treinador ID 4 (Marcio Bigolin)
-(445, 108, 108, 130, 95,  80,  85, 102, NULL, 4), -- 1. Garchomp
+(445, 108, 1, 130, 95,  80,  85, 102, NULL, 4), -- 1. Garchomp
 (376,  80,  80, 135, 150, 95,  90,  70, NULL, 4), -- 2. Metagross
 (479,  50,  50,  65, 107, 105, 107,  86, NULL, 4), -- 3. Rotom-Wash
 (637,  85,  85,  60,  65, 135, 105, 100, NULL, 4), -- 4. Volcarona
@@ -191,7 +191,7 @@ VALUES
 (778,  55,  55,  90,  80,  50, 105,  96, NULL, 6); -- 18. Mimikyu
 
 INSERT INTO time (posicao, id_treinador, id_pokemon) VALUES
-(1, 4, 1), (2, 4, 2), (3, 4, 3), (4, 4, 4), (5, 4, 5), (6, 4, 6),
+(1, 4, 1), --(2, 4, 2), (3, 4, 3), (4, 4, 4), (5, 4, 5), (6, 4, 6),
 (1, 5, 7), (2, 5, 8), (3, 5, 9), (4, 5, 10), (5, 5, 11), (6, 5, 12),
 (1, 6, 13), (2, 6, 14), (3, 6, 15), (4, 6, 16), (5, 6, 17), (6, 6, 18);
 

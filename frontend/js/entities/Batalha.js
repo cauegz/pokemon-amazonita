@@ -1,4 +1,5 @@
 import CalculadoraDano from "./CalculadoraDano.js";
+import Api from "../APIs/Api.js";
 
 class Batalha{
     #jogador;
@@ -44,24 +45,32 @@ class Batalha{
         })
 
         if(this.#jogador.hpAtual == 0){
-            console.log("jogador desmaiou");
             this.#emAndamento = false;
-            this.#view.trocar(funcaoTimePokemon => 
-                this.trocarPokemon(funcaoTimePokemon, true)
-            );
-            document.getElementById("trocaPokeAtivo").showPopover();
+            if(this.timeDerrotado(this.#timeJogador)){
+                alert('voce perdeu');
+
+                Api.atualizarTime(this.#timeJogador);
+            } else {
+                this.#view.trocar(funcaoTimePokemon => 
+                    this.trocarPokemon(funcaoTimePokemon, true)
+                );
+                document.getElementById("trocaPokeAtivo").showPopover();
+            }
         } 
 
         if(this.#oponente.hpAtual <= 0){
-            console.log("oponente desmaiou");
             this.#emAndamento = false;
-            for(const oponente of this.#timeOponente.pokemon){
-                if(oponente.hpAtual > 0){
-                    this.trocarOponente(oponente, true);
-                    continue;
-                }
+            const proximoOponente = this.#timeOponente.pokemon.find(
+                pokemon => pokemon !== null && pokemon.hpAtual > 0
+            );
+
+            if(proximoOponente){
+                this.trocarOponente(proximoOponente, true);
+            } else {
+                alert('voce venceu');
+
+                Api.atualizarTime(this.#timeJogador);
             }
-            console.log("voce venceu")
         }
         console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
     }
@@ -95,6 +104,7 @@ class Batalha{
 
             if(this.#oponente.hpAtual == 0){
                 this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+                return;
             }
 
             this.configurarEventos();
@@ -106,7 +116,7 @@ class Batalha{
     atacar(atacante, defensor, ataque){
         try{
             let dano = CalculadoraDano.ataque(atacante, defensor, ataque);
-            console.log(atacante.nome + " deu " + dano + " de dano no " + defensor.nome);
+            // console.log(atacante.nome + " deu " + dano + " de dano no " + defensor.nome);
 
             if(defensor.hpAtual - dano < 0) {
                 defensor.hpAtual = 0
@@ -130,6 +140,18 @@ class Batalha{
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         }, 3000);
        
+    }
+
+    /**
+     * Método que verifica se algum dos times esta derrotado
+     * 
+     * @param {Time} time 
+     */
+    timeDerrotado(time){
+        const pokemons = time.pokemon.filter(pokemon => pokemon !== null);
+
+        return pokemons.length > 0 &&
+            pokemons.every(pokemon => pokemon.hpAtual <= 0);
     }
 }
 
