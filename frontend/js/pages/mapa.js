@@ -36,5 +36,5 @@ async function batalhar(nome){
     localStorage.setItem("idOponente", oponente.id);
     localStorage.setItem("recompensa", npc.recompensa);
 
-    // window.location.href = "./batalha.html";
+    window.location.href = "./batalha.html";
 }

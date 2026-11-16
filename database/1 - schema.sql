@@ -1,3 +1,6 @@
+-- =========================================
+-- CRIAÇÃO DAS TABELAS
+-- =========================================
 
 CREATE TABLE IF NOT EXISTS ataque
 (
@@ -46,11 +49,9 @@ CREATE TABLE IF NOT EXISTS log_usuario
 CREATE TABLE IF NOT EXISTS loja
 (
   id   INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome CHAR(2) NOT NULL UNIQUE,
+  nome CHAR(2) NOT NULL UNIQUE CHECK (nome IN ('l1', 'l2', 'l3')),
   PRIMARY KEY (id)
 );
-
-COMMENT ON COLUMN loja.nome IS 'CHECK (nome IN (''l1'',''l2'',''l3''))';
 
 CREATE TABLE IF NOT EXISTS npc
 (
@@ -144,6 +145,10 @@ CREATE TABLE IF NOT EXISTS venda
   id_loja         INT NOT NULL,
   PRIMARY KEY (id)
 );
+
+-- =========================================
+-- CHAVES ESTRANGEIRAS (FOREIGN KEYS)
+-- =========================================
 
 ALTER TABLE npc DROP CONSTRAINT IF EXISTS FK_tipo_npc_TO_npc;
 ALTER TABLE npc
@@ -252,10 +257,3 @@ ALTER TABLE tipo_pokemon
   ADD CONSTRAINT FK_pokemon_TO_tipo_pokemon
     FOREIGN KEY (pokemon_id)
     REFERENCES pokemon (id);
---VISUALIZA PRODUTOS DISPONÍVEIS 
----SELECT p.nome, p.preco
----FROM produto p
---INNER JOIN loja l ON p.loja_id = l.id
---WHERE p.estoque > 0;
-
-
