@@ -176,11 +176,11 @@ INSERT INTO pokemon
 VALUES
 -- Treinador ID 4 (Marcio Bigolin)
 (445, 108, 1, 130, 95,  80,  85, 102, NULL, 4), -- 1. Garchomp
-(376,  80,  80, 135, 150, 95,  90,  70, NULL, 4), -- 2. Metagross
-(479,  50,  50,  65, 107, 105, 107,  86, NULL, 4), -- 3. Rotom-Wash
-(637,  85,  85,  60,  65, 135, 105, 100, NULL, 4), -- 4. Volcarona
-(730,  80,  80,  74,  74, 126, 116,  60, NULL, 4), -- 5. Primarina
-(823,  98,  98,  87, 105,  53,  85,  67, NULL, 4), -- 6. Corviknight
+-- (376,  80,  80, 135, 150, 95,  90,  70, NULL, 4), -- 2. Metagross
+-- (479,  50,  50,  65, 107, 105, 107,  86, NULL, 4), -- 3. Rotom-Wash
+-- (637,  85,  85,  60,  65, 135, 105, 100, NULL, 4), -- 4. Volcarona
+-- (730,  80,  80,  74,  74, 126, 116,  60, NULL, 4), -- 5. Primarina
+-- (823,  98,  98,  87, 105,  53,  85,  67, NULL, 4), -- 6. Corviknight
 
 -- Treinador ID 5 (Raissa Scheeren)
 (248, 100, 100, 134, 110,  95, 100,  61, NULL, 5), -- 7. Tyranitar
