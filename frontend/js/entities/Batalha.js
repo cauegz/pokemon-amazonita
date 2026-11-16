@@ -36,11 +36,11 @@ class Batalha{
             );
         })
         document.getElementById('mochila').addEventListener('click', e => {
-            this.#view.mostrarMochila(this.#inventario, (pokemon, item, view) =>
+            this.#view.mostrarMochila(this.#inventario, this.#jogador,this.#inventario, (pokemon, item) =>
                 CalculadoraStats.usarItem(this.#jogador, item)
             );
             
-            this.#view.atualizarHp(this.#jogador)
+            this.#view.atualizarHp(this.#jogador,this.#oponente)
         })
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
