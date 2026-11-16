@@ -99,11 +99,19 @@ INSERT INTO treinador (id_npc, id_usuario) VALUES
 
 INSERT INTO produto
 (id_item_pokeapi, preco, estoque, loja_id) VALUES
-(4, 200.00, 100, 1),
-(17, 300.00, 50, 2),
-(18, 700.00, 25, 3),
-(19, 100.00, 40, 1);
-
+(17, 300.00, 50, 1), -- Potion: recupera 20 HP
+(18, 700.00, 25, 1), -- Antidote: cura envenenamento
+(19, 100.00, 40, 1), -- Burn Heal: cura queimadura
+(20, 100.00, 40, 1), -- Ice Heal: cura congelamento
+(21, 100.00, 40, 1), -- Awakening: cura sono
+(22, 100.00, 40, 1), -- Paralyze Heal: cura paralisia
+(23, 2500.00, 20, 1), -- Full Restore: recupera todo o HP e cura condições de status
+(24, 1500.00, 25, 1), -- Max Potion: recupera 100% do HP
+(25, 1000.00, 30, 1), -- Hyper Potion: recupera 200 HP
+(26, 500.00, 50, 1), -- Super Potion: recupera 50 HP
+(27, 300.00, 50, 1), -- Full Heal: cura todas as condições de status
+(28, 1500.00, 30, 1), -- Revive: revive um Pokémon desmaiado com metade do HP
+(85, 5000.00, 6, 1); -- Pedra da evolução
 
 -- =========================================
 -- 9. Inventários dos treinadores

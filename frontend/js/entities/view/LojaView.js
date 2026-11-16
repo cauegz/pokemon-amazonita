@@ -8,7 +8,7 @@ export default class LojaView{
     }
     
     configurarEventos(){
-        this.carregarAcervo();
+        this.carregarMercadoria();
     }
     
     async inicializar(id){
@@ -16,11 +16,20 @@ export default class LojaView{
         this.configurarEventos();
     }
 
-    carregarAcervo(){
-        let local = document.getElementById("principal")
+    carregarMercadoria(){
+        let local = document.getElementById("mesa")
         console.log(this.#produtos);
         this.#produtos.forEach(produto => {
-            local.innerHTML += `<img src="${produto.urlImagem}" alt="${produto.nome}"><p>${produto.nome}</p><br> `;
+            local.innerHTML += 
+            `<div>
+                <div class="produto">
+                <div class="produtoNome">${produto.nome}</div>
+                    <div class="produtoImg"><img src="${produto.urlImagem}" alt="${produto.nome} image"></div>
+                    <div class="produtoPreco">
+                    <legend>${produto.preco}</legend><img src="../../../images/moeda.png">
+                    </div>
+                </div>
+            </div>`;
         });
     }
 
