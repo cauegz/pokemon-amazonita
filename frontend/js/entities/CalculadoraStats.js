@@ -7,6 +7,16 @@ class CalculadoraStats{
         ["full-restore",0]
     ]);
 
+    static statusCures = new Map([
+        ["antidote", "envenenamento"],
+        ["burn-heal", "queimadura"],
+        ["ice-heal", "congelamento"],
+        ["awakening", "sono"],
+        ["paralyze-heal", "paralisia"],
+        ["full-heal", "all-stats"]
+    ]);
+
+
     static usarItem(pokemon, item){
         console.log(pokemon.hpAtual);
         if(item.categoria == "healing"){

@@ -7,8 +7,9 @@ class Ataque {
     #classe;
     #poder;
     #tipo;
+    #efeito
 
-    constructor(id, pokeApi, nome, pp, prioridade, classe, poder, tipo){
+    constructor(id, pokeApi, nome, pp, prioridade, classe, poder, tipo, efeito){
         this.#id = id;
         this.#pokeApi = pokeApi;
         this.#nome = nome;
@@ -17,6 +18,7 @@ class Ataque {
         this.#classe = classe;
         this.#poder = poder;
         this.#tipo = tipo;
+        this.#efeito = efeito;
     }
 
     get id(){
@@ -49,6 +51,10 @@ class Ataque {
 
     get tipo(){
         return this.#tipo;
+    }
+    
+    get efeito(){
+        return this.#efeito;
     }
 }
 

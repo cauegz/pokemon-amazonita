@@ -17,7 +17,7 @@ export default class BuilderView {
 
     configurarEventos() {
         const botoes = document.querySelectorAll(".btn-selecionar-poke"); //pega o espaço do time
-
+        
         botoes.forEach(botao => {
             botao.addEventListener("click", () => {
                 this.#posicao = botao.dataset.poke;

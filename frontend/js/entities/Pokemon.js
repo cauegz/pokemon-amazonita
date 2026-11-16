@@ -227,7 +227,8 @@ class Pokemon{
                 ataqueApi.priority,
                 ataqueApi.damage_class.name,
                 ataqueApi.power,
-                tipoObj
+                tipoObj,
+                ataqueApi.meta.ailment.name
             );
 
             pokemon.adicionarAtaque(ataque, posicao);

@@ -4,12 +4,16 @@ export default class BatalhaView{
     #time
     #posicaoAtual = 0;
     #mensagemBatalha = document.getElementById('mensagemBatalha');
+    #stsJogador;
+    #stsInimigo;
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
         this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
         this.#time = time;
+        this.#stsJogador = document.getElementById('efeitoJogador');
+        this.#stsInimigo = document.getElementById('efeitoInimigo')
     }
 
     mostrarPokemon(jogador, oponente){
@@ -72,7 +76,11 @@ export default class BatalhaView{
         }
     }
    
-
+    mostrarEfeitos(jogador,oponente){
+        if(jogador.efeito) this.#stsJogador.innerHTML = jogador.efeito;
+        if(oponente.efeito) this.#stsInimigo.innerHTML = oponente.efeito;
+        
+    }
     trocar(trocarPokemon){
         console.log(this.#time);
         let time=document.getElementById('time');

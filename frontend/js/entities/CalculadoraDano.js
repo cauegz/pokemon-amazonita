@@ -3,6 +3,10 @@ class CalculadoraDano{
         let statAtaque;
         let statDefesa;
 
+        if(ataque.efeito !== "none"){
+           pokeDefesa.efeito= ataque.efeito;
+           console.log(pokeDefesa.nome+"esta com "+pokeDefesa.efeito)
+        }
         let multiplicadores = this.resolveMultiplicadores(pokeAtaque, pokeDefesa, ataque);
         let classeAtaque = ataque.classe;
 
@@ -17,7 +21,7 @@ class CalculadoraDano{
         }
 
         let dano = (((2 * pokeAtaque.nivel / 5) * ataque.poder * (statAtaque / statDefesa)) / 50) + 2
-
+        
         return Math.trunc(dano * multiplicadores);
     }
 

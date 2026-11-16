@@ -62,6 +62,9 @@
 #ataques{
     border: 1px solid black;
 }
+.sts{
+ color:red;
+}
 #trocaPokeAtivo, #abreMochila{
     width: 40%;
     height: 50%;

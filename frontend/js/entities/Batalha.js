@@ -25,7 +25,7 @@ class Batalha{
         if(!this.#turnoJogador){
             this.ataqueBot();
         }
-
+        this.#view.mostrarEfeitos(this.#jogador, this.#oponente);
         document.getElementById('atacar').addEventListener('click', async event => {
            this.#view.mostrarAtaques(this.#jogador, ataque => 
             this.executarTurno(ataque));
@@ -80,6 +80,7 @@ class Batalha{
 
     atacar(atacante, defensor, ataque){
         try{
+            console.log(ataque);
             let dano = CalculadoraDano.ataque(atacante, defensor, ataque);
             console.log(atacante.nome + " deu " + dano + " de dano no " + defensor.nome);
 
