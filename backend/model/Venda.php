@@ -84,17 +84,17 @@ class Venda implements \JsonSerializable
     {
         
         if ($this->isNovo()) { 
-            $sql = "INSERT INTO public.venda (tipo) VALUES (:tipo)";
+            $sql = "INSERT INTO public.venda (id_itens_compra, id_loja) VALUES (:id_itens_compra, :id_loja)";
             
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_itens_compra", $this->id_itens_compra);
-            $result->bindParam(":id_loja, $this->id_loja");
+            $result->bindParam(":id_loja", $this->id_loja);
             $result->execute();
 
             $this->id = (int)self::getPDO()->lastInsertId();
         } else {
             
-            $sql = "UPDATE public.categoria SET tipo = :tipo WHERE id = :id"; 
+            $sql = "UPDATE public.venda SET id_itens_compra = :id_itens_compra, id_loja = :id_loja WHERE id = :id";
 
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_itens_compra", $this->id_itens_compra);

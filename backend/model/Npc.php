@@ -2,12 +2,13 @@
 
 class Npc extends ModelGeral implements JsonSerializable, ModelInterface
 {
+    protected int $recompensa;
     protected string $nome;
     protected int $tipoNpc;
 
     public static function find($id)
     {
-        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc"
+        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc", recompensa
                 FROM npc
                 WHERE id = :id';
 
@@ -22,7 +23,7 @@ class Npc extends ModelGeral implements JsonSerializable, ModelInterface
 
     public static function all($filter = null)
     {
-        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc"
+        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc", recompensa
                 FROM npc';
 
         if ($filter) {
@@ -82,7 +83,7 @@ class Npc extends ModelGeral implements JsonSerializable, ModelInterface
     }
 
     public static function findByNome($nome){
-        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc"
+        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc", recompensa
                 FROM npc
                 WHERE nome = :nome';
 
@@ -100,6 +101,7 @@ class Npc extends ModelGeral implements JsonSerializable, ModelInterface
         return [
             "id" => $this->id,
             "nome" => $this->nome,
+            "recompensa" => $this->recompensa,
             "tipoNpc" => $this->tipoNpc
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../autoload.php';
+require_once __DIR__ . '/../backend/config/autoload.php';
 
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -18,12 +18,15 @@ $router->add("/api/me",       "Auth@me");
 $router->add("/api/logout",   "Auth@logout");
 $router->add("/api/teste",    "Npc@createNpc");
 $router->add("/api/builder",    "Time@criarTime");
+$router->add("/api/builder/atualiza", "Time@atualizarTime");
 $router->add("/api/treinador/time",    "Time@time");
 $router->add("/api/pokemon",    "Pokemon@pokemonById");
 $router->add("/api/produto/criar",  "Loja@criarProduto");
 $router->add("/api/treinador",  "Batalha@treinador");
 $router->add("/api/npc",  "Batalha@npc");
+$router->add("/api/usuario/recompensa", "Batalha@recompensa");
 
+$router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");

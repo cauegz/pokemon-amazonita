@@ -19,6 +19,7 @@ class Time {
     }
 
     static async carregarTime(idTreinador) {
+        console.log("carregou carregar time")
         let objTime = new Time();
 
         const timeBanco = await Api.buscarTime(idTreinador);
@@ -29,13 +30,19 @@ class Time {
                 index++;
                 continue;
             }
-
+            
             const pokemon = await Pokemon.carregaPokemon(pokeBanco.pokemon);
+
+            console.log("hp do " + pokemon.nome +": " + pokemon.hpAtual)
             
             objTime.adicionarPokemon(index, pokemon);
             index++;
         }
         return objTime;
+    }
+
+    toJSON() {
+        return this.#pokemon;
     }
 }
 

@@ -1,7 +1,7 @@
 export default class BatalhaView{
     #menuPrincipal;
     #opcoesBatalha;
-    #time
+    #time;
     #posicaoAtual = 0;
     #mensagemBatalha = document.getElementById('mensagemBatalha');
     #stsJogador;
@@ -84,23 +84,34 @@ export default class BatalhaView{
         
     }
     trocar(trocarPokemon){
-        console.log(this.#time);
-        let time=document.getElementById('time');
-        for(const poke of this.#time.pokemon){
+        let objTime = this.#time;
+        
+        let time = document.getElementById('time');
+
+        time.innerHTML = ``;
+        for(const poke of objTime.pokemon){
             if(poke === null) continue;
+            let disabled = "";
+            let classeDisabled = "";
+            
+            if(poke.hpAtual == 0){
+                disabled = "disabled";
+                classeDisabled = "poke-time-disabled";
+            }
+            //depois fazer a formatação do pokemon desmaiado com a classe poke-time-disabled
+            
             time.innerHTML += `
                 <div class="poke-time-container" id=${poke.id}>
                     <img src=${poke.urlImagem} />
-                    <button class="poke-time" data-posicao="${this.#time.pokemon.indexOf(poke)}">Escolher ${poke.nome}</button>
+                    <button class="poke-time ${classeDisabled}" data-posicao="${objTime.pokemon.indexOf(poke)}" ${disabled}>Escolher ${poke.nome}</button>
                 </div>
             `;
         }
         let pokeSelecionado = document.querySelectorAll('.poke-time');
         for(const poke of pokeSelecionado){
-            poke.addEventListener('click', ()=>{
+            poke.addEventListener('click', () => {
                 this.#posicaoAtual = poke.dataset.posicao;
-                console.log(this.#posicaoAtual);
-                trocarPokemon(this.#time.pokemon[this.#posicaoAtual]);
+                trocarPokemon(objTime.pokemon[this.#posicaoAtual]);
                 document.getElementById('trocaPokeAtivo').hidePopover();
             });
         }
@@ -138,7 +149,7 @@ export default class BatalhaView{
         console.log("mochilou", inventario);
     }
 
-    turnoInimigo(){
-        this.#mensagemBatalha.innerHTML = "Esperando inimigo jogar...";
+    turnoInimigo(ataqueExecutado, inimigo){
+        this.#mensagemBatalha.innerHTML = `${inimigo.nome} usou ${ataqueExecutado.nome} em você!!!!`;
     }
 }
