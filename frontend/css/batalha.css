@@ -121,8 +121,16 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
+    flex-wrap: wrap;
+    height: 40%;
+    width: 65%;
 }
-
-#pokeOponente{
-    margin-bottom 150px;
+.pokemon{
+    width: 50%;
+    height: 50%;
+}
+.pokeImg >img{
+    object-fit: cover;
+    width: 7vw;
+    height: 17vh;
 }

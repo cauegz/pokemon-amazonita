@@ -19,7 +19,8 @@ export default class BatalhaView{
     mostrarPokemon(jogador, oponente){
         //mostrar jogador
         document.getElementById('pokeNome').innerHTML = jogador.nome;
-        document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.urlImagem}'/>`;
+        console.log(jogador)
+        document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.imgBack}'/>`;
 
         //mostrar oponente
         document.getElementById('pokeNomeInimigo').innerHTML = oponente.nome;
