@@ -23,7 +23,7 @@ async function iniciarBatalha() {
     const pokemonJogador = timeJogador.pokemon[0];
     const pokemonOponente = timeOponente.pokemon[0];
 
-    new Batalha(pokemonJogador, timeJogador, pokemonOponente, timeOponente, view);
+    new Batalha(pokemonJogador, timeJogador, pokemonOponente, timeOponente, view, inventario);
     }catch(error){
         console.error("Erro ao iniciar a batalha:", error);
     }

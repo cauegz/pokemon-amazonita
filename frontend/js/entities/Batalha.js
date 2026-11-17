@@ -13,7 +13,7 @@ class Batalha{
     #inventario;
     
 
-    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view){
+    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view, inventario){
         this.#jogador = pokeJogador;
         this.#timeJogador = timeJogador;
         this.#oponente = pokeOponente;
