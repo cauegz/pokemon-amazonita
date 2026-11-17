@@ -77,6 +77,8 @@ export default class BatalhaView{
     }
    
     mostrarEfeitos(jogador,oponente){
+        this.#stsJogador.innerHTML= ``;
+        this.#stsInimigo.innerHTML= ``;
         if(jogador.efeito) this.#stsJogador.innerHTML = jogador.efeito;
         if(oponente.efeito) this.#stsInimigo.innerHTML = oponente.efeito;
         
@@ -130,6 +132,7 @@ export default class BatalhaView{
                 calculadoraStats(this.#time.pokemon[this.#posicaoAtual], inventario.items[item.dataset.pos]);
                 document.getElementById('abreMochila').hidePopover();
                 this.atualizarHp(jogador, oponente);
+                this.mostrarEfeitos(jogador,oponente);
             });
         }
         console.log("mochilou", inventario);

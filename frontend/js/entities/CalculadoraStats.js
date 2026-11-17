@@ -8,22 +8,24 @@ class CalculadoraStats{
     ]);
 
     static statusCures = new Map([
-        ["antidote", "envenenamento"],
-        ["burn-heal", "queimadura"],
-        ["ice-heal", "congelamento"],
-        ["awakening", "sono"],
-        ["paralyze-heal", "paralisia"],
+        ["antidote", "poison"],
+        ["burn-heal", "burn"],
+        ["ice-heal", "freeze"],
+        ["awakening", "sleep"],
+        ["paralyze-heal", "paralysis"],
         ["full-heal", "all-stats"]
     ]);
 
 
     static usarItem(pokemon, item){
-        console.log(pokemon.hpAtual);
         if(item.categoria == "healing"){
            const quantidadeCura = CalculadoraStats.cura.get(item.nome);
-           pokemon.hpAtual += quantidadeCura;
+           pokemon.hpAtual += quantidadeCura ;
            if(pokemon.hpAtual>pokemon.hp) pokemon.hpAtual= pokemon.hp;
-            console.log(pokemon.hpAtual);
+        }
+        if(item.categoria == "status-cures"){
+            const efeitoCura = CalculadoraStats.statusCures.get(item.nome);
+            if(pokemon.efeito == efeitoCura) pokemon.efeito = null;
         }
     }
 }
