@@ -39,4 +39,28 @@ class ControladorBatalha extends ControladorGeral {
 
         $this->responseJSON(Tipo::findByPokeApi($id)[0]);
     }
+
+    /**
+     * Retorna um npc do banco com base no nome
+     */
+    public function npc(){
+        if(!isset($_GET['nome'])){
+            $this->responseError("nome não informado", 400);
+        }
+        $nome = $_GET['nome'];
+
+        $this->responseJSON(Npc::findByNome($nome));
+    }
+
+    /**
+     * Retorna um treinador com base no id do npc
+     */
+    public function treinador() {
+        if(!isset($_GET['idNpc'])){
+            $this->responseError("id não informado", 400);
+        }
+        $idNpc = $_GET['idNpc'];
+
+        $this->responseJSON(Treinador::findByNpc($idNpc));
+    }
 }

@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS produto
 (
   id              INT           NOT NULL GENERATED ALWAYS AS IDENTITY,
   id_item_pokeapi INT           NOT NULL UNIQUE,
-  nome            VARCHAR(100)  NOT NULL,
   preco           DECIMAL(10,2) NOT NULL,
   estoque         INT           NOT NULL,
   loja_id    INT           NOT NULL,

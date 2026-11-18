@@ -81,6 +81,20 @@ class Npc extends ModelGeral implements JsonSerializable, ModelInterface
         }
     }
 
+    public static function findByNome($nome){
+        $sql = 'SELECT id, nome, id_tipo_npc as "tipoNpc"
+                FROM npc
+                WHERE nome = :nome';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam(":nome", $nome);
+
+        $result->execute();
+
+        return $result->fetchObject(self::class);
+    }
+
     public function jsonSerialize(): mixed
     {
         return [
