@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 :root{
     --cor-menus: #f0e6a4;
     --cor-fontes: #4a4530;
@@ -11,4 +12,5 @@
     --cor-card-pokemon-hover: #d9edc2;
 
     --fonte-principal: 'Pixelify Sans', sans-serif;
+    --cor-fudndo: #1f5711;
 }
