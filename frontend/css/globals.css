@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
-
 :root{
     --cor-menus: #f0e6a4;
     --cor-fontes: #4a4530;
@@ -21,5 +20,5 @@ body{
      background-image: url(../images/background/fundo.png);
      background-repeat: no-repeat;
      background-size: cover;
-    --cor-fudndo: #1f5711;
+    --cor-fundo: #1f5711;
 }
