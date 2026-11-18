@@ -51,6 +51,7 @@
 }
 .hp-bar > span{
     font-size: 0.8rem;
+    color: white;
 }
 .life{
     background-color: rgb(145, 214, 42);
@@ -59,7 +60,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 .sts{
  color:red;

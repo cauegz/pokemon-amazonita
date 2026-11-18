@@ -143,7 +143,6 @@ export default class BatalhaView{
     }
 
     fugir(){
-        console.log("fugiu")
     }
 
     mostrarMochila(inventario, jogador, oponente, calculadoraStats){

@@ -53,6 +53,9 @@ class Batalha{
         document.getElementById('voltar').addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
+        document.getElementById('fugir').addEventListener('click', e =>{
+             window.location.href = "game.html"
+        })
 
         if(this.#jogador.hpAtual == 0){
             this.#emAndamento = false;
