@@ -61,6 +61,9 @@
 #ataques{
     border: 1px solid black;
 }
+.sts{
+ color:red;
+}
 #trocaPokeAtivo, #abreMochila{
     width: 40%;
     height: 50%;
@@ -116,6 +119,18 @@
 }
 .pokemonsEmBatalha{
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
+    flex-wrap: wrap;
+    height: 40%;
+    width: 65%;
+}
+.pokemon{
+    width: 50%;
+    height: 50%;
+}
+.pokeImg >img{
+    object-fit: cover;
+    width: 7vw;
+    height: 17vh;
 }
