@@ -51,7 +51,6 @@
       "M3Bsx_2zvOzIyovNzWq0V",
       "uKGyOLVbSP1qt49rwTC1G",
       "S7OdlmRMyIkoYFCB4uXnd",
-      "2nqoPxePoqg7zFDMDMXV4",
       "Xw8ho6rQf56ulAUXkAzaa",
       "kbgPBI0RS8_2069CnSDyp",
       "NoIZBOD-5d6yTqIbzrmYX",
@@ -233,8 +232,8 @@
           "6d9hiu0K9nUoODBr0Iqpw"
         ],
         "ui": {
-          "x": -52.3408,
-          "y": -208.4894
+          "x": -161.9299,
+          "y": -187.9411
         }
       },
       "g7EZwS9-TOE2gtJoDXBiH": {
@@ -739,16 +738,6 @@
         "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
         "name": "preco",
         "dataType": "DECIMAL(10,2)",
-        "default": "",
-        "options": 8
-      },
-      "d8fgKhIu1pe0Sx5OygZAa": {
-        "id": "d8fgKhIu1pe0Sx5OygZAa",
-        "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
-        "name": "loja_id",
-        "comment": "",
-        "dataType": "INT",
-        "default": "",
         "options": 8
       },
       "69EjE2tIX1xtV92hEd1BD": {

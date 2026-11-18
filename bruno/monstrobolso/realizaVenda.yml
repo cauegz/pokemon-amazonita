@@ -5,7 +5,11 @@ info:
 
 http:
   method: POST
-  url: http://localhost:8080/api/loja/realizaVenda?id=999999
+  url: http://localhost:8080/api/loja/realizaVenda?id=1
+  params:
+    - name: id
+      value: "1"
+      type: query
   auth: inherit
 
 settings:

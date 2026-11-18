@@ -240,8 +240,3 @@ ALTER TABLE time
 ---FROM produto p
 --INNER JOIN loja l ON p.loja_id = l.id
 --WHERE p.estoque > 0;
-
-alter table usuario 
-  add column saldo decimal(10,2) not null default 0
-  check(saldo >=0);
-
