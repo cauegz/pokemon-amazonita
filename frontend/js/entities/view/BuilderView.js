@@ -44,6 +44,7 @@ export default class BuilderView {
                     null,
                     pokemonApi.name,
                     pokemonApi.sprites.front_default,
+                    pokemonApi.sprites.back_default,
                     pokemonApi.id,
                     50,
                 )
