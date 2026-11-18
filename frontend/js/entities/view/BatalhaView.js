@@ -6,24 +6,27 @@ export default class BatalhaView{
     #mensagemBatalha = document.getElementById('mensagemBatalha');
     #stsJogador;
     #stsInimigo;
+    #hpPlayer;
+    #hpInimigo;
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
-        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer:";
         this.#time = time;
         this.#stsJogador = document.getElementById('efeitoJogador');
-        this.#stsInimigo = document.getElementById('efeitoInimigo')
+        this.#stsInimigo = document.getElementById('efeitoInimigo');
+        this.#hpPlayer = document.getElementById('hp-bar-player');
+        this.#hpInimigo = document.getElementById('hp-bar-oponente');
     }
 
     mostrarPokemon(jogador, oponente){
         //mostrar jogador
-        document.getElementById('pokeNome').innerHTML = jogador.nome;
-        console.log(jogador)
+        document.getElementById('pokeNome').innerHTML =  jogador.nome.charAt(0).toUpperCase() + jogador.nome.slice(1);
         document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.imgBack}'/>`;
 
         //mostrar oponente
-        document.getElementById('pokeNomeInimigo').innerHTML = oponente.nome;
+        document.getElementById('pokeNomeInimigo').innerHTML = oponente.nome.charAt(0).toUpperCase() + oponente.nome.slice(1);
         document.getElementById('pokeInimigo').innerHTML = `<img src='${oponente.urlImagem}'/>`;
 
         this.atualizarHp(jogador, oponente);
@@ -32,11 +35,31 @@ export default class BatalhaView{
     atualizarHp(jogador, oponente){
         document.getElementById('hp').innerHTML = `${jogador.hpAtual}/${jogador.hp}`; 
         document.getElementById('hpInimigo').innerHTML = `${oponente.hpAtual}/${oponente.hp}`; 
+        
+        this.#hpPlayer.style.width=(jogador.hpAtual*100)/jogador.hp + "%";
+        this.#hpInimigo.style.width=(oponente.hpAtual*100)/oponente.hp + "%";
+
+        this.#hpPlayer.style.backgroundColor=`green`;
+        this.#hpInimigo.style.backgroundColor=`green`;
+        if(jogador.hpAtual<(jogador.hp/2)){
+            this.#hpPlayer.style.backgroundColor=`orange`;
+        }
+        if(jogador.hpAtual<(jogador.hp/4)){
+            this.#hpPlayer.style.backgroundColor=`red`;
+        }
+
+        if(oponente.hpAtual<(oponente.hp/2)){
+            this.#hpInimigo.style.backgroundColor=`orange`;
+        }
+        if(oponente.hpAtual<(oponente.hp/4)){
+            this.#hpInimigo.style.backgroundColor=`red`;
+        }
+        
     }
 
     mostrarMenuPrincipal(addJs){
         this.#opcoesBatalha.innerHTML = this.#menuPrincipal;
-        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer: ";
         addJs()
     }
 

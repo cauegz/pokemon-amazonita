@@ -14,7 +14,7 @@ export default class Api {
         });
 
         if (!resposta.ok) {
-            throw new Error(`${reposta.stacktrace}`);
+            throw new Error(`${resposta.stacktrace}`);
         }
 
         return await resposta.json();
