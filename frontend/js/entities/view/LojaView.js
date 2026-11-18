@@ -31,6 +31,12 @@ export default class LojaView{
                 </div>
             </div>`;
         });
+        local.innerHTML += 
+        `<div>
+            <div id="botaoComprar">
+                <button type="button">Comprar</button>
+            </div>
+        </div>`;
     }
 
 }
