@@ -1,35 +1,16 @@
 <?php
 class ControladorLoja extends ControladorGeral{
 
-    // public function criarLoja (){
-    //     $loja = new Loja();
-    //     $loja->nome = "l1";
-    //     $loja->save();
-
-    //     $this->responseJSON(Loja::all());
-    // }
-    // public function criarProduto(){
-    //     $produto = new Produto();
-    //     $produto->nome = "banana";
-    //     $produto->preco = 5;
-    //     $produto->estoque = 200;
-    //     $produto->loja_id = 1;
-    //     $produto->id_item_pokeapi = 1;
-    //     $produto->save();
-
-    //     $this->responseJSON(Produto::all());
-
-    // }
-
-    public function listarProdutosByLojaId($loja_id){
+    public function listarProdutosByLojaId(){
+        $loja_id = $_GET['id'] ?? null;
         $this->responseJSON(Produto::findByLojaId($loja_id));
     }
 
-    public function realizaVenda($id_usuario) {
+    public function realizaVenda($idUsuario) {
         $dados = $this->receiveJSON();
-        $id_usuario = $dados["id_usuario"] ?? null;
+        $idUsuario = $dados["id_usuario"] ?? null;
 
-        if (!$id_usuario) {
+        if (!$idUsuario) {
             $this->responseError("id_usuario é obrigatório", 400);
             return;
         }
@@ -55,7 +36,7 @@ class ControladorLoja extends ControladorGeral{
                     WHERE t.id_usuario = u.id
                     AND u.saldo >= t.total"
             );
-            $stmt->execute([':id_usuario' => $id_usuario]);
+            $stmt->execute([':id_usuario' => $idUsuario]);
 
             // Se nenhuma linha foi atualizada, o saldo não era suficiente
             // (ou o carrinho está vazio). A exceção cai no catch e desfaz tudo.
@@ -78,7 +59,7 @@ class ControladorLoja extends ControladorGeral{
                     WHERE t.id_produto = p.id
                     AND p.estoque >= t.total"
             );
-            $stmt->execute([':id_usuario' => $id_usuario]);
+            $stmt->execute([':id_usuario' => $idUsuario]);
             $produtosAtualizados = $stmt->rowCount();
 
             //  Confere se TODOS os produtos do carrinho foram atualizados.
@@ -90,7 +71,7 @@ class ControladorLoja extends ControladorGeral{
                     WHERE i.id_usuario = :id_usuario
                     AND NOT EXISTS (SELECT 1 FROM venda v WHERE v.id_itens_compra = i.id)"
             );
-            $stmt->execute([':id_usuario' => $id_usuario]);
+            $stmt->execute([':id_usuario' => $idUsuario]);
             $produtosNoCarrinho = (int) $stmt->fetchColumn();
 
             if ($produtosAtualizados !== $produtosNoCarrinho) {
@@ -108,7 +89,7 @@ class ControladorLoja extends ControladorGeral{
                     WHERE i.id_usuario = :id_usuario
                     AND NOT EXISTS (SELECT 1 FROM venda v WHERE v.id_itens_compra = i.id)"
             );
-            $stmt->execute([':id_usuario' => $id_usuario]);
+            $stmt->execute([':id_usuario' => $idUsuario]);
 
             $pdo->commit();
 

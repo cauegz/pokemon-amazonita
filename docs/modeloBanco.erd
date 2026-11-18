@@ -51,7 +51,6 @@
       "M3Bsx_2zvOzIyovNzWq0V",
       "uKGyOLVbSP1qt49rwTC1G",
       "S7OdlmRMyIkoYFCB4uXnd",
-      "2nqoPxePoqg7zFDMDMXV4",
       "Xw8ho6rQf56ulAUXkAzaa",
       "kbgPBI0RS8_2069CnSDyp",
       "NoIZBOD-5d6yTqIbzrmYX",
@@ -247,8 +246,7 @@
         ],
         "ui": {
           "x": 77.4657,
-          "y": 276.7729,
-          "color": ""
+          "y": 276.7729
         }
       },
       "mZZmDqli3wt2KnJC7LV3E": {
@@ -271,7 +269,6 @@
         "columnIds": [
           "NLTpaXU6iYh8Cva4kEM_P",
           "03h1jiai9snqzhyod7abk9ffy",
-          "jIll2pVPe-0szzYNzyAPX",
           "bmUYcw-ymfpoeFGHwwsKk",
           "29-wh5eTfekL3FEAHlUFL",
           "03h4ljzwtlbad0lbe4myr4x2v"
@@ -723,23 +720,6 @@
         "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
         "name": "preco",
         "dataType": "DECIMAL(10,2)",
-        "default": "",
-        "options": 8
-      },
-      "d8fgKhIu1pe0Sx5OygZAa": {
-        "id": "d8fgKhIu1pe0Sx5OygZAa",
-        "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
-        "name": "loja_id",
-        "comment": "",
-        "dataType": "INT",
-        "default": "",
-        "options": 8
-      },
-      "jIll2pVPe-0szzYNzyAPX": {
-        "id": "jIll2pVPe-0szzYNzyAPX",
-        "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
-        "name": "nome",
-        "dataType": "VARCHAR(100)",
         "options": 8
       },
       "69EjE2tIX1xtV92hEd1BD": {

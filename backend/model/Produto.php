@@ -1,52 +1,9 @@
-<?php>
+<?php
 class Produto extends ModelGeral implements JsonSerializable{
-    private static $pdo;
-    private ?int $id = null;
-    private string $nome;
     private float $preco;
     private int  $estoque;
     private int $loja_id;
     private int $id_item_pokeapi;
-
-    private static function getPDO()
-    {
-        if (self::$pdo === null) {
-            self::$pdo = Conexao::getPDO();
-        }
-        return self::$pdo;
-    }
-
-    public function __get(string $nome)
-    {
-        return $this->$nome;
-    }
-
-    public function __set(string $nome, $valor)
-    {
-        if (!trim((string)$valor)) {
-            throw new \InvalidArgumentException('Credenciais inválidas');
-        }
-
-        $metodo = 'set' . ucfirst($nome);
-
-        if (method_exists($this, $metodo)) {
-            $this->$metodo($valor);
-            return;
-        }
-        $this->$nome = $valor;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id'   => $this->id,
-            'nome' => $this->nome,
-            'preco' => $this->preco,
-            'estoque' => $this->estoque,
-            'loja_id' => $this->loja_id,
-            'id_item_pokeapi' => $this->id_item_pokeapi
-        ];
-    }
 
     public static function find($id)
     {
@@ -69,19 +26,19 @@ class Produto extends ModelGeral implements JsonSerializable{
         $result = self::getPDO()->prepare($sql);
         $result->execute();
 
-        return $result->fetchAll(\PDO::FETCH_CLASS, self::class);
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
     }
     // procura produtos disponíveis de uma loja específica, com estoque maior que 0
     public static function findByLojaId($loja_id)
     {
-        $sql = "SELECT p.nome, p.preco FROM public.produto
-                INNER JOIN public.loja l ON p.loja_id = l.id 
+        $sql = "SELECT p.id, id_item_pokeapi, preco, estoque, loja_id
+                FROM public.produto p INNER JOIN public.loja l ON p.loja_id = l.id 
                 WHERE p.estoque > 0 AND p.loja_id = :loja_id";
         $result = self::getPDO()->prepare($sql);
         $result->bindParam(":loja_id", $loja_id);
         $result->execute();
 
-        return $result->fetchAll(\PDO::FETCH_CLASS, self::class);
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
     }
     
     public static function delete(int $id)
@@ -100,10 +57,9 @@ class Produto extends ModelGeral implements JsonSerializable{
     public function save()
     {
         if ($this->isNovo()) {
-            $sql = "INSERT INTO public.produto (id_item_pokeapi, nome, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :nome, :preco, :estoque, :loja_id)";
+            $sql = "INSERT INTO public.produto (id_item_pokeapi, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :preco, :estoque, :loja_id)";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
-            $result->bindParam(":nome", $this->nome);
             $result->bindParam(":preco", $this->preco);
             $result->bindParam(":estoque", $this->estoque);
             $result->bindParam(":loja_id", $this->loja_id);
@@ -111,15 +67,25 @@ class Produto extends ModelGeral implements JsonSerializable{
 
             $this->id = (int)self::getPDO()->lastInsertId();
         } else {
-            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, nome = :nome, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
+            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
-            $result->bindParam(":nome", $this->nome);
             $result->bindParam(":preco", $this->preco);
             $result->bindParam(":estoque", $this->estoque);
             $result->bindParam(":loja_id", $this->loja_id);
             $result->bindParam(":id", $this->id);
             $result->execute();
         }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id'   => $this->id,
+            'preco' => $this->preco,
+            'estoque' => $this->estoque,
+            'loja_id' => $this->loja_id,
+            'id_item_pokeapi' => $this->id_item_pokeapi
+        ];
     }
 }

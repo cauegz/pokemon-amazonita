@@ -101,14 +101,27 @@ export default class BatalhaView{
         console.log("fugiu")
     }
 
-    mostrarMochila(inventario){
+    mostrarMochila(inventario, calculadoraStats){
         let mochila = document.getElementById('itens');
-        for(const item of inventario){
+        mochila.innerHTML = ``;
+        let count=0;
+        for(const item of inventario.items){
             if(item === null) continue;
             mochila.innerHTML += `
                 <div class="item-container" id=${item.id}>
                     <img src=${item.urlImagem} />
-                    <button class="item" data-id="${item.id}">Usar ${item.nome}</button>`
+                    <button class="item" data-pos="${count}">Usar ${item.nome}</button>
+                </div>`
+            count++;
+        }
+        let itemSelecionado = document.querySelectorAll('.item');
+        for(const item of itemSelecionado){
+            item.addEventListener('click', ()=>{
+                console.log(item.dataset.pos);
+                console.log(inventario.items[item.dataset.pos]);
+                calculadoraStats(this.#time.pokemon[this.#posicaoAtual], inventario.items[item.dataset.pos]);
+                document.getElementById('abreMochila').hidePopover();
+            });
         }
         console.log("mochilou", inventario);
     }
