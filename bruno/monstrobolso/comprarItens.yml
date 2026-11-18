@@ -1,0 +1,25 @@
+info:
+  name: comprarItens
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/api/loja/comprar
+  body:
+    type: json
+    data: |-
+      {
+        "itens": [
+          2,
+          1,
+          3
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

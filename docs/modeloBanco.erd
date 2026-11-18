@@ -51,7 +51,6 @@
       "M3Bsx_2zvOzIyovNzWq0V",
       "uKGyOLVbSP1qt49rwTC1G",
       "S7OdlmRMyIkoYFCB4uXnd",
-      "2nqoPxePoqg7zFDMDMXV4",
       "Xw8ho6rQf56ulAUXkAzaa",
       "kbgPBI0RS8_2069CnSDyp",
       "NoIZBOD-5d6yTqIbzrmYX",
@@ -215,12 +214,13 @@
         "name": "npc",
         "columnIds": [
           "Tcsed9GJxSIAkLO9z-z8T",
+          "03h8bnwf3mwu71wow9mcyqriu",
           "WXWMkjl7XKwkB2439Xzv6",
           "QymA8omWEFSco8uFJUZSb"
         ],
         "ui": {
-          "x": 1680.8961,
-          "y": 739.157
+          "x": 1681.867,
+          "y": 729.4483
         }
       },
       "bgd6svgA1saljhQk_WQVb": {
@@ -232,8 +232,8 @@
           "6d9hiu0K9nUoODBr0Iqpw"
         ],
         "ui": {
-          "x": -52.3408,
-          "y": -208.4894
+          "x": -161.9299,
+          "y": -187.9411
         }
       },
       "g7EZwS9-TOE2gtJoDXBiH": {
@@ -247,8 +247,7 @@
         ],
         "ui": {
           "x": 77.4657,
-          "y": 276.7729,
-          "color": ""
+          "y": 276.7729
         }
       },
       "mZZmDqli3wt2KnJC7LV3E": {
@@ -258,7 +257,8 @@
           "We-00xvJVLnVgoHs6kr6x",
           "-I_gYEa3wVmC2hv8umSor",
           "KczWBT54RrE8QE6MEOqvd",
-          "6UW7Lt2iX7kyf2xb4bLW_"
+          "6UW7Lt2iX7kyf2xb4bLW_",
+          "03h8bmuf61udfphp6mht3dlwl"
         ],
         "ui": {
           "x": 642.857,
@@ -271,7 +271,6 @@
         "columnIds": [
           "NLTpaXU6iYh8Cva4kEM_P",
           "03h1jiai9snqzhyod7abk9ffy",
-          "jIll2pVPe-0szzYNzyAPX",
           "bmUYcw-ymfpoeFGHwwsKk",
           "29-wh5eTfekL3FEAHlUFL",
           "03h4ljzwtlbad0lbe4myr4x2v"
@@ -592,6 +591,14 @@
         "dataType": "VARCHAR(100)",
         "options": 8
       },
+      "03h8bnwf3mwu71wow9mcyqriu": {
+        "id": "03h8bnwf3mwu71wow9mcyqriu",
+        "tableId": "U1y3zoV102grouoIhzNN2",
+        "name": "recompensa",
+        "dataType": "INT",
+        "default": "100",
+        "options": 8
+      },
       "QymA8omWEFSco8uFJUZSb": {
         "id": "QymA8omWEFSco8uFJUZSb",
         "tableId": "U1y3zoV102grouoIhzNN2",
@@ -669,6 +676,14 @@
         "dataType": "VARCHAR(100)",
         "options": 12
       },
+      "03h8bmuf61udfphp6mht3dlwl": {
+        "id": "03h8bmuf61udfphp6mht3dlwl",
+        "tableId": "mZZmDqli3wt2KnJC7LV3E",
+        "name": "dinheiro",
+        "dataType": "INT",
+        "default": "100",
+        "options": 0
+      },
       "6UW7Lt2iX7kyf2xb4bLW_": {
         "id": "6UW7Lt2iX7kyf2xb4bLW_",
         "tableId": "mZZmDqli3wt2KnJC7LV3E",
@@ -723,23 +738,6 @@
         "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
         "name": "preco",
         "dataType": "DECIMAL(10,2)",
-        "default": "",
-        "options": 8
-      },
-      "d8fgKhIu1pe0Sx5OygZAa": {
-        "id": "d8fgKhIu1pe0Sx5OygZAa",
-        "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
-        "name": "loja_id",
-        "comment": "",
-        "dataType": "INT",
-        "default": "",
-        "options": 8
-      },
-      "jIll2pVPe-0szzYNzyAPX": {
-        "id": "jIll2pVPe-0szzYNzyAPX",
-        "tableId": "uA1lWa6XvtBhlrIJ_JN_k",
-        "name": "nome",
-        "dataType": "VARCHAR(100)",
         "options": 8
       },
       "69EjE2tIX1xtV92hEd1BD": {

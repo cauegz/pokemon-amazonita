@@ -1,3 +1,6 @@
+-- =========================================
+-- CRIAÇÃO DAS TABELAS
+-- =========================================
 
 CREATE TABLE IF NOT EXISTS ataque
 (
@@ -50,11 +53,10 @@ CREATE TABLE IF NOT EXISTS loja
   PRIMARY KEY (id)
 );
 
-COMMENT ON COLUMN loja.nome IS 'CHECK (nome IN (''l1'',''l2'',''l3''))';
-
 CREATE TABLE IF NOT EXISTS npc
 (
   id          INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  recompensa  INT          NOT NULL DEFAULT 100,
   nome        VARCHAR(100) NOT NULL,
   id_tipo_npc INT          NOT NULL,
   PRIMARY KEY (id)
@@ -80,7 +82,6 @@ CREATE TABLE IF NOT EXISTS produto
 (
   id              INT           NOT NULL GENERATED ALWAYS AS IDENTITY,
   id_item_pokeapi INT           NOT NULL UNIQUE,
-  nome            VARCHAR(100)  NOT NULL,
   preco           DECIMAL(10,2) NOT NULL,
   estoque         INT           NOT NULL,
   loja_id    INT           NOT NULL,
@@ -129,10 +130,11 @@ CREATE TABLE IF NOT EXISTS treinador
 
 CREATE TABLE IF NOT EXISTS usuario
 (
-  id    INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
-  login VARCHAR(100) NOT NULL UNIQUE,
-  senha VARCHAR(255) NOT NULL,
-  nome  VARCHAR(100),
+  id       INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  login    VARCHAR(100) NOT NULL UNIQUE,
+  senha    VARCHAR(255) NOT NULL,
+  nome     VARCHAR(100),
+  dinheiro INT          DEFAULT 100,
   PRIMARY KEY (id)
 );
 
@@ -143,6 +145,10 @@ CREATE TABLE IF NOT EXISTS venda
   id_loja         INT NOT NULL,
   PRIMARY KEY (id)
 );
+
+-- =========================================
+-- CHAVES ESTRANGEIRAS (FOREIGN KEYS)
+-- =========================================
 
 ALTER TABLE npc DROP CONSTRAINT IF EXISTS FK_tipo_npc_TO_npc;
 ALTER TABLE npc
@@ -234,8 +240,3 @@ ALTER TABLE time
 ---FROM produto p
 --INNER JOIN loja l ON p.loja_id = l.id
 --WHERE p.estoque > 0;
-
-alter table usuario 
-  add column saldo decimal(10,2) not null default 0
-  check(saldo >=0);
-

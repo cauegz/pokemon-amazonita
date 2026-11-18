@@ -132,6 +132,34 @@ class ControladorTime extends ControladorGeral{
     }
 
     /**
+     * método para fazer o time persistir no banco
+     */
+    public function atualizarTime() {
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+
+        $idTreinador = $_SESSION['treinador'];
+
+        $dados = json_decode(file_get_contents("php://input"), true);
+
+        $time = $dados['pokemon'];
+        
+        for ($i=0; $i < 6; $i++) {
+            if(!$time[$i]){
+                continue;
+            }
+            $pokemonTime = Time::findByTreinadorAndPosicao($idTreinador, $i+1);
+            $pokeBanco = Pokemon::find($pokemonTime->pokemon);
+            $pokeBanco->hpAtual = $time[$i]['hpAtual'];
+            $pokeBanco->save();
+        }
+
+        $this->responseJSON(["ok" => true]);
+    }
+
+    /**
      * retorna o time atual do usuário no parametro get id
      */
     public function time(){

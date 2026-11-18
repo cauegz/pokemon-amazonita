@@ -66,12 +66,13 @@ export default class PokeAPI{
         }
         return await response.json();
     }
+
     static async buscarItem(id) {
         const response = await fetch(
             `${this.URL}/item/${id}`
         );
-        if(!response.ok){
-            throw new Error("Erro ao buscar item");
+        if (!response.ok) {
+            throw new Error("Erro ao buscar item.");
         }
         return await response.json();
     }

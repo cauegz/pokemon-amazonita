@@ -63,4 +63,20 @@ class ControladorBatalha extends ControladorGeral {
 
         $this->responseJSON(Treinador::findByNpc($idNpc));
     }
+
+    /**
+     * Aumenta o dinheiro do jogador
+     */
+    public function recompensa(){
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+        $idUsuario = $_SESSION['usuario_id'];
+        $usuario = Usuario::find($idUsuario);
+
+        $usuario->dinheiro += $_GET['dinheiro'];
+        $usuario->save();
+        $this->responseJSON($usuario);
+    }
 }

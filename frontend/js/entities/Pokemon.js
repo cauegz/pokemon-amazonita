@@ -7,6 +7,7 @@ class Pokemon{
     #id;
     #nome;
     #urlImagem;
+    #imgBack;
     #pokeApi;
     #nivel;
     #hp;
@@ -20,10 +21,11 @@ class Pokemon{
     #efeito;
     #tipos;
 
-    constructor(id, nome, urlImagem, pokeApi, nivel = 40, hp, hpAtual, ataque, defesa, ataqueEspecial, defesaEspecial, velocidade, efeito) {
+    constructor(id, nome, urlImagem, imgBack, pokeApi, nivel = 40, hp, hpAtual, ataque, defesa, ataqueEspecial, defesaEspecial, velocidade, efeito) {
         this.#id = id;
         this.#nome = nome;
         this.#urlImagem = urlImagem;
+        this.#imgBack = imgBack;
         this.#pokeApi = pokeApi;
         this.#nivel = nivel;
         this.#hp = hp;
@@ -52,6 +54,9 @@ class Pokemon{
 
     get urlImagem() {
         return this.#urlImagem;
+    }
+    get imgBack(){
+        return this.#imgBack;
     }
 
     set urlImagem(urlImagem) {
@@ -170,6 +175,7 @@ class Pokemon{
             //depois pegar o nome do banco aqui
             pokemonPokeApi.name,
             `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonPokeApi.id}.png`,
+            `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonPokeApi.id}.png`,
             pokemonPokeApi.id,
             50,
             pokeBanco.hp,
@@ -227,7 +233,8 @@ class Pokemon{
                 ataqueApi.priority,
                 ataqueApi.damage_class.name,
                 ataqueApi.power,
-                tipoObj
+                tipoObj,
+                ataqueApi.meta.ailment.name
             );
 
             pokemon.adicionarAtaque(ataque, posicao);

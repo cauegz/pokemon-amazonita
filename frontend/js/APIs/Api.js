@@ -14,12 +14,24 @@ export default class Api {
         });
 
         if (!resposta.ok) {
-            throw new Error(`erro na API: ${resposta}`);
+            throw new Error(`${resposta.stacktrace}`);
         }
 
         return await resposta.json();
     }
 
+    static async atualizarTime(time) {
+        const pokemons = time.pokemon ?? time;
+
+        return await this.requisicao("/builder/atualiza", {
+            method: "POST",
+            body: JSON.stringify({
+                pokemon: pokemons.map(pokemon => (
+                    pokemon ? { hpAtual: pokemon.hpAtual, idPokeApi: pokemon.pokeApi} : null
+                ))
+            })
+        });
+    }
  
     static async enviarTime(time) {
         console.log(time)
@@ -58,6 +70,10 @@ export default class Api {
     static async buscarTipoPokeApi(id) {
         return await this.requisicao(`/tipo?id=${id}`);
     }
+    
+    static async buscarProdutos(loja_id) {
+        return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
+    }
 
     static async buscarInventario(id) {
         return await this.requisicao(`/inventario?id=${id}`);
@@ -75,6 +91,13 @@ export default class Api {
         return await this.requisicao(`/npc?nome=${nome}`);
 
     }
-}
 
+    static async buscarProdutos(loja_id) {
+        return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
+    }
+
+    static async aumentarDinheiro(recompensa) {
+        return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
+    }
+}
 

@@ -1,59 +1,20 @@
 <?php
 
-class Loja implements \JsonSerializable
+class Loja extends ModelGeral implements JsonSerializable, ModelInterface
 {
-    private static $pdo;
-    private ?int $id = null;
-    private string $nome;
-
-    private static function getPDO()
-    {
-        if (self::$pdo === null) {
-            self::$pdo = Conexao::getPDO();
-        }
-        return self::$pdo;
-    }
-
-    public function __get(string $nome)
-    {
-        return $this->$nome;
-    }
-
-    public function __set(string $nome, $valor)
-    {
-        if (!trim((string)$valor)) {
-            throw new \InvalidArgumentException('Credenciais inválidas');
-        }
-
-        $metodo = 'set' . ucfirst($nome);
-
-        if (method_exists($this, $metodo)) {
-            $this->$metodo($valor);
-            return;
-        }
-        $this->$nome = $valor;
-    }
+    protected string $nome;
 
     public function setNome($nome)
     {
         if (!in_array($nome, ['l1', 'l2', 'l3'], true)) {
-            throw new \Exception('O nome da loja deve ser l1, l2 ou l3');
+            throw new Exception('O nome da loja deve ser l1, l2 ou l3');
         }
         $this->nome = $nome;
     }
 
-    
-    public function jsonSerialize(): array
-    {
-        return [
-            'id'           => $this->id,
-            'nome'         => $this->nome,
-        ];
-    }
-
     public static function find($id)
     {
-        $sql = "SELECT id, nome FROM public.loja WHERE id = :id";
+        $sql = "SELECT id, nome FROM loja WHERE id = :id";
         $result = self::getPDO()->prepare($sql);
         $result->bindParam(":id", $id);
         $result->execute();
@@ -63,7 +24,7 @@ class Loja implements \JsonSerializable
 
     public static function all($filter = null)
     {
-        $sql = "SELECT * FROM public.loja";
+        $sql = "SELECT * FROM loja";
 
         if ($filter) {
             $sql .= " WHERE " . $filter;
@@ -73,37 +34,40 @@ class Loja implements \JsonSerializable
         $result->execute();
 
         
-        return $result->fetchAll(\PDO::FETCH_CLASS, self::class);
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
-    public static function delete(int $id)
+    public static function delete($id)
     {
-        $sql = "DELETE FROM public.loja WHERE id = :id";
+        $sql = "DELETE FROM loja WHERE id = :id";
         $result = self::getPDO()->prepare($sql);
         $result->bindParam(":id", $id);
         $result->execute();
     }
 
-    public function isNovo(): bool
-    {
-        return $this->id === null;
-    }
-
     public function save()
     {
-        if ($this->isNovo()) {
-            $sql = "INSERT INTO public.loja (nome) VALUES (:nome)";
+        if ($this->id == null) {
+            $sql = "INSERT INTO loja (nome) VALUES (:nome)";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":nome", $this->nome);
             $result->execute();
 
-            $this->id = (int)self::getPDO()->lastInsertId();
+            $this->id = self::getPDO()->lastInsertId();
         } else {
-            $sql = "UPDATE public.loja SET nome = :nome WHERE id = :id";
+            $sql = "UPDATE loja SET nome = :nome WHERE id = :id";
             $result = self::getPDO()->prepare($sql);
             $result->bindParam(":nome", $this->nome);
             $result->bindParam(":id", $this->id);
             $result->execute();
         }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+        ];
     }
 }
