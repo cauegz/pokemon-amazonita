@@ -2,12 +2,12 @@ export class Player {
     constructor(game){
         this.game = game;
         // tamanho do recorte no Spritesheet
-        this.spriteWidth = 256;
-        this.spriteHeight = 320;
+        this.spriteWidth = 64;
+        this.spriteHeight = 64;
 
         // tamanho do jogador no jogo
-        this.width = 60;
-        this.height = 75;
+        this.width = 80;
+        this.height = 80;
 
         this.x = 0;
         this.y = this.game.height - this.height;

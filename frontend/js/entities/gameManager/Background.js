@@ -12,7 +12,7 @@ export class Background {
             [-1, 0, -1], //-1 é onde não tem mapa
             [1, 2, 3],
         ];
-        this.row = 0;
+        this.row = 1;
         this.column = 1;
         this.current = this.layout[this.row][this.column];
         this.image = new Image();

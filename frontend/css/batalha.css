@@ -12,7 +12,9 @@
     width: 1020px;
     height: 586px;
     border: 1px solid black;  
-    background-color: var(--cor-menus);
+    background-image: url(../images/background/fundo-batalha.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     padding: 1%;
     box-sizing: border-box;
     display: flex;
@@ -21,29 +23,7 @@
     justify-content: flex-end;
     font-family: var(--fonte-principal);
 }
-#menuBatalha{
-    width: 80%;
-    height: 30%;
-    
-    display: flex;
-    flex-direction: row;
-    justify-self: flex-end;
 
-    border: 2px solid #303030;
-    border-radius: 8px;
-    box-shadow: 6px 6px 0 #303030;
-}
-#menuBatalha >p{
-    background-color:  var(--cor-input-text);
-    width: 50%;
-    height: 100%;
-}
-#opcoesBatalha{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 50%;
-    height: 100%;
-}
 .pokemon{
     display: flex;
     flex-direction: row;
@@ -54,12 +34,32 @@
     background-color: var(--cor-input-text);
     width: 20dvw;
     height: 5dvh;
+
     border: 1px solid #303030;
     border-radius: 8px;
     box-shadow: 6px 6px 0 #303030;
+    padding: 2%;
 }
-#ataques{
-    border: 1px solid black;
+.hp-bar{
+    display: flex;
+    width: 80%;
+    height: 30%;
+    border:1px solid #303030;
+    background-color: #ffffff;
+    border-radius: 7px;
+    padding: 2px;
+}
+.hp-bar > span{
+    font-size: 0.8rem;
+    color: white;
+}
+.life{
+    background-color: rgb(145, 214, 42);
+    border-radius: 7px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .sts{
  color:red;
@@ -103,6 +103,12 @@
     padding: 5px 10px;
     transition: 0.2s;
 }
+.poke-time-disabled{
+    background-color: rgb(216, 71, 71);
+}
+.poke-time-disabled:hover{
+    background-color: rgb(184, 43, 43);
+}
 .close-popover{
     all: unset;
     cursor: pointer;
@@ -133,4 +139,111 @@
     object-fit: cover;
     width: 7vw;
     height: 17vh;
+}
+
+#menuBatalha{
+    width: 80%;
+    height: 30%;
+    
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    background-color: var(--cor-menus);
+
+    border: 2px solid #303030;
+    border-radius: 8px;
+    box-shadow: 6px 6px 0 #303030;
+}
+#mensagemBatalha{
+    background-color:  var(--cor-input-text);
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+
+    padding-top: 3%;
+    padding-left: 1%;
+    
+    border-radius: 15px;
+    border: 2px solid #303030;
+    font-size: 1.3rem;
+}
+#opcoesBatalha{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 50%;
+    height: 100%;
+    position: relative;
+}
+.btn-opc{
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid rgb(243, 242, 242);
+    border-radius: 25px;
+    text-shadow:
+    -1px -1px 0 #000000,
+     1px -1px 0 #000000,
+    -1px  1px 0 #000000,
+     1px  1px 0 #000000;
+
+    font-size: 1.5rem;
+    color:white;
+   
+    transition: 0.2s;
+    box-shadow: 6px 6px 0 #303030;
+
+    background-color: rgb(241, 128, 128);
+    border:7px solid rgb(216, 71, 71);
+}
+.btn-opc:hover{
+    font-size:1.7rem;
+}
+
+#atacar{
+    background-color: rgb(241, 128, 128);
+    border:7px solid rgb(216, 71, 71);
+}
+#atacar:hover{
+    background-color:rgb(241, 167, 167);
+}
+
+#fugir{
+    background-color: rgb(206, 176, 102);
+    border:7px solid rgb(182, 145, 51)
+}
+#fugir:hover{
+    background-color: rgb(228, 204, 145);
+}
+
+#trocar{
+    background-color: rgb(151, 180, 233);
+    border:7px solid rgb(118, 155, 223);
+}
+#trocar:hover{
+    background-color: rgb(170, 191, 230);
+}
+
+#mochila{
+    background-color: rgb(192, 136, 219);
+    border:7px solid rgb(172, 102, 207);
+}
+#mochila:hover{
+    background-color: rgb(203, 167, 221)
+}
+#voltar{
+    all: unset;
+    background-color:  var(--cor-input-text);
+    border-radius: 15px;
+    border: 2px solid #303030;
+    height: 5%;
+
+    z-index: 10;
+    position: absolute;
+    right:11%;
+    transition:0.2s
+}
+#voltar:hover{
+    font-size: 1.3rem;
 }
