@@ -17,3 +17,6 @@
 
     --fonte-principal: 'Pixelify Sans', sans-serif;
 }
+body{
+     background-image: url(../images/background/fundo.png);
+}
