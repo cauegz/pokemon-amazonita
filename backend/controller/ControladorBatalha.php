@@ -44,12 +44,12 @@ class ControladorBatalha extends ControladorGeral {
      * Retorna um npc do banco com base no nome
      */
     public function npc(){
-        if(!isset($_GET['nome'])){
-            $this->responseError("nome não informado", 400);
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
         }
-        $nome = $_GET['nome'];
+        $id = $_GET['id'];
 
-        $this->responseJSON(Npc::findByNome($nome));
+        $this->responseJSON(Npc::find($id));
     }
 
     /**

@@ -87,9 +87,8 @@ export default class Api {
         return await this.requisicao(`/treinador?idNpc=${idNpc}`);
     }
 
-    static async buscarNpcByNome(nome) {
-        return await this.requisicao(`/npc?nome=${nome}`);
-
+    static async buscarNpcById(nome) {
+        return await this.requisicao(`/npc?id=${nome}`);
     }
 
     static async buscarProdutos(loja_id) {

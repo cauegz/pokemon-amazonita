@@ -10,10 +10,12 @@ class Batalha{
     #view;
     #emAndamento;
     #turnoJogador;
+    #npcOponente;
+    #mapaNpcs;
     #inventario;
+    #idOponente;
     
-
-    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view, inventario){
+    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view, npcOponente, inventario){
         this.#jogador = pokeJogador;
         this.#timeJogador = timeJogador;
         this.#oponente = pokeOponente;
@@ -21,9 +23,12 @@ class Batalha{
         this.#view = view;
         this.#inventario = inventario;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
+        this.#npcOponente = npcOponente;
 
         this.#emAndamento = true;
         this.#turnoJogador = true;
+        this.#mapaNpcs = JSON.parse(localStorage.getItem("npcs"));
+        this.#idOponente = sessionStorage.getItem("oponente");
 
         this.configurarEventos();
     }
@@ -60,10 +65,15 @@ class Batalha{
         if(this.#jogador.hpAtual == 0){
             this.#emAndamento = false;
             if(this.timeDerrotado(this.#timeJogador)){
-                alert('voce perdeu');
-                Api.aumentarDinheiro(localStorage.getItem("recompensa"));
+                console.log('voce perdeu')
+
+                this.#mapaNpcs[idOponente].isBatalhando = false;
 
                 Api.atualizarTime(this.#timeJogador);
+
+                localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
+                
+                window.location.href = "./mapa.html"
             } else {
                 this.#view.trocar(funcaoTimePokemon => 
                     this.trocarPokemon(funcaoTimePokemon, true)
@@ -81,9 +91,31 @@ class Batalha{
             if(proximoOponente){
                 this.trocarOponente(proximoOponente, true);
             } else {
-                alert('voce venceu');
+                console.log("------começando fluxo de vitória------")
+                
+                let idOponente = this.#idOponente;
 
+                console.log("------aumentando dinheiro------")
+                Api.aumentarDinheiro(this.#npcOponente.recompensa);
+                                
+                console.log("------criando a variável npcOponente e atribuindo à ela o objeto no mapaNpcs na posição do sessionStorage------")
+                console.log(this.#mapaNpcs)
+                let npcOponente = this.#mapaNpcs[idOponente];
+
+                console.log("------setando npcOponente.defeated como true------")
+                npcOponente.defeated = true;
+                npcOponente.isBatalhando = false;
+
+                console.log("------botando a variavel npcOponente de volta no mapa na mesma posição")
+                this.#mapaNpcs[idOponente] = npcOponente;
+
+                console.log("------botando a variavel mapaNpcs no localStorage")
+                localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
+
+                console.log("------chamando a api do banco pra atualizar o time------")
                 Api.atualizarTime(this.#timeJogador);
+
+                window.location.href = "./mapa.html"
             }
         }
         console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
