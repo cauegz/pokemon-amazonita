@@ -117,17 +117,18 @@ export default class BatalhaView{
             if(poke === null) continue;
             let disabled = "";
             let classeDisabled = "";
-            
+            let frase = `Escolher ${poke.nome}`
             if(poke.hpAtual == 0){
                 disabled = "disabled";
                 classeDisabled = "poke-time-disabled";
+                frase = "Derrotado :("
             }
             //depois fazer a formatação do pokemon desmaiado com a classe poke-time-disabled
             
             time.innerHTML += `
-                <div class="poke-time-container" id=${poke.id}>
+                <div class="poke-time-container ${classeDisabled}" id=${poke.id}>
                     <img src=${poke.urlImagem} />
-                    <button class="poke-time ${classeDisabled}" data-posicao="${objTime.pokemon.indexOf(poke)}" ${disabled}>Escolher ${poke.nome}</button>
+                    <button class="poke-time" data-posicao="${objTime.pokemon.indexOf(poke)}" ${disabled}>${frase}</button>
                 </div>
             `;
         }
