@@ -22,7 +22,7 @@ async function iniciarBuilder() {
             .addEventListener("click", async () => {
                     await Api.enviarTime(objTime);
 
-                    console.log("time enviado");
+                    window.location.href = "game.html";
             });
 
     } catch (erro) {

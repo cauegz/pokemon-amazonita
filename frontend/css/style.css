@@ -5,13 +5,26 @@
     box-sizing: border-box;
 }
 
-#gameCanvas{
-    border: 5px solid black;
+#gameCanvas, .camada-interface{
     position: absolute;
     top: 50%;
-    left:50%;
+    left: 50%;
     transform: translate(-50%,-50%);
     max-width: 100%;
+}
+
+.camada-interface{
+    width: 1020px;
+    height: 586px;
+}
+
+.nome-area{
+    font-family: var(--fonte-principal);
+    color: white;
+}
+
+#gameCanvas{
+    border: 5px solid black;
 }
 
 #player{

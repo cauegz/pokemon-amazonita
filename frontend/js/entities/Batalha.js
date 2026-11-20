@@ -91,28 +91,20 @@ class Batalha{
             if(proximoOponente){
                 this.trocarOponente(proximoOponente, true);
             } else {
-                console.log("------começando fluxo de vitória------")
                 
                 let idOponente = this.#idOponente;
 
-                console.log("------chamando a api do banco pra atualizar o time------")
                 await Api.atualizarTime(this.#timeJogador);
 
-                console.log("------aumentando dinheiro------")
                 await Api.aumentarDinheiro(this.#npcOponente.recompensa);
                                 
-                console.log("------criando a variável npcOponente e atribuindo à ela o objeto no mapaNpcs na posição do sessionStorage------")
-                console.log(this.#mapaNpcs)
                 let npcOponente = this.#mapaNpcs[idOponente];
 
-                console.log("------setando npcOponente.defeated como true------")
                 npcOponente.defeated = true;
                 npcOponente.isBatalhando = false;
 
-                console.log("------botando a variavel npcOponente de volta no mapa na mesma posição")
                 this.#mapaNpcs[idOponente] = npcOponente;
 
-                console.log("------botando a variavel mapaNpcs no localStorage")
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
 
                 window.location.href = "./mapa.html"
