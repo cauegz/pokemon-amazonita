@@ -42,7 +42,7 @@ botoes.forEach(botao => {
         botao.innerHTML = "ja derrotado";
     }
     botao.addEventListener("click", (event) => {
-        const idNpc = event.target.dataset.id;
+        const idNpc = event.currentTarget.dataset.id;
         batalhar(idNpc);
     });
 });
