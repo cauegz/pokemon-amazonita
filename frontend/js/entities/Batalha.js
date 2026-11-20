@@ -33,7 +33,7 @@ class Batalha{
         this.configurarEventos();
     }
 
-    configurarEventos(){
+    async configurarEventos(){
         if(!this.#turnoJogador && this.#oponente.hpAtual > 0){
             this.ataqueBot();
         }
@@ -95,8 +95,11 @@ class Batalha{
                 
                 let idOponente = this.#idOponente;
 
+                console.log("------chamando a api do banco pra atualizar o time------")
+                await Api.atualizarTime(this.#timeJogador);
+
                 console.log("------aumentando dinheiro------")
-                Api.aumentarDinheiro(this.#npcOponente.recompensa);
+                await Api.aumentarDinheiro(this.#npcOponente.recompensa);
                                 
                 console.log("------criando a variável npcOponente e atribuindo à ela o objeto no mapaNpcs na posição do sessionStorage------")
                 console.log(this.#mapaNpcs)
@@ -111,9 +114,6 @@ class Batalha{
 
                 console.log("------botando a variavel mapaNpcs no localStorage")
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
-
-                console.log("------chamando a api do banco pra atualizar o time------")
-                Api.atualizarTime(this.#timeJogador);
 
                 window.location.href = "./mapa.html"
             }
