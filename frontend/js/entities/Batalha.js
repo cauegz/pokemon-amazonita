@@ -83,18 +83,34 @@ class Batalha {
     }
 
     async verificarFimDeTurno() {
+        //se o pokemon do jogador ta com 0 de hp
         if (this.#jogador.hpAtual <= 0) {
+            //verifica se o time do jogador foi derrotado
             if (this.timeDerrotado(this.#timeJogador)) {
-                console.log('voce perdeu');
+                //se foi derrotado executa isso
+
+                //pega do localStorage e seta o isBatalhando como false
                 this.#mapaNpcs[this.#idOponente].isBatalhando = false;
 
+                //atualiza o time do jogador no banco e no localStorage
                 await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
                 localStorage.setItem("time", JSON.stringify(this.#timeJogador));
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
 
+                //salva o log da batalha no banco
+                await Api.salvarLog(
+                    {
+                        idTreinador1: this.#idTreinador,
+                        idTreinador2: this.#npcOponente.id,
+                        idVencedor: this.#npcOponente.id,
+                        recompensa: 0
+                    }
+                );
+
                 window.location.href = "./game.html";
                 return;
             } else {
+                //se nao for derrotado, aparece o popup de troca
                 this.#view.trocar(funcaoTimePokemon =>
                     this.trocarPokemon(funcaoTimePokemon)
                 );
@@ -102,19 +118,33 @@ class Batalha {
             }
         }
 
+        //se o oponente esta com 0 de hp
         if (this.#oponente.hpAtual <= 0) {
-            const proximoOponente = this.#timeOponente.pokemon.find(
-                pokemon => pokemon !== null && pokemon.hpAtual > 0
-            );
-
-            if (proximoOponente) {
+            
+            //verifica se o time do oponente esta derrotado
+            if (!this.timeDerrotado(this.#timeOponente)) {
+                //se nao estiver derrotado, pega o proximo pokemon ainda vivo
+                const proximoOponente = this.#timeOponente.pokemon.find(
+                    pokemon => pokemon !== null && pokemon.hpAtual > 0
+                );
                 this.trocarOponente(proximoOponente);
             } else {
+                //se nao tiver mais nenhum pokemon vivo, o jogador venceu
                 await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
                 await Api.aumentarDinheiro(this.#npcOponente.recompensa);
+                await Api.salvarLog(
+                    {
+                        idTreinador1: this.#idTreinador,
+                        idTreinador2: this.#npcOponente.id,
+                        idVencedor: this.#idTreinador,
+                        recompensa: this.#npcOponente.recompensa
+                    }
+                );
 
+                //salva o time pos batalha no localStorage para evitar multiplas buscas na PokeAPI
                 localStorage.setItem("time", JSON.stringify(this.#timeJogador));
 
+                //salva no localStorage que voce derrotou o inimigo
                 const npcOponente = this.#mapaNpcs[this.#idOponente];
                 npcOponente.defeated = true;
                 npcOponente.isBatalhando = false;

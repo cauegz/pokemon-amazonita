@@ -45,6 +45,28 @@ export default class Api {
         });
     }
 
+    /**
+     * Salva o log de uma batalha, logBatalha deve ser:
+     * {
+     *    idTreinador1: (int),
+     *    idTreinador2: (int),
+     *    idVencedor: (int),
+     *    recompensa: (int)
+     * }
+     * @param {Object} logBatalha 
+     * @returns void
+     */
+    static async salvarLog(logBatalha) {
+        return await this.requisicao("/batalha/log", {
+            method: "POST",
+            body: JSON.stringify({
+                idTreinador1: logBatalha.idTreinador1,
+                idTreinador2: logBatalha.idTreinador2,
+                idVencedor: logBatalha.idVencedor,
+                recompensa: logBatalha.recompensa
+            })
+        });
+    }
 
     static async buscarPokemon(id) {
         return await this.requisicao(`/pokemon?id=${id}`);

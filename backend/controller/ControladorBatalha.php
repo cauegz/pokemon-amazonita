@@ -79,4 +79,33 @@ class ControladorBatalha extends ControladorGeral {
         $usuario->save();
         $this->responseJSON($usuario);
     }
+
+    /**
+     * Salva o resultado da batalha no banco
+     * 
+     * Espera isso: 
+     * {
+     *    idTreinador1: (int),
+     *    idTreinador2: (int),
+     *    idVencedor: (int),
+     *    recompensa: (int)
+     * }
+     */
+    public function salvarLog(){
+        $dados = $this->receiveJSON();
+
+        $log = new LogBatalha();
+        $log->idTreinador1 = $dados['idTreinador1'];
+        $log->idTreinador2 = $dados['idTreinador2'];
+        $log->idVencedor = $dados['idVencedor'];
+        $log->recompensa = $dados['recompensa'];
+
+        try{
+            $log->save();
+        } catch(Exception $e){
+            $this->responseError("erro ao salvar o log da batalha", 500);
+        }
+
+        $this->responseJSON(["ok" => true, "mensagem" => "salvo com sucesso"]);
+    }
 }
