@@ -70,13 +70,14 @@ export default class BatalhaView{
         const ataques = pokemon.ataques;
         let html = '';
         
-        let posicao = 1
+        let posicao = 1;
         for(const ataque of ataques){
             if(!ataque || ataque == 'undefined'){
                 html += `
-                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>  
+                    <button class = 'btn-opc' id = 'ataque-${posicao}' disabled>
                     </button>
                 `;
+                posicao++;
                 continue;
             }
 
@@ -90,7 +91,7 @@ export default class BatalhaView{
         }
         opcoesBatalha.innerHTML = html;
 
-        let botoes = document.querySelectorAll('.btn-opc');
+        let botoes = opcoesBatalha.querySelectorAll('.btn-opc');
         for(const botao of botoes){
             botao.addEventListener("click", ()=>{
                 let posicaoAtaque = botao.id.match(/\d+/g)[0];
@@ -140,7 +141,6 @@ export default class BatalhaView{
                 document.getElementById('trocaPokeAtivo').hidePopover();
             });
         }
-        console.log("trocou");
     }
 
     fugir(){
@@ -175,5 +175,9 @@ export default class BatalhaView{
 
     turnoInimigo(ataqueExecutado, inimigo){
         this.#mensagemBatalha.innerHTML = `${inimigo.nome} usou ${ataqueExecutado.nome} em você!!!!`;
+    }
+
+    turnoJogador(ataqueExecutado, jogador, inimigo){
+        this.#mensagemBatalha.innerHTML = `${jogador.nome} usou ${ataqueExecutado.nome} no ${inimigo.nome}!!!`;
     }
 }

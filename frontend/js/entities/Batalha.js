@@ -2,20 +2,19 @@ import CalculadoraDano from "./CalculadoraDano.js";
 import CalculadoraStats from "./CalculadoraStats.js";
 import Api from "../APIs/Api.js";
 
-class Batalha{
+class Batalha {
     #jogador;
     #timeJogador;
     #oponente;
     #timeOponente;
     #view;
-    #emAndamento;
-    #turnoJogador;
     #npcOponente;
     #mapaNpcs;
     #inventario;
     #idOponente;
-    
-    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view, npcOponente, inventario){
+    #idTreinador;
+
+    constructor(pokeJogador, timeJogador, pokeOponente, timeOponente, view, npcOponente, inventario, idTreinador) {
         this.#jogador = pokeJogador;
         this.#timeJogador = timeJogador;
         this.#oponente = pokeOponente;
@@ -25,172 +24,190 @@ class Batalha{
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
         this.#npcOponente = npcOponente;
 
-        this.#emAndamento = true;
-        this.#turnoJogador = true;
         this.#mapaNpcs = JSON.parse(localStorage.getItem("npcs"));
         this.#idOponente = sessionStorage.getItem("oponente");
+        this.#idTreinador = idTreinador;
 
         this.configurarEventos();
     }
 
-    async configurarEventos(){
-        if(!this.#turnoJogador && this.#oponente.hpAtual > 0){
-            this.ataqueBot();
-        }
+    esperar(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async configurarEventos() {
         this.#view.mostrarEfeitos(this.#jogador, this.#oponente);
-        document.getElementById('atacar').addEventListener('click', async event => {
-           this.#view.mostrarAtaques(this.#jogador, ataque => 
-            this.executarTurno(ataque));
-        })
 
-        document.getElementById('trocar').addEventListener('click', e => {
-            this.#view.trocar(funcaoTimePokemon => 
-                this.trocarPokemon(funcaoTimePokemon, false)
-            );
-        })
-        document.getElementById('mochila').addEventListener('click', e => {
-            this.#view.mostrarMochila(this.#inventario, this.#jogador,this.#inventario, (pokemon, item) =>
-                CalculadoraStats.usarItem(this.#jogador, item)
-            );
-            
-            this.#view.atualizarHp(this.#jogador,this.#oponente)
-        })
-        document.getElementById('voltar').addEventListener('click', e => {
-            this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
-        })
-        document.getElementById('fugir').addEventListener('click', e =>{
-             window.location.href = "game.html"
-        })
+        const botaoAtacar = document.getElementById('atacar');
+        if (botaoAtacar) {
+            botaoAtacar.onclick = () => {
+                this.#view.mostrarAtaques(this.#jogador, async ataque =>
+                    await this.executarTurno(ataque)
+                );
+            };
+        }
 
-        if(this.#jogador.hpAtual == 0){
-            this.#emAndamento = false;
-            if(this.timeDerrotado(this.#timeJogador)){
-                console.log('voce perdeu')
+        const botaoTrocar = document.getElementById('trocar');
+        if (botaoTrocar) {
+            botaoTrocar.onclick = async () => {
+                await this.executarTurno(false);
+            };
+        }
 
-                this.#mapaNpcs[idOponente].isBatalhando = false;
+        const botaoMochila = document.getElementById('mochila');
+        if (botaoMochila) {
+            botaoMochila.onclick = () => {
+                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#inventario, (pokemon, item) => {
+                    CalculadoraStats.usarItem(this.#jogador, item);
+                    this.#view.atualizarHp(this.#jogador, this.#oponente);
+                });
+            };
+        }
 
-                Api.atualizarTime(this.#timeJogador);
+        const botaoVoltar = document.getElementById('voltar');
+        if (botaoVoltar) {
+            botaoVoltar.onclick = () => {
+                this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
+            };
+        }
 
+        const botaoFugir = document.getElementById('fugir');
+        if (botaoFugir) {
+            botaoFugir.onclick = () => {
+                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+                window.location.href = "game.html";
+            };
+        }
+
+        await this.verificarFimDeTurno();
+    }
+
+    async verificarFimDeTurno() {
+        if (this.#jogador.hpAtual <= 0) {
+            if (this.timeDerrotado(this.#timeJogador)) {
+                console.log('voce perdeu');
+                this.#mapaNpcs[this.#idOponente].isBatalhando = false;
+
+                await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
+                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
-                
-                window.location.href = "./mapa.html"
+
+                window.location.href = "./game.html";
+                return;
             } else {
-                this.#view.trocar(funcaoTimePokemon => 
-                    this.trocarPokemon(funcaoTimePokemon, true)
+                this.#view.trocar(funcaoTimePokemon =>
+                    this.trocarPokemon(funcaoTimePokemon)
                 );
                 document.getElementById("trocaPokeAtivo").showPopover();
             }
-        } 
+        }
 
-        if(this.#oponente.hpAtual <= 0){
-            this.#emAndamento = false;
+        if (this.#oponente.hpAtual <= 0) {
             const proximoOponente = this.#timeOponente.pokemon.find(
                 pokemon => pokemon !== null && pokemon.hpAtual > 0
             );
 
-            if(proximoOponente){
-                this.trocarOponente(proximoOponente, true);
+            if (proximoOponente) {
+                this.trocarOponente(proximoOponente);
             } else {
-                
-                let idOponente = this.#idOponente;
-
-                await Api.atualizarTime(this.#timeJogador);
-
+                await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
                 await Api.aumentarDinheiro(this.#npcOponente.recompensa);
-                                
-                let npcOponente = this.#mapaNpcs[idOponente];
 
+                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+
+                const npcOponente = this.#mapaNpcs[this.#idOponente];
                 npcOponente.defeated = true;
                 npcOponente.isBatalhando = false;
-
-                this.#mapaNpcs[idOponente] = npcOponente;
+                this.#mapaNpcs[this.#idOponente] = npcOponente;
 
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
 
-                window.location.href = "./mapa.html"
+                window.location.href = "./game.html";
+                return;
             }
         }
-        console.log("jogador hp: " + this.#jogador.hpAtual + " oponente hp: " + this.#oponente.hpAtual);
     }
 
-    trocarPokemon(novoPokemon, turnoJogador){
+    trocarPokemon(novoPokemon) {
         this.#jogador = novoPokemon;
-        console.log(this.#jogador);
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
-        this.#turnoJogador = turnoJogador;
-
-        this.configurarEventos();
+        this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
     }
 
-    trocarOponente(novoPokemon, turnoJogador){
-        console.log("executou trocar oponente")
-        console.log(novoPokemon)
+    trocarOponente(novoPokemon) {
         this.#oponente = novoPokemon;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
-        this.#turnoJogador = turnoJogador;
-
-        this.configurarEventos();
+        this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
     }
 
-    executarTurno(ataque){
-        try{
-            this.atacar(this.#jogador, this.#oponente, ataque);
-
-            this.#view.atualizarHp(this.#jogador, this.#oponente)
-            
-            this.#turnoJogador = false;
-
-            if(this.#oponente.hpAtual == 0){
-                this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
+    async executarTurno(ataque) {
+        try {
+            // se o parametro ataque for false, é uma troca e nao um ataque, e se for uma troca sem o pokemon
+            // do jogador ter desmaiado o bot ataca o novo pokemon
+            if (!ataque) {
+                this.#view.trocar(async novoPokemon => {
+                    this.trocarPokemon(novoPokemon);
+                    const ataquesValidos = this.#oponente.ataques.filter(a => a !== null);
+                    const ataqueBot = ataquesValidos[Math.floor(Math.random() * ataquesValidos.length)];
+                    await this.ataqueBot(ataqueBot);
+                    await this.verificarFimDeTurno();
+                });
                 return;
             }
 
-            this.configurarEventos();
-        }catch(error){
-
-        }
-    }
-
-    atacar(atacante, defensor, ataque){
-        try{
-            console.log(ataque);
-            let dano = CalculadoraDano.ataque(atacante, defensor, ataque);
-            // console.log(atacante.nome + " deu " + dano + " de dano no " + defensor.nome);
-
-            if(defensor.hpAtual - dano < 0) {
-                defensor.hpAtual = 0
-            } else {
-                defensor.hpAtual -= dano;
-            }
-
-        } catch(e){
-            console.error(e)
-        }
-    }
-
-    ataqueBot(){
-        let numeroAtaque = Math.floor(Math.random() * 3) + 1;
-
-        this.#view.turnoInimigo(this.#oponente.ataques[numeroAtaque], this.#oponente);
-        setTimeout(() => {
-            this.atacar(this.#oponente, this.#jogador, this.#oponente.ataques[numeroAtaque]);
+            await this.resolveOrdemAtaque(this.#jogador, this.#oponente, ataque);
             this.#view.atualizarHp(this.#jogador, this.#oponente);
-            this.#turnoJogador = true;
-            this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
-        }, 3000);
-       
+            this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
+        } catch (error) {
+            console.error("Erro ao executar turno:", error);
+        }
     }
 
-    /**
-     * Método que verifica se algum dos times esta derrotado
-     * 
-     * @param {Time} time 
-     */
-    timeDerrotado(time){
-        const pokemons = time.pokemon.filter(pokemon => pokemon !== null);
+    async atacar(atacante, defensor, ataque) {
+        try {
+            if(atacante === this.#jogador){
+                this.#view.turnoJogador(ataque, atacante, defensor);
+            }
+            const dano = CalculadoraDano.ataque(atacante, defensor, ataque);
+            defensor.hpAtual = Math.max(0, defensor.hpAtual - dano);
 
-        return pokemons.length > 0 &&
-            pokemons.every(pokemon => pokemon.hpAtual <= 0);
+            this.#view.atualizarHp(this.#jogador, this.#oponente);
+            await this.esperar(1500);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async resolveOrdemAtaque(jogador, oponente, ataqueJogador) {
+        const ataquesValidos = oponente.ataques.filter(a => a !== null);
+        const ataqueBot = ataquesValidos[Math.floor(Math.random() * ataquesValidos.length)];
+
+        const jogadorPrimeiro =
+            ataqueJogador.prioridade !== ataqueBot.prioridade
+                ? ataqueJogador.prioridade > ataqueBot.prioridade
+                : jogador.velocidade >= oponente.velocidade;
+
+        if (jogadorPrimeiro) {
+            await this.atacar(jogador, oponente, ataqueJogador);
+            if (oponente.hpAtual > 0) {
+                await this.ataqueBot(ataqueBot);
+            }
+        } else {
+            await this.ataqueBot(ataqueBot);
+            if (jogador.hpAtual > 0) {
+                await this.atacar(jogador, oponente, ataqueJogador);
+            }
+        }
+    }
+
+    async ataqueBot(ataque) {
+        this.#view.turnoInimigo(ataque, this.#oponente);
+        await this.atacar(this.#oponente, this.#jogador, ataque);
+    }
+
+    timeDerrotado(time) {
+        const pokemons = time.pokemon.filter(pokemon => pokemon !== null);
+        return pokemons.length > 0 && pokemons.every(pokemon => pokemon.hpAtual <= 0);
     }
 }
 

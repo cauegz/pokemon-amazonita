@@ -157,7 +157,7 @@ INSERT INTO pokemon
 (id_pokeapi, hp, hp_atual, ataque, defesa, ataque_especial, defesa_especial, velocidade, id_efeito, id_treinador) 
 VALUES
 -- Treinador ID 4 (Marcio Bigolin)
-(445, 108, 1, 130, 95,  80,  85, 102, NULL, 4), -- 1. Garchomp
+(445, 108, 108, 130, 95,  80,  85, 102, NULL, 4), -- 1. Garchomp
 (376,  80,  1, 135, 150, 95,  90,  70, NULL, 4), -- 2. Metagross
 (479,  50,  1,  65, 107, 105, 107,  86, NULL, 4), -- 3. Rotom-Wash
 (637,  85,  1,  60,  65, 135, 105, 100, NULL, 4), -- 4. Volcarona
@@ -165,7 +165,7 @@ VALUES
 (823,  98,  1,  87, 105,  53,  85,  67, NULL, 4), -- 6. Corviknight
 
 -- Treinador ID 5 (Raissa Scheeren)
-(248, 100, 1, 134, 110,  95, 100,  61, NULL, 5), -- 7. Tyranitar
+(248, 100, 100, 134, 110,  95, 100,  61, NULL, 5), -- 7. Tyranitar
 (530, 110, 1, 135,  60,  50,  65,  88, NULL, 5), -- 8. Excadrill
 (94,   60,  1,  65,  60, 130,  75, 110, NULL, 5), -- 9. Gengar
 (130,  95,  1, 125,  79,  60, 100,  81, NULL, 5), -- 10. Gyarados
@@ -173,7 +173,7 @@ VALUES
 (212,  70,  1, 130, 100,  55,  80,  65, NULL, 5), -- 12. Scizor
 
 -- Treinador ID 6 (Jacqueline Akazaki)
-(149,  91,  1, 134,  95, 100, 100,  80, NULL, 6), -- 13. Dragonite
+(149,  91,  91, 134,  95, 100, 100,  80, NULL, 6), -- 13. Dragonite
 (681,  60,  1,  50, 140,  50, 140,  60, NULL, 6), -- 14. Aegislash
 (635,  92,  1, 105,  90, 125,  90,  98, NULL, 6), -- 15. Hydreigon
 (350,  95,  1,  60,  79, 100, 125,  81, NULL, 6), -- 16. Milotic

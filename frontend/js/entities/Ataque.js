@@ -56,6 +56,20 @@ class Ataque {
     get efeito(){
         return this.#efeito;
     }
+
+    toJSON() {
+        return {
+            id: this.#id,
+            pokeApi: this.#pokeApi,
+            nome: this.#nome,
+            pp: this.#pp,
+            prioridade: this.#prioridade,
+            classe: this.#classe,
+            poder: this.#poder,
+            tipo: this.#tipo,
+            efeito: this.#efeito
+        }
+    }
 }
 
 export default Ataque;

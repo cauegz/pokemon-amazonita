@@ -1,4 +1,5 @@
 import Api from "../APIs/Api.js";
+import Time from "../entities/Time.js";
 import verificarSessao from "../services/verificarSessao.js";
 
 const user = await verificarSessao();
@@ -30,7 +31,6 @@ if(!localStorage.getItem('npcs')){
 }
 
 const mapa = JSON.parse(localStorage.getItem("npcs"));
-console.log(mapa);
 
 const botoes = document.querySelectorAll('.btn-escolher');
 
@@ -47,9 +47,12 @@ botoes.forEach(botao => {
     });
 });
 
-function batalhar(idNpc) {
+async function batalhar(idNpc) {
     mapa[idNpc].isBatalhando = true;
-    console.log(mapa);
+    const oponente = await Api.buscarTreinadorByNpc(idNpc);
+
+    let timeOponente = await Time.carregarTime(oponente.id);
+    
     sessionStorage.setItem("oponente", mapa[idNpc].npc);
 
     localStorage.setItem("npcs", JSON.stringify(mapa));
