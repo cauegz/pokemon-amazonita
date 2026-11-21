@@ -155,7 +155,7 @@ export default class BatalhaView{
 
         const botoesReviver = containerTime.querySelectorAll('.btn-reviver');
         for (const botaoRevive of botoesReviver) {
-            botaoRevive.addEventListener('click', () => {
+            botaoRevive.addEventListener('click', async () => {
                 const pos = Number(botaoRevive.dataset.posicao);
                 const pokeAlvo = objTime.pokemon[pos];
                 const indiceRevive = inventario.items.findIndex(
@@ -165,10 +165,17 @@ export default class BatalhaView{
                 if (!pokeAlvo || indiceRevive === -1) return;
 
                 const itemUsado = inventario.items[indiceRevive];
-                calculadoraStats(pokeAlvo, itemUsado);
-
-                // Remove o revive usado do inventário local
-                inventario.items.splice(indiceRevive, 1);
+                const hpAnterior = pokeAlvo.hpAtual;
+                const efeitoAnterior = pokeAlvo.efeito;
+                if (calculadoraStats(pokeAlvo, itemUsado) === false) return;
+                try {
+                    await inventario.removerItem(itemUsado.id);
+                } catch (error) {
+                    pokeAlvo.hpAtual = hpAnterior;
+                    pokeAlvo.efeito = efeitoAnterior;
+                    console.error("Não foi possível consumir o Revive:", error);
+                    return;
+                }
 
                 atualizarHpCallback();
                 this.trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback);
@@ -196,12 +203,22 @@ export default class BatalhaView{
 
         let itemSelecionado = mochila.querySelectorAll('.item');
         for (const item of itemSelecionado) {
-            item.addEventListener('click', () => {
+            item.addEventListener('click', async () => {
                 const pos = Number(item.dataset.pos);
                 const itemEscolhido = inventario.items[pos];
                 if (!itemEscolhido) return;
 
+                const hpAnterior = jogador.hpAtual;
+                const efeitoAnterior = jogador.efeito;
                 calculadoraStats(jogador, itemEscolhido);
+                try {
+                    await inventario.removerItem(itemEscolhido.id);
+                } catch (error) {
+                    jogador.hpAtual = hpAnterior;
+                    jogador.efeito = efeitoAnterior;
+                    console.error("Não foi possível consumir o item:", error);
+                    return;
+                }
                 document.getElementById('abreMochila').hidePopover();
                 this.atualizarHp(jogador, oponente);
                 this.mostrarEfeitos(jogador, oponente);
