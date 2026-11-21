@@ -33,32 +33,39 @@ class Batalha{
         this.configurarEventos();
     }
 
+    #abrirMenuTroca(turnoAposTroca) {
+        this.#view.trocar(
+            pokemon => this.trocarPokemon(pokemon, turnoAposTroca),
+            this.#inventario,
+            (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
+            () => this.#view.atualizarHp(this.#jogador, this.#oponente)
+        );
+    }
+
     async configurarEventos(){
         if(!this.#turnoJogador && this.#oponente.hpAtual > 0){
             this.ataqueBot();
         }
         this.#view.mostrarEfeitos(this.#jogador, this.#oponente);
-        document.getElementById('atacar').addEventListener('click', async event => {
+        document.getElementById('atacar')?.addEventListener('click', async event => {
            this.#view.mostrarAtaques(this.#jogador, ataque => 
             this.executarTurno(ataque));
         })
 
-        document.getElementById('trocar').addEventListener('click', e => {
-            this.#view.trocar(funcaoTimePokemon => 
-                this.trocarPokemon(funcaoTimePokemon, false)
-            );
+        document.getElementById('trocar')?.addEventListener('click', e => {
+           this.#abrirMenuTroca(false);
         })
-        document.getElementById('mochila').addEventListener('click', e => {
+        document.getElementById('mochila')?.addEventListener('click', e => {
             this.#view.mostrarMochila(this.#inventario, this.#jogador,this.#inventario, (pokemon, item) =>
                 CalculadoraStats.usarItem(this.#jogador, item)
             );
             
             this.#view.atualizarHp(this.#jogador,this.#oponente)
         })
-        document.getElementById('voltar').addEventListener('click', e => {
+        document.getElementById('voltar')?.addEventListener('click', e => {
             this.#view.mostrarMenuPrincipal(addJs => this.configurarEventos());
         })
-        document.getElementById('fugir').addEventListener('click', e =>{
+        document.getElementById('fugir')?.addEventListener('click', e =>{
              window.location.href = "game.html"
         })
 
@@ -75,8 +82,11 @@ class Batalha{
                 
                 window.location.href = "./mapa.html"
             } else {
-                this.#view.trocar(funcaoTimePokemon => 
-                    this.trocarPokemon(funcaoTimePokemon, true)
+               this.#view.trocar(
+                    pokemon => this.trocarPokemon(pokemon, true),
+                    this.#inventario,
+                    (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
+                    () => this.#view.atualizarHp(this.#jogador, this.#oponente)
                 );
                 document.getElementById("trocaPokeAtivo").showPopover();
             }

@@ -107,70 +107,107 @@ export default class BatalhaView{
         if(oponente.efeito) this.#stsInimigo.innerHTML = oponente.efeito;
         
     }
-    trocar(trocarPokemon){
-        let objTime = this.#time;
-        
-        let time = document.getElementById('time');
+    trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback) {
+        const objTime = this.#time;
+        const containerTime = document.getElementById('time');
+        const reviveItem = inventario?.items?.find(
+            item => item && item.categoria === "revival"
+        );
 
-        time.innerHTML = ``;
-        for(const poke of objTime.pokemon){
-            if(poke === null) continue;
-            let disabled = "";
-            let classeDisabled = "";
-            let frase = `Escolher ${poke.nome}`
-            if(poke.hpAtual == 0){
-                disabled = "disabled";
-                classeDisabled = "poke-time-disabled";
-                frase = "Derrotado :("
-            }
-            //depois fazer a formatação do pokemon desmaiado com a classe poke-time-disabled
-            
-            time.innerHTML += `
-                <div class="poke-time-container ${classeDisabled}" id=${poke.id}>
-                    <img src=${poke.urlImagem} />
-                    <button class="poke-time" data-posicao="${objTime.pokemon.indexOf(poke)}" ${disabled}>${frase}</button>
+        containerTime.innerHTML = ``;
+
+        for (let i = 0; i < objTime.pokemon.length; i++) {
+            const poke = objTime.pokemon[i];
+            if (!poke) continue;
+
+            const estaDesmaiado = poke.hpAtual <= 0;
+            const disabled = estaDesmaiado ? "disabled" : "";
+            const classeDisabled = estaDesmaiado ? "poke-time-disabled" : "";
+            const frase = estaDesmaiado ? "Derrotado :(" : `Escolher ${poke.nome}`;
+
+            const botaoReviverHtml = (estaDesmaiado && reviveItem) ? `
+                <div class="revive-acao">
+                    <img src="${reviveItem.urlImagem}" alt="${reviveItem.nome}" class="img-revive" />
+                    <button type="button" class="btn-reviver" data-posicao="${i}">Reviver</button>
+                </div>
+            ` : "";
+
+            containerTime.innerHTML += `
+                <div class="poke-time-container ${classeDisabled}" id="${poke.id}">
+                    <img src="${poke.urlImagem}" alt="${poke.nome}" />
+                    <span class="hp-time">HP: ${poke.hpAtual}/${poke.hp}</span>
+                    <button type="button" class="poke-time" data-posicao="${i}" ${disabled}>${frase}</button>
+                    ${botaoReviverHtml}
                 </div>
             `;
         }
-        let pokeSelecionado = document.querySelectorAll('.poke-time');
-        for(const poke of pokeSelecionado){
-            poke.addEventListener('click', () => {
-                this.#posicaoAtual = poke.dataset.posicao;
-                trocarPokemon(objTime.pokemon[this.#posicaoAtual]);
+
+        const botoesEscolher = containerTime.querySelectorAll('.poke-time');
+        for (const botao of botoesEscolher) {
+            botao.addEventListener('click', () => {
+                const pos = Number(botao.dataset.posicao);
+                this.#posicaoAtual = pos;
+                trocarPokemon(objTime.pokemon[pos]);
                 document.getElementById('trocaPokeAtivo').hidePopover();
             });
         }
-        console.log("trocou");
-    }
 
+        const botoesReviver = containerTime.querySelectorAll('.btn-reviver');
+        for (const botaoRevive of botoesReviver) {
+            botaoRevive.addEventListener('click', () => {
+                const pos = Number(botaoRevive.dataset.posicao);
+                const pokeAlvo = objTime.pokemon[pos];
+                const indiceRevive = inventario.items.findIndex(
+                    item => item && item.categoria === "revival"
+                );
+
+                if (!pokeAlvo || indiceRevive === -1) return;
+
+                const itemUsado = inventario.items[indiceRevive];
+                calculadoraStats(pokeAlvo, itemUsado);
+
+                // Remove o revive usado do inventário local
+                inventario.items.splice(indiceRevive, 1);
+
+                atualizarHpCallback();
+
+                // Re-renderiza a troca para refletir o Pokémon vivo e a atualização do inventário
+                this.trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback);
+            });
+        }
+    }
     fugir(){
     }
 
-    mostrarMochila(inventario, jogador, oponente, calculadoraStats){
+   mostrarMochila(inventario, jogador, oponente, calculadoraStats) {
         let mochila = document.getElementById('itens');
         mochila.innerHTML = ``;
-        let count=0;
-        for(const item of inventario.items){
-            if(item === null) continue;
+
+        for (let count = 0; count < inventario.items.length; count++) {
+            const item = inventario.items[count];
+            if (!item || item.categoria === "revival") continue;
+
             mochila.innerHTML += `
-                <div class="item-container" id=${item.id}>
-                    <img src=${item.urlImagem} />
-                    <button class="item" data-pos="${count}">Usar ${item.nome}</button>
-                </div>`
-            count++;
+                <div class="item-container" id="${item.id}">
+                    <img src="${item.urlImagem}" alt="${item.nome}" />
+                    <button type="button" class="item" data-pos="${count}">Usar ${item.nome}</button>
+                </div>
+            `;
         }
-        let itemSelecionado = document.querySelectorAll('.item');
-        for(const item of itemSelecionado){
-            item.addEventListener('click', ()=>{
-                console.log(item.dataset.pos);
-                console.log(inventario.items[item.dataset.pos]);
-                calculadoraStats(this.#time.pokemon[this.#posicaoAtual], inventario.items[item.dataset.pos]);
+
+        let itemSelecionado = mochila.querySelectorAll('.item');
+        for (const item of itemSelecionado) {
+            item.addEventListener('click', () => {
+                const pos = Number(item.dataset.pos);
+                const itemEscolhido = inventario.items[pos];
+                if (!itemEscolhido) return;
+
+                calculadoraStats(jogador, itemEscolhido);
                 document.getElementById('abreMochila').hidePopover();
                 this.atualizarHp(jogador, oponente);
-                this.mostrarEfeitos(jogador,oponente);
+                this.mostrarEfeitos(jogador, oponente);
             });
         }
-        console.log("mochilou", inventario);
     }
 
     turnoInimigo(ataqueExecutado, inimigo){
