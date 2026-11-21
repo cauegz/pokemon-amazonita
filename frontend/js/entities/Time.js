@@ -1,5 +1,4 @@
 import Api from "../APIs/Api.js";
-import PokeApi from "../APIs/PokeApi.js";
 import Pokemon from "./Pokemon.js";
 
 class Time {
@@ -19,7 +18,28 @@ class Time {
     }
 
     static async carregarTime(idTreinador) {
-        console.log("carregou carregar time")
+        const timeSalvo = localStorage.getItem("time-" + idTreinador);
+        if(timeSalvo != null){
+            try {
+                console.log("localStorage, idTreinador: " + idTreinador)
+                const listaPokemon = JSON.parse(timeSalvo);
+
+                let objTime = new Time();
+
+                listaPokemon.forEach((dadosPoke, i) => {
+                    if (dadosPoke !== null) {
+                        const pokemonReconstruido = Pokemon.reconstruir(dadosPoke); 
+                        objTime.adicionarPokemon(i + 1, pokemonReconstruido);
+                    }
+                });
+
+                return objTime;
+            } catch (erro) {
+                localStorage.removeItem("time-" + idTreinador);
+            }
+        }
+
+
         let objTime = new Time();
 
         const timeBanco = await Api.buscarTime(idTreinador);
@@ -38,6 +58,8 @@ class Time {
             objTime.adicionarPokemon(index, pokemon);
             index++;
         }
+
+        localStorage.setItem("time-"+idTreinador, JSON.stringify(objTime));
         return objTime;
     }
 

@@ -25,6 +25,12 @@
     width: 100%;
     height: 100%;
 }
+
+.interface-mapa{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 .btn-menu, .npc{
     display: block;
     width: 15%;

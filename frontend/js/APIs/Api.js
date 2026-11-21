@@ -20,7 +20,8 @@ export default class Api {
         return await resposta.json();
     }
 
-    static async atualizarTime(time) {
+    static async atualizarTime(time, idTreinador) {
+        localStorage.setItem("time-"+idTreinador, JSON.stringify(time));
         const pokemons = time.pokemon ?? time;
 
         return await this.requisicao("/builder/atualiza", {
@@ -35,13 +36,7 @@ export default class Api {
  
     static async enviarTime(time) {
         console.log(time)
-        let ids = new Array;
-        for(const pokemon of time.pokemon){
-            if(!pokemon)
-                continue;
-            
-            ids.push(pokemon.pokeApi)
-        }
+        const ids = time.pokemon.map(pokemon => pokemon ? pokemon.pokeApi : null);
         return await this.requisicao("/builder", {
             method: "POST",
             body: JSON.stringify({
@@ -99,4 +94,3 @@ export default class Api {
         return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
     }
 }
-
