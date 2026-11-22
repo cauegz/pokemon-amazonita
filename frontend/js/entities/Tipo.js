@@ -8,7 +8,6 @@ class Tipo {
         this.#id = id;
         this.#pokeApi = pokeApi;
         this.#nome = nome;
-
         this.#relacoesDano = relacoesApi;
     }
 
@@ -26,6 +25,15 @@ class Tipo {
 
     get relacoesDano() {
         return this.#relacoesDano;
+    }
+
+    toJSON() {
+        return {
+            id: this.#id,
+            pokeApi: this.#pokeApi,
+            nome: this.#nome,
+            relacoesDano: this.#relacoesDano
+        }
     }
 }
 

@@ -15,14 +15,24 @@ async function iniciarBuilder() {
         console.log("time: ")
         console.log(objTime)
 
-        
-        new BuilderView(objTime);
+        new BuilderView(objTime, usuario);
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
-                    await Api.enviarTime(objTime);
+                const botao = document.getElementById("enviar");
+                botao.disabled = true;
 
-                    console.log("time enviado");
+                try {
+                    await Api.enviarTime(objTime);
+                    // Os atributos e a vida são calculados pelo backend ao salvar.
+                    // O objeto usado pelo builder ainda não contém esses dados.
+                    localStorage.removeItem("time-" + usuario.treinador);
+                    window.location.href = "game.html";
+                } catch (erro) {
+                    console.error("erro ao enviar o time:", erro);
+                    botao.disabled = false;
+                    alert("Não foi possível salvar o time. Tente novamente.");
+                }
             });
 
     } catch (erro) {
