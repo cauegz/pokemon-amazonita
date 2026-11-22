@@ -96,6 +96,12 @@ export default class Api {
         return await this.requisicao(`/inventario?id=${id}`);
     }
 
+    static async removerItemInventario(id) {
+        return await this.requisicao(`/inventario/remover?id=${id}`, {
+            method: "DELETE"
+        });
+    }
+
     static async buscarItem(id) {
         return await this.requisicao(`/item?id=${id}`);
     }

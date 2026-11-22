@@ -5,9 +5,11 @@ export default class BuilderView {
     #time;
     #posicao;
 
-    constructor(time) {
+    constructor(time, usuario) {
         this.#time = time;
         this.#posicao = null;
+
+        this.mostrarJogador(usuario);
 
         this.selecionarPoke = document.getElementById("selecionar-poke"); //modal
         this.pokemons = document.getElementById("pokemons"); //lista
@@ -30,7 +32,6 @@ export default class BuilderView {
             .addEventListener("click", () => {
                 this.selecionarPoke.close();
             });
-
         
         this.selecionarPoke.addEventListener("click", async event => {
             // Busca o elemento com a classe CSS btn-opcao no alvo ou em seus ancestrais.
@@ -60,6 +61,17 @@ export default class BuilderView {
             }
         });
         this.carregaTimeBanco();
+    }
+
+    mostrarJogador(usuario) {
+        const nome = document.getElementById("info");
+        const avatar = document.getElementById("player-avatar");
+        const foto = usuario.foto; //depois adicionar lógica do upload
+        nome.innerHTML = usuario.nome || "Treinador";
+
+        if (foto) {
+            avatar.innerHTML = `<img class="player-photo" src="${foto}" alt="Foto de ${nome.textContent}">`;
+        }
     }
 
     async carregarPokemons() {

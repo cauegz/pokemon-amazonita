@@ -27,6 +27,12 @@ class CalculadoraStats{
             const efeitoCura = CalculadoraStats.statusCures.get(item.nome);
             if(pokemon.efeito == efeitoCura) pokemon.efeito = null;
         }
+        if(item.categoria == "revival"){
+            if (pokemon.hpAtual > 0) return false;
+            pokemon.hpAtual = Math.ceil(pokemon.hp / 2);
+            pokemon.efeito = null;
+            return true;
+        }
     }
 }
 export default CalculadoraStats;

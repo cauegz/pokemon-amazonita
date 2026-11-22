@@ -31,10 +31,19 @@ class Batalha {
         this.configurarEventos();
     }
 
+    #abrirMenuTroca(turnoAposTroca) {
+        this.#view.trocar(
+            pokemon => this.trocarPokemon(pokemon, turnoAposTroca),
+            this.#inventario,
+            (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
+            () => this.#view.atualizarHp(this.#jogador, this.#oponente)
+        );
+    }
+
     esperar(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-
+    
     async configurarEventos() {
         this.#view.mostrarEfeitos(this.#jogador, this.#oponente);
 
@@ -46,11 +55,10 @@ class Batalha {
                 );
             };
         }
-
         const botaoTrocar = document.getElementById('trocar');
         if (botaoTrocar) {
             botaoTrocar.onclick = async () => {
-                await this.executarTurno(false);
+              this.#abrirMenuTroca(false);
             };
         }
 
@@ -110,9 +118,11 @@ class Batalha {
                 window.location.href = "./game.html";
                 return;
             } else {
-                //se nao for derrotado, aparece o popup de troca
-                this.#view.trocar(funcaoTimePokemon =>
-                    this.trocarPokemon(funcaoTimePokemon)
+               this.#view.trocar(
+                    pokemon => this.trocarPokemon(pokemon, true),
+                    this.#inventario,
+                    (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
+                    () => this.#view.atualizarHp(this.#jogador, this.#oponente)
                 );
                 document.getElementById("trocaPokeAtivo").showPopover();
             }

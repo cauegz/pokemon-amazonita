@@ -26,6 +26,51 @@
     height: 100%;
 }
 
+.interface-mapa{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.btn-menu, .npc{
+    display: block;
+    width: 15%;
+    height: 15%;
+    position: absolute;
+}
+.btn-menu > img, .npc > img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+#centro-pokemon{
+    top:50%;
+    left:5%;
+}
+#poke-mart{
+    top:40%;
+    right:13%;
+}
+
+#menu {
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+#team-builder, #mochila {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+#team-builder > img, #mochila > img {
+    width: 100%;
+    height: 100%;
+}
 .nome-area{
     font-family: var(--fonte-principal);
     color: white;
@@ -79,6 +124,9 @@ body{
 }
 
 .btn-escolher:hover > img{
+    animation: balancar 0.8s ease-in-out infinite;
+}
+.npc:hover{
     animation: balancar 0.8s ease-in-out infinite;
 }
 @keyframes balancar {
