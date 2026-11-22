@@ -9,4 +9,7 @@ class ControladorPokemon extends ControladorGeral{
         }
         return $this->responseJSON(Pokemon::find($id));
     }
+    public function evoluir(){
+        //implementar depois
+    }
 }

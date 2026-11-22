@@ -78,7 +78,6 @@ export default class PokeAPI {
     }
 
     static async buscarProximaEvolucao(pokeApiId) {
-
         // busca os dados do Pokémon atual
         const pokemon = await this.buscarPokemon(pokeApiId);
 

@@ -2,7 +2,8 @@ import verificarSessao from "../services/verificarSessao.js";
 import Game from "../entities/gameManager/Game.js";
 import Time from "../entities/Time.js";
 import Inventario from "../entities/Inventario.js";
-window.addEventListener('load', async function(){
+import PokeAPI from "../APIs/PokeApi.js";
+window.addEventListener('load', async function () {
     const usuario = await verificarSessao();
 
     const canvas = document.getElementById('gameCanvas');
@@ -10,12 +11,12 @@ window.addEventListener('load', async function(){
     canvas.width = 1020;
     canvas.height = 586;
 
-    const game = new Game(canvas.width, canvas.height); 
-    
+    const game = new Game(canvas.width, canvas.height);
+
     const time = await Time.carregarTime(usuario.treinador);
     console.log(time)
 
-    function animate(){
+    function animate() {
         context.clearRect(0, 0, canvas.width, canvas.height); // limpa o canvas para que ao mudar objetos de posição não deixar rastro
         game.update();
         game.draw(context);
@@ -32,14 +33,14 @@ window.addEventListener('load', async function(){
     const renderizarInventario = () => {
         htmlItem.innerHTML = "";
 
-        const itens = inventario.items.filter(item => item !== null);
+        const items = inventario.items.filter(item => item !== null);
 
-        if (itens.length === 0) {
+        if (items.length === 0) {
             htmlItem.innerHTML = "<p>Inventário vazio.</p>";
             return;
         }
 
-        for (const item of itens) {
+        for (const item of items) {
             htmlItem.innerHTML += `
                 <button type="button" class="item-inventario" data-item-id="${item.id}">
                     <img src="${item.urlImagem}" alt="${item.nome}">
@@ -47,6 +48,65 @@ window.addEventListener('load', async function(){
                 </button>
             `;
         }
+        htmlItem.querySelectorAll(".item-inventario").forEach(botao => {
+            botao.addEventListener("click", () => {
+                const item = items.find(
+                    itemAtual => itemAtual.id === Number(botao.dataset.itemId)
+                );
+                escolherPokemon(item);
+            })
+        })
+
+    };
+
+    const escolherPokemon = async (item) => {
+        let pokemons = [];
+
+        if (item.categoria === "revival") {
+            for (const pokemon of time.pokemon) {
+                if (pokemon !== null && pokemon.hpAtual <= 0) {
+                    pokemons.push({ pokemon: pokemon });
+                }
+            }
+        } else if (item.categoria === "evolution") {
+            for (const pokemon of time.pokemon) {
+                if (pokemon !== null) {
+                    const evolucao =
+                        await PokeAPI.buscarProximaEvolucao(pokemon.pokeApi);
+
+                    if (evolucao !== null) {
+                        pokemons.push({
+                            pokemon: pokemon,
+                            evolucao: evolucao
+                        });
+                    }
+                }
+            }
+        } else {
+            for (const pokemon of time.pokemon) {
+                if (pokemon !== null) {
+                    pokemons.push({ pokemon: pokemon });
+                }
+            }
+        }
+
+        const htmlItem = document.getElementById("mochilaItems");
+
+        if (pokemons.length === 0) {
+            htmlItem.innerHTML =
+                "<p>Nenhum Pokémon pode usar este item.</p>";
+            return;
+        }
+
+        htmlItem.innerHTML = pokemons.map(({ pokemon, evolucao }) => `
+            <button type="button"
+                class="pokemon-inventario"
+                data-posicao="${time.pokemon.indexOf(pokemon)}">
+                <img src="${pokemon.urlImagem}" alt="${pokemon.nome}">
+                <span>${pokemon.nome}</span>
+                ${evolucao ? `<small> -> ${evolucao.nome}</small>` : ""}
+            </button>
+        `).join("");
     };
 
     document.getElementById("mochila").addEventListener("click", () => {
