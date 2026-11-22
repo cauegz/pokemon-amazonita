@@ -10,7 +10,7 @@ export default class Api {
                 ...opcoes.headers
             },
             // Mantém os cookies da sessão nas requisições.
-            credentials: "include" 
+            credentials: "include"
         });
 
         if (!resposta.ok) {
@@ -21,19 +21,19 @@ export default class Api {
     }
 
     static async atualizarTime(time, idTreinador) {
-        localStorage.setItem("time-"+idTreinador, JSON.stringify(time));
+        localStorage.setItem("time-" + idTreinador, JSON.stringify(time));
         const pokemons = time.pokemon ?? time;
 
         return await this.requisicao("/builder/atualiza", {
             method: "POST",
             body: JSON.stringify({
                 pokemon: pokemons.map(pokemon => (
-                    pokemon ? { hpAtual: pokemon.hpAtual, idPokeApi: pokemon.pokeApi} : null
+                    pokemon ? { hpAtual: pokemon.hpAtual, idPokeApi: pokemon.pokeApi } : null
                 ))
             })
         });
     }
- 
+
     static async enviarTime(time) {
         console.log(time)
         const ids = time.pokemon.map(pokemon => pokemon ? pokemon.pokeApi : null);
@@ -87,7 +87,7 @@ export default class Api {
     static async buscarTipoPokeApi(id) {
         return await this.requisicao(`/tipo?id=${id}`);
     }
-    
+
     static async buscarProdutos(loja_id) {
         return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
     }
@@ -117,7 +117,15 @@ export default class Api {
     static async buscarProdutos(loja_id) {
         return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
     }
+    static async comprarProdutos(produtos) {
+        let itens = { itens: produtos }
 
+        return await this.requisicao("/loja/comprar", {
+            method: "POST",
+            body: JSON.stringify(itens)
+        }
+        )
+    }
     static async aumentarDinheiro(recompensa) {
         return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
     }

@@ -5,7 +5,6 @@ export default class LojaView {
     #carrinho;
 
     constructor(loja_id) {
-
         this.inicializar(loja_id);
     }
 
@@ -13,6 +12,21 @@ export default class LojaView {
         this.#produtos = await Produto.listaProdutosByLojaId(id);
         this.carregarMercadoria();
         this.#carrinho = []
+
+        this.#produtos.forEach(produto => {
+            document.getElementById(`produto-${produto.id}`).addEventListener("click", () => {
+                this.#carrinho.push(produto.id);
+                console.log(this.#carrinho)
+            });
+        });
+
+        document.querySelector("#botaoLimpar button").addEventListener("click", () => {
+            this.#carrinho = [];
+        })
+
+        document.querySelector("#botaoComprar button").addEventListener("click", () => {
+            Produto.comprar(this.#carrinho);
+        })
     }
 
     carregarMercadoria() {
@@ -41,15 +55,5 @@ export default class LojaView {
                 </div>
             </div>
         `;
-        this.#produtos.forEach(produto => {
-            document.getElementById(`produto-${produto.id}`).addEventListener("click", () => {
-                this.#carrinho.push(produto.id);
-                console.log(this.#carrinho)
-            });
-        });
-
-        document.querySelector("#botaoLimpar button").addEventListener("click", () => {
-            this.#carrinho = [];
-        })
     }
 }
