@@ -26,7 +26,7 @@ Criar um site em **PHP (Orientado a Objetos)** integrado a um **banco de dados**
 ---
 
 ## 🖥️ Telas Exigidas
-* **Login:** Autenticação e controle de usuário (*Perfil à la Arnaldo*).
+* **Login:** Autenticação e controle de usuário (*Foto de usuario sendo salva como imagem*).
 * **Montagem de Time (*Team Builder*):** Seleção e gerenciamento da equipe.
 * **Batalha:** Sistema de combate (todas as batalhas devem ser registradas em uma **tabela de log** no banco).
 * **Lojinha (*Poké Mart*):** Compra de itens utilizando o dinheiro ganho nas batalhas.
