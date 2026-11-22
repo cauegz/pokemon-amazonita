@@ -1,28 +1,24 @@
-import Produto from "../Produto.js";
+﻿import Produto from "../Produto.js";
 
 export default class LojaView {
     #produtos;
-    #carrinho; 
+    #carrinho;
 
-    constructor(loja_id, carrinho) {
-        this.inicializar(loja_id, carrinho);
+    constructor(loja_id) {
+
+        this.inicializar(loja_id);
     }
 
-    configurarEventos() {
-        this.carregarMercadoria();
-    }
-
-    async inicializar(id, carrinho) {
+    async inicializar(id) {
         this.#produtos = await Produto.listaProdutosByLojaId(id);
-        this.#carrinho = carrinho;
-        this.configurarEventos();
+        this.carregarMercadoria();
+        this.#carrinho = []
     }
 
     carregarMercadoria() {
-        let local = document.getElementById("mesa")
-        console.log(this.#produtos);
-        this.#produtos.forEach(produto => {
-        local.innerHTML += `
+        const local = document.getElementById("mesa");
+
+        local.innerHTML = this.#produtos.map(produto => `
             <div>
                 <div class="produto" id="produto-${produto.id}">
                     <div class="produtoNome">${produto.nome}</div>
@@ -31,23 +27,22 @@ export default class LojaView {
                     </div>
                     <div class="produtoPreco">
                         <legend>${produto.preco}</legend>
-                        <img src="../../../images/moeda.png">
+                        <img src="../../../images/moeda.png" alt="Moedas">
                     </div>
                 </div>
             </div>
-        `;
-
-        document.getElementById(`produto-${produto.id}`)
-            .addEventListener('click', () => {
-                this.#carrinho.adicionarProduto(produto.id);
-            });
-    });
-        local.innerHTML +=
-            `<div>
-            <div id="botaoComprar">
-                <button type="button">Comprar</button>
+        `).join("") + `
+            <div>
+                <div id="botaoComprar">
+                    <button type="button">Comprar</button>
+                </div>
             </div>
-        </div>`;
+        `;
+        this.#produtos.forEach(produto => {
+            document.getElementById(`produto-${produto.id}`).addEventListener("click", () => {
+                this.#carrinho.push(produto.id);
+                console.log(this.#carrinho)
+            });
+        });
     }
-
 }
