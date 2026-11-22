@@ -165,7 +165,7 @@ class Pokemon{
         const pokemonPokeApi = await PokeApi.buscarPokemon(pokeBanco.pokeApi);
         const ataquesBanco = await Api.buscarAtaques(pokeBanco.id);
 
-        const efeito = null;
+        let efeito = null;
         if(pokeBanco.efeito){
             efeito = await Api.buscarEfeito(pokeBanco.efeito);
         }
@@ -239,6 +239,85 @@ class Pokemon{
 
             pokemon.adicionarAtaque(ataque, posicao);
             posicao++;
+        }
+
+        return pokemon;
+    }
+
+    toJSON() {
+        return {
+            id: this.#id,
+            nome: this.#nome,
+            urlImagem: this.#urlImagem,
+            imgBack: this.#imgBack,
+            pokeApi: this.#pokeApi,
+            nivel: this.#nivel,
+            hp: this.#hp,
+            hpAtual: this.#hpAtual,
+            ataque: this.#ataque,
+            defesa: this.#defesa,
+            ataqueEspecial: this.#ataqueEspecial,
+            defesaEspecial: this.#defesaEspecial,
+            velocidade: this.#velocidade,
+            ataques: this.#ataques,
+            efeito: this.#efeito,
+            tipos: this.#tipos
+        };
+    }
+
+    static reconstruir(dados) {
+        if (!dados) return null;
+
+        const pokemon = new Pokemon(
+            dados.id,
+            dados.nome,
+            dados.urlImagem,
+            dados.imgBack,
+            dados.pokeApi,
+            dados.nivel,
+            dados.hp,
+            dados.hpAtual,
+            dados.ataque,
+            dados.defesa,
+            dados.ataqueEspecial,
+            dados.defesaEspecial,
+            dados.velocidade,
+            dados.efeito
+        );
+
+        if (Array.isArray(dados.tipos)) {
+            dados.tipos.forEach((tipo, index) => {
+                if (tipo) {
+                    const tipoObj = new Tipo(tipo.id, tipo.pokeApi, tipo.nome, tipo.relacoesDano);
+                    pokemon.adicionarTipo(tipoObj, index);
+                }
+            });
+        }
+
+        if (Array.isArray(dados.ataques)) {
+            dados.ataques.forEach((ataque, index) => {
+                if (ataque) {
+                    let tipoAtaque; 
+                    if(ataque.tipo){ 
+                        tipoAtaque = new Tipo(ataque.tipo.id, ataque.tipo.pokeApi, ataque.tipo.nome, ataque.tipo.relacoesDano) 
+                    }else {
+                        tipoAtaque = null;
+                    }
+                    
+                    const ataqueObj = new Ataque(
+                        ataque.id,
+                        ataque.pokeApi,
+                        ataque.nome,
+                        ataque.pp,
+                        ataque.prioridade,
+                        ataque.classe,
+                        ataque.poder,
+                        tipoAtaque,
+                        ataque.efeito
+                    );
+                    pokemon.adicionarAtaque(ataqueObj, index);
+                }
+            });
         }
 
         return pokemon;

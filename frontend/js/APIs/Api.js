@@ -20,7 +20,8 @@ export default class Api {
         return await resposta.json();
     }
 
-    static async atualizarTime(time) {
+    static async atualizarTime(time, idTreinador) {
+        localStorage.setItem("time-"+idTreinador, JSON.stringify(time));
         const pokemons = time.pokemon ?? time;
 
         return await this.requisicao("/builder/atualiza", {
@@ -35,13 +36,7 @@ export default class Api {
  
     static async enviarTime(time) {
         console.log(time)
-        let ids = new Array;
-        for(const pokemon of time.pokemon){
-            if(!pokemon)
-                continue;
-            
-            ids.push(pokemon.pokeApi)
-        }
+        const ids = time.pokemon.map(pokemon => pokemon ? pokemon.pokeApi : null);
         return await this.requisicao("/builder", {
             method: "POST",
             body: JSON.stringify({
@@ -50,6 +45,28 @@ export default class Api {
         });
     }
 
+    /**
+     * Salva o log de uma batalha, logBatalha deve ser:
+     * {
+     *    idTreinador1: (int),
+     *    idTreinador2: (int),
+     *    idVencedor: (int),
+     *    recompensa: (int)
+     * }
+     * @param {Object} logBatalha 
+     * @returns void
+     */
+    static async salvarLog(logBatalha) {
+        return await this.requisicao("/batalha/log", {
+            method: "POST",
+            body: JSON.stringify({
+                idTreinador1: logBatalha.idTreinador1,
+                idTreinador2: logBatalha.idTreinador2,
+                idVencedor: logBatalha.idVencedor,
+                recompensa: logBatalha.recompensa
+            })
+        });
+    }
 
     static async buscarPokemon(id) {
         return await this.requisicao(`/pokemon?id=${id}`);
@@ -87,9 +104,8 @@ export default class Api {
         return await this.requisicao(`/treinador?idNpc=${idNpc}`);
     }
 
-    static async buscarNpcByNome(nome) {
-        return await this.requisicao(`/npc?nome=${nome}`);
-
+    static async buscarNpcById(nome) {
+        return await this.requisicao(`/npc?id=${nome}`);
     }
 
     static async buscarProdutos(loja_id) {
@@ -100,4 +116,3 @@ export default class Api {
         return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
     }
 }
-

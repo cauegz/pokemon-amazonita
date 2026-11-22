@@ -13,7 +13,7 @@ export class InputHandler{
             ){
                 this.keys.push(e.key);
             }
-            console.log(e.key,this.keys);
+            // console.log(e.key,this.keys);
         });
         //remove a tecla do array
         window.addEventListener('keyup', e =>{
@@ -24,7 +24,7 @@ export class InputHandler{
                 e.key === 'Enter'){
                 this.keys.splice(this.keys.indexOf(e.key),1);     
             }
-            console.log(e.key,this.keys);     
+            // console.log(e.key,this.keys);     
         });
     }
 }
