@@ -33,6 +33,9 @@ class CalculadoraStats{
             pokemon.efeito = null;
             return true;
         }
+        if(item.categoria == "evolution"){
+            
+        }
     }
 }
 export default CalculadoraStats;

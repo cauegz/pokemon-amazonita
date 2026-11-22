@@ -97,9 +97,7 @@ export default class Api {
     }
 
     static async removerItemInventario(id) {
-        return await this.requisicao(`/inventario/remover?id=${id}`, {
-            method: "DELETE"
-        });
+        return await this.requisicao(`/inventario/remover?id=${id}`);
     }
 
     static async buscarItem(id) {
