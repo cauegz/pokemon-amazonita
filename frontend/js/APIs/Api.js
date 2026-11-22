@@ -147,6 +147,10 @@ export default class Api {
     }
 
     static async curarTime() {
-        return await this.requisicao(`/time/curar`)
+        return await this.requisicao(`/time/curar`);
+    }
+    
+    static async evoluirPokemon(idBanco,idNovoPokeApi){
+        return await this.requisicao(`/pokemon/evoluir?newid=${idNovoPokeApi}&&id=${idBanco}`)
     }
 }

@@ -23,6 +23,7 @@ $router->add("/api/builder",    "Time@criarTime");
 $router->add("/api/builder/atualiza", "Time@atualizarTime");
 $router->add("/api/treinador/time",    "Time@time");
 $router->add("/api/pokemon",    "Pokemon@pokemonById");
+$router->add("/api/pokemon/evoluir", "Pokemon@evoluir");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
