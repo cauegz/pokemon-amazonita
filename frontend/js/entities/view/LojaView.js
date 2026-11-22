@@ -32,8 +32,7 @@ export default class LojaView {
                 </div>
             </div>
         `).join("") + `
-            <div>
-
+            <div id="botoesAcao">
                 <div id="botaoLimpar">
                     <button type="button">Limpar Carrinho</button>
                 </div>
