@@ -15,7 +15,7 @@ async function iniciarBuilder() {
         console.log("time: ")
         console.log(objTime)
 
-        new BuilderView(objTime);
+        new BuilderView(objTime, usuario);
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
