@@ -10,30 +10,43 @@
     <div id="gameContainer">
         <div class="pokemonsEmBatalha">
             <div class="pokemon" id="pokeOponente">
-                <span id="pokeInimigo"></span>
+                <span class="pokeImg" id="pokeInimigo"></span>
                 <div class="pokeInfo" id="pokeInimigoInfo">
-                    <span id="pokeNomeInimigo"></span>
-                    <span id="hpInimigo"></span>
+                    <div>
+                        <span id="pokeNomeInimigo"></span>
+                        
+                        <span class="sts" id="efeitoInimigo"></span>
+                    </div>
+                    <span class="hp-bar">
+                        <span id="hp-bar-oponente" class="life"><span id="hpInimigo"></span></span>
+                    </span>
                 </div>
             </div>
-        
+            <span class="pokemon"></span>
+            <span class="pokemon"></span>
             <div class="pokemon" id="pokeUser">
-                <span id="pokeSelecionado"></span>
+                <span class="pokeImg" id="pokeSelecionado"></span>
                 <div class="pokeInfo" id="pokeUserInfo">
-                    <span id="pokeNome"></span>
-                    <span id="hp"></span>
+                    <div>
+                        <span id="pokeNome"></span>
+                        <span class="sts" id="efeitoJogador"><span>
+                    </div>
+                    <span class="hp-bar">
+                        <span id="hp-bar-player" class="life"><span id="hp"></span></span>
+                    </span>
                 </div>
             </div>
+           
         </div>
         <div id="menuBatalha">
             <p id="mensagemBatalha"></p>
             <div id="opcoesBatalha">
                 <button class="btn-opc" id="atacar">Atacar</button>
                 <button class="btn-opc" id="fugir">Fugir</button>
-                <button class="btn-opc" id="trocar" popovertarget="trocaPokeAtivo" >Trocar</button>
+                <button class="btn-opc" id="trocar" popovertarget="trocaPokeAtivo" >Pokemon</button>
                 <button class="btn-opc" id="mochila" popovertarget="abreMochila">Mochila</button>
             </div>
-            <button id="voltar">voltar</button>
+            <button id="voltar"><i class="fa-solid fa-left-long"></i></button>
         </div>
         <div id="trocaPokeAtivo" popover="auto">
             <button class="close-popover" popovertargetaction="hide"  popovertarget="trocaPokeAtivo" id="fecharPopover">Fechar</button>
@@ -50,5 +63,6 @@
     </div>
    
     <script src="../js/pages/batalha.js" type="module"></script>
+    <script src="https://kit.fontawesome.com/20f8a440c6.js" crossorigin="anonymous"></script>
 </body>
 </html>

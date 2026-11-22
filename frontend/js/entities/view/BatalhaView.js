@@ -1,24 +1,32 @@
 export default class BatalhaView{
     #menuPrincipal;
     #opcoesBatalha;
-    #time
+    #time;
     #posicaoAtual = 0;
     #mensagemBatalha = document.getElementById('mensagemBatalha');
+    #stsJogador;
+    #stsInimigo;
+    #hpPlayer;
+    #hpInimigo;
 
     constructor(time){
         this.#opcoesBatalha = document.getElementById('opcoesBatalha');
         this.#menuPrincipal = this.#opcoesBatalha.innerHTML;
-        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer:";
         this.#time = time;
+        this.#stsJogador = document.getElementById('efeitoJogador');
+        this.#stsInimigo = document.getElementById('efeitoInimigo');
+        this.#hpPlayer = document.getElementById('hp-bar-player');
+        this.#hpInimigo = document.getElementById('hp-bar-oponente');
     }
 
     mostrarPokemon(jogador, oponente){
         //mostrar jogador
-        document.getElementById('pokeNome').innerHTML = jogador.nome;
-        document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.urlImagem}'/>`;
+        document.getElementById('pokeNome').innerHTML =  jogador.nome.charAt(0).toUpperCase() + jogador.nome.slice(1);
+        document.getElementById('pokeSelecionado').innerHTML = `<img src='${jogador.imgBack}'/>`;
 
         //mostrar oponente
-        document.getElementById('pokeNomeInimigo').innerHTML = oponente.nome;
+        document.getElementById('pokeNomeInimigo').innerHTML = oponente.nome.charAt(0).toUpperCase() + oponente.nome.slice(1);
         document.getElementById('pokeInimigo').innerHTML = `<img src='${oponente.urlImagem}'/>`;
 
         this.atualizarHp(jogador, oponente);
@@ -27,11 +35,31 @@ export default class BatalhaView{
     atualizarHp(jogador, oponente){
         document.getElementById('hp').innerHTML = `${jogador.hpAtual}/${jogador.hp}`; 
         document.getElementById('hpInimigo').innerHTML = `${oponente.hpAtual}/${oponente.hp}`; 
+        
+        this.#hpPlayer.style.width=(jogador.hpAtual*100)/jogador.hp + "%";
+        this.#hpInimigo.style.width=(oponente.hpAtual*100)/oponente.hp + "%";
+
+        this.#hpPlayer.style.backgroundColor=`green`;
+        this.#hpInimigo.style.backgroundColor=`green`;
+        if(jogador.hpAtual<(jogador.hp/2)){
+            this.#hpPlayer.style.backgroundColor=`orange`;
+        }
+        if(jogador.hpAtual<(jogador.hp/4)){
+            this.#hpPlayer.style.backgroundColor=`red`;
+        }
+
+        if(oponente.hpAtual<(oponente.hp/2)){
+            this.#hpInimigo.style.backgroundColor=`orange`;
+        }
+        if(oponente.hpAtual<(oponente.hp/4)){
+            this.#hpInimigo.style.backgroundColor=`red`;
+        }
+        
     }
 
     mostrarMenuPrincipal(addJs){
         this.#opcoesBatalha.innerHTML = this.#menuPrincipal;
-        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer";
+        this.#mensagemBatalha.innerHTML = "Em batalha! selecione o que você vai fazer: ";
         addJs()
     }
 
@@ -72,25 +100,43 @@ export default class BatalhaView{
         }
     }
    
-
+    mostrarEfeitos(jogador,oponente){
+        this.#stsJogador.innerHTML= ``;
+        this.#stsInimigo.innerHTML= ``;
+        if(jogador.efeito) this.#stsJogador.innerHTML = jogador.efeito;
+        if(oponente.efeito) this.#stsInimigo.innerHTML = oponente.efeito;
+        
+    }
     trocar(trocarPokemon){
-        console.log(this.#time);
-        let time=document.getElementById('time');
-        for(const poke of this.#time.pokemon){
+        let objTime = this.#time;
+        
+        let time = document.getElementById('time');
+
+        time.innerHTML = ``;
+        for(const poke of objTime.pokemon){
             if(poke === null) continue;
+            let disabled = "";
+            let classeDisabled = "";
+            let frase = `Escolher ${poke.nome}`
+            if(poke.hpAtual == 0){
+                disabled = "disabled";
+                classeDisabled = "poke-time-disabled";
+                frase = "Derrotado :("
+            }
+            //depois fazer a formatação do pokemon desmaiado com a classe poke-time-disabled
+            
             time.innerHTML += `
-                <div class="poke-time-container" id=${poke.id}>
+                <div class="poke-time-container ${classeDisabled}" id=${poke.id}>
                     <img src=${poke.urlImagem} />
-                    <button class="poke-time" data-posicao="${this.#time.pokemon.indexOf(poke)}">Escolher ${poke.nome}</button>
+                    <button class="poke-time" data-posicao="${objTime.pokemon.indexOf(poke)}" ${disabled}>${frase}</button>
                 </div>
             `;
         }
         let pokeSelecionado = document.querySelectorAll('.poke-time');
         for(const poke of pokeSelecionado){
-            poke.addEventListener('click', ()=>{
+            poke.addEventListener('click', () => {
                 this.#posicaoAtual = poke.dataset.posicao;
-                console.log(this.#posicaoAtual);
-                trocarPokemon(this.#time.pokemon[this.#posicaoAtual]);
+                trocarPokemon(objTime.pokemon[this.#posicaoAtual]);
                 document.getElementById('trocaPokeAtivo').hidePopover();
             });
         }
@@ -98,10 +144,9 @@ export default class BatalhaView{
     }
 
     fugir(){
-        console.log("fugiu")
     }
 
-    mostrarMochila(inventario, calculadoraStats){
+    mostrarMochila(inventario, jogador, oponente, calculadoraStats){
         let mochila = document.getElementById('itens');
         mochila.innerHTML = ``;
         let count=0;
@@ -121,12 +166,14 @@ export default class BatalhaView{
                 console.log(inventario.items[item.dataset.pos]);
                 calculadoraStats(this.#time.pokemon[this.#posicaoAtual], inventario.items[item.dataset.pos]);
                 document.getElementById('abreMochila').hidePopover();
+                this.atualizarHp(jogador, oponente);
+                this.mostrarEfeitos(jogador,oponente);
             });
         }
         console.log("mochilou", inventario);
     }
 
-    turnoInimigo(){
-        this.#mensagemBatalha.innerHTML = "Esperando inimigo jogar...";
+    turnoInimigo(ataqueExecutado, inimigo){
+        this.#mensagemBatalha.innerHTML = `${inimigo.nome} usou ${ataqueExecutado.nome} em você!!!!`;
     }
 }

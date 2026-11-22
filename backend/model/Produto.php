@@ -1,9 +1,9 @@
 <?php
 class Produto extends ModelGeral implements JsonSerializable{
-    private float $preco;
-    private int  $estoque;
-    private int $loja_id;
-    private int $id_item_pokeapi;
+    protected float $preco;
+    protected int  $estoque;
+    protected int $loja_id;
+    protected int $id_item_pokeapi;
 
     public static function find($id)
     {

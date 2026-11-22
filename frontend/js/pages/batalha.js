@@ -16,13 +16,14 @@ async function iniciarBatalha() {
     inventario.carregarInventario(user.treinador);
     console.log("Inventário carregado:", inventario);
     const timeJogador = await Time.carregarTime(user.treinador);
-    const timeOponente = await Time.carregarTime(localStorage.getItem("idOponente"))
-    
+    const timeOponente = await Time.carregarTime(localStorage.getItem("idOponente"));
+    console.log(timeOponente)
+
     const view = new BatalhaView(timeJogador);
     const pokemonJogador = timeJogador.pokemon[0];
     const pokemonOponente = timeOponente.pokemon[0];
 
-    new Batalha(pokemonJogador, pokemonOponente, view, inventario);
+    new Batalha(pokemonJogador, timeJogador, pokemonOponente, timeOponente, view, inventario);
     }catch(error){
         console.error("Erro ao iniciar a batalha:", error);
     }

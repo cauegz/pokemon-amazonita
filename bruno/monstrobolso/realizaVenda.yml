@@ -1,0 +1,19 @@
+info:
+  name: realizaVenda
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: http://localhost:8080/api/loja/realizaVenda?id=1
+  params:
+    - name: id
+      value: "1"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
