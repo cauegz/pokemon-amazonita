@@ -12,27 +12,31 @@ $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $router = new Roteador();
 
+// Autenticação
 $router->add("/api/cadastro", "Auth@cadastro");
 $router->add("/api/login",    "Auth@login");
 $router->add("/api/me",       "Auth@me");
 $router->add("/api/logout",   "Auth@logout");
-$router->add("/api/teste",    "Npc@createNpc");
-$router->add("/api/builder",    "Time@criarTime");
-$router->add("/api/produto/criar",  "Loja@criarProduto");
 
+// Time e Pokémon
+$router->add("/api/builder",    "Time@criarTime");
 $router->add("/api/builder/atualiza", "Time@atualizarTime");
 $router->add("/api/treinador/time",    "Time@time");
 $router->add("/api/pokemon",    "Pokemon@pokemonById");
-$router->add("/api/treinador",  "Batalha@treinador");
-$router->add("/api/npc",  "Batalha@npc");
-$router->add("/api/usuario/recompensa", "Batalha@recompensa");
-
-$router->add("/api/loja/comprar", "Loja@comprar");
-
-$router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
+
+// Batalha
+$router->add("/api/treinador",  "Batalha@treinador");
+$router->add("/api/npc",  "Batalha@npc");
+$router->add("/api/usuario/recompensa", "Batalha@recompensa");
+$router->add("/api/batalha/log", "Batalha@salvarLog");
+
+// Loja e inventário
+$router->add("/api/loja/comprar", "Loja@comprar");
+$router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
+$router->add("/api/produto/criar", "Loja@criarProduto");
 $router->add("/api/inventario",  "Inventario@getAllInventarioItems");
 $router->add("/api/inventario/remover", "Inventario@deleteInventarioItem");
 $router->add("/api/item",  "Inventario@getInventarioItem");

@@ -1,6 +1,3 @@
--- =========================================
--- CRIAÇÃO DAS TABELAS
--- =========================================
 
 CREATE TABLE IF NOT EXISTS ataque
 (
@@ -36,6 +33,17 @@ CREATE TABLE IF NOT EXISTS itens_compra
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS log_batalha
+(
+  id             INT       NOT NULL GENERATED ALWAYS AS IDENTITY,
+  recompensa     INT       NOT NULL,
+  criado_em      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  id_treinador_1 INT       NOT NULL,
+  id_treinador_2 INT       NOT NULL,
+  id_vencedor    INT      ,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS log_usuario
 (
   id         INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -48,10 +56,12 @@ CREATE TABLE IF NOT EXISTS log_usuario
 
 CREATE TABLE IF NOT EXISTS loja
 (
-  id           INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome         CHAR(2) NOT NULL UNIQUE,
+  id   INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
+  nome CHAR(2) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
+
+COMMENT ON COLUMN loja.nome IS 'CHECK (nome IN (''l1'',''l2'',''l3''))';
 
 CREATE TABLE IF NOT EXISTS npc
 (
@@ -84,7 +94,7 @@ CREATE TABLE IF NOT EXISTS produto
   id_item_pokeapi INT           NOT NULL UNIQUE,
   preco           DECIMAL(10,2) NOT NULL,
   estoque         INT           NOT NULL,
-  loja_id    INT           NOT NULL,
+  loja_id         INT           NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -146,10 +156,6 @@ CREATE TABLE IF NOT EXISTS venda
   PRIMARY KEY (id)
 );
 
--- =========================================
--- CHAVES ESTRANGEIRAS (FOREIGN KEYS)
--- =========================================
-
 ALTER TABLE npc DROP CONSTRAINT IF EXISTS FK_tipo_npc_TO_npc;
 ALTER TABLE npc
   ADD CONSTRAINT FK_tipo_npc_TO_npc
@@ -179,13 +185,6 @@ ALTER TABLE inventario
   ADD CONSTRAINT FK_treinador_TO_inventario
     FOREIGN KEY (id_treinador)
     REFERENCES treinador (id);
-
-ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_loja_TO_produto;
-ALTER TABLE produto
-  ADD CONSTRAINT FK_loja_TO_produto
-    FOREIGN KEY (loja_id)
-    REFERENCES loja (id);
-
 
 ALTER TABLE venda DROP CONSTRAINT IF EXISTS FK_loja_TO_venda;
 ALTER TABLE venda
@@ -235,8 +234,50 @@ ALTER TABLE time
     FOREIGN KEY (id_pokemon)
     REFERENCES pokemon (id);
 
---VISUALIZA PRODUTOS DISPONÍVEIS 
----SELECT p.nome, p.preco
----FROM produto p
---INNER JOIN loja l ON p.loja_id = l.id
---WHERE p.estoque > 0;
+ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_loja_TO_produto;
+ALTER TABLE produto
+  ADD CONSTRAINT FK_loja_TO_produto
+    FOREIGN KEY (loja_id)
+    REFERENCES loja (id);
+
+ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_pokemon_TO_ataque;
+ALTER TABLE ataque
+  ADD CONSTRAINT FK_pokemon_TO_ataque
+    FOREIGN KEY (pokemon_id)
+    REFERENCES pokemon (id);
+
+ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_tipo_TO_ataque;
+ALTER TABLE ataque
+  ADD CONSTRAINT FK_tipo_TO_ataque
+    FOREIGN KEY (tipo_id)
+    REFERENCES tipo (id);
+
+ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_tipo_TO_tipo_pokemon;
+ALTER TABLE tipo_pokemon
+  ADD CONSTRAINT FK_tipo_TO_tipo_pokemon
+    FOREIGN KEY (tipo_id)
+    REFERENCES tipo (id);
+
+ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_pokemon_TO_tipo_pokemon;
+ALTER TABLE tipo_pokemon
+  ADD CONSTRAINT FK_pokemon_TO_tipo_pokemon
+    FOREIGN KEY (pokemon_id)
+    REFERENCES pokemon (id);
+
+ALTER TABLE log_batalha DROP CONSTRAINT IF EXISTS FK_treinador_TO_log_batalha;
+ALTER TABLE log_batalha
+  ADD CONSTRAINT FK_treinador_TO_log_batalha
+    FOREIGN KEY (id_treinador_1)
+    REFERENCES treinador (id);
+
+ALTER TABLE log_batalha DROP CONSTRAINT IF EXISTS FK_treinador_TO_log_batalha1;
+ALTER TABLE log_batalha
+  ADD CONSTRAINT FK_treinador_TO_log_batalha1
+    FOREIGN KEY (id_treinador_2)
+    REFERENCES treinador (id);
+
+ALTER TABLE log_batalha DROP CONSTRAINT IF EXISTS FK_treinador_TO_log_batalha2;
+ALTER TABLE log_batalha
+  ADD CONSTRAINT FK_treinador_TO_log_batalha2
+    FOREIGN KEY (id_vencedor)
+    REFERENCES treinador (id);
