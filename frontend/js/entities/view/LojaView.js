@@ -33,6 +33,10 @@ export default class LojaView {
             </div>
         `).join("") + `
             <div>
+
+                <div id="botaoLimpar">
+                    <button type="button">Limpar Carrinho</button>
+                </div>
                 <div id="botaoComprar">
                     <button type="button">Comprar</button>
                 </div>
@@ -44,5 +48,9 @@ export default class LojaView {
                 console.log(this.#carrinho)
             });
         });
+
+        document.querySelector("#botaoLimpar button").addEventListener("click", () => {
+            this.#carrinho = [];
+        })
     }
 }

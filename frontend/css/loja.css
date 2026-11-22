@@ -119,10 +119,12 @@ h3 {
 }
 
 #mesa > div:last-child {
+    display: flex;
     grid-column: span 3;
+    align-items: center;
 }
 
-#botaoComprar {
+#mesa > div:last-child > * {
     display: flex;
     height: 65%;
     width: 65%;
@@ -131,8 +133,15 @@ h3 {
 }
 
 #botaoComprar button {
-    color: white;
     background-image: url(../images/background/botao-comprar-bg.png);
+}
+
+#botaoLimpar button {
+    background-image: url(../images/background/botao-limpar-bg.png);
+}
+
+#botaoComprar button, #botaoLimpar button {
+    color: white;
     background-size: contain;
     /*background-color: rgb(0, 167, 0);*/
     border: solid 4px #222;
