@@ -41,7 +41,7 @@ export default class LojaView {
                     </div>
                     <div class="produtoPreco">
                         <legend>${produto.preco}</legend>
-                        <img src="../../../images/moeda.png" alt="Moedas">
+                        <img src="../../../images/moeda.png" class="moedaIcon" alt="Moedas">
                     </div>
                 </div>
             </div>
