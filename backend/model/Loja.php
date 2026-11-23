@@ -4,6 +4,90 @@ class Loja extends ModelGeral implements JsonSerializable, ModelInterface
 {
     protected string $nome;
 
+    public static function comprar($idUsuario, $itens)
+    {
+        $pdo = self::getPDO();
+        $quantidades = [];
+
+        foreach ($itens as $idProduto) {
+            $idProduto = (int)$idProduto;
+
+            $quantidades[$idProduto] += 1;
+        }
+
+        try {
+            $pdo->beginTransaction();
+
+            $usuario = Usuario::find($idUsuario);
+            $treinador = Treinador::findByUsuario($idUsuario);
+
+            $total = 0;
+            $produtos = [];
+
+            foreach ($quantidades as $idProduto => $quantidade) {
+                $produto = Produto::find($idProduto);
+
+                if (!$produto) {
+                    throw new RuntimeException('Produto nao encontrado');
+                }
+
+                if ($produto->estoque < $quantidade) {
+                    throw new SemEstoqueException($produto->estoque, $quantidade);
+                }
+
+                $total += $produto->preco * $quantidade;
+                $produtos[$idProduto] = [$produto, $quantidade];
+            }
+
+            if ($usuario->dinheiro < $total) {
+                throw new SemDinheiroException($usuario->dinheiro, $total);
+            }
+
+            foreach ($produtos as $idProduto => [$produto, $quantidade]) {
+                $produto->estoque -= $quantidade;
+                $produto->save();
+
+                $itemCompra = new ItensCompra();
+                $itemCompra->idProduto = $idProduto;
+                $itemCompra->quantidade = $quantidade;
+                $itemCompra->idUsuario = $idUsuario;
+                $itemCompra->save();
+
+                $inventario = Inventario::findByTreinadorEItem(
+                    $treinador->id,
+                    $produto->id_item_pokeapi
+                );
+
+                if ($inventario) {
+                    $inventario->quantidade += $quantidade;
+                } else {
+                    $inventario = new Inventario();
+                    $inventario->idTreinador = $treinador->id;
+                    $inventario->idPokeApi = $produto->id_item_pokeapi;
+                    $inventario->quantidade = $quantidade;
+                }
+
+                $inventario->save();
+            }
+
+            $usuario->dinheiro -= $total;
+            $usuario->save();
+
+            $pdo->commit();
+
+            return [
+                'ok' => true,
+                'mensagem' => 'Compra realizada com sucesso',
+            ];
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+
+            throw $e;
+        }
+    }
+
     public function setNome($nome)
     {
         if (!in_array($nome, ['l1', 'l2', 'l3'], true)) {

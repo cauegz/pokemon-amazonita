@@ -16,11 +16,14 @@ export class Background {
         this.column = 1;
         this.current = this.layout[this.row][this.column];
         this.image = new Image();
-        this.image.src = this.images[this.current];
+        
+        this.updateUI();
     }
+
     draw(context) {
         context.drawImage(this.image, 0, 0, this.game.width, this.game.height);
     }
+
     changeBackground(dx, dy) {
         const row = this.row + dy;
         const column = this.column + dx;
@@ -40,7 +43,26 @@ export class Background {
         this.row = row;
         this.column = column;
         this.current = nextImage;
-        this.image.src = this.images[this.current];
+        this.updateUI();
         return true;
+    }
+
+    updateUI() {
+        let caminhoImagemAtual = this.images[this.current];
+        let idImagemAtual = this.current;
+        console.log(idImagemAtual)
+
+        this.image.src = caminhoImagemAtual;
+
+        console.log(document.querySelectorAll('interface-mapa'))
+        document.querySelectorAll('.interface-mapa').forEach((element) => {
+            let id = Number(element.dataset.mapaId);
+
+            if(id == idImagemAtual){
+                element.hidden = false;
+            } else {
+                element.hidden = true;
+            }
+        })
     }
 }

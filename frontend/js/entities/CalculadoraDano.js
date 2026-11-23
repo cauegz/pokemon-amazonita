@@ -5,7 +5,7 @@ class CalculadoraDano{
 
         if(ataque.efeito !== "none"){
            pokeDefesa.efeito= ataque.efeito;
-           console.log(pokeDefesa.nome+"esta com "+pokeDefesa.efeito)
+           console.log(pokeDefesa.nome+" esta com "+pokeDefesa.efeito)
         }
         let multiplicadores = this.resolveMultiplicadores(pokeAtaque, pokeDefesa, ataque);
         let classeAtaque = ataque.classe;
