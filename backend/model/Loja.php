@@ -27,10 +27,6 @@ class Loja extends ModelGeral implements JsonSerializable, ModelInterface
             foreach ($quantidades as $idProduto => $quantidade) {
                 $produto = Produto::find($idProduto);
 
-                if (!$produto) {
-                    throw new RuntimeException('Produto nao encontrado');
-                }
-
                 if ($produto->estoque < $quantidade) {
                     throw new SemEstoqueException($produto->estoque, $quantidade);
                 }
@@ -80,9 +76,7 @@ class Loja extends ModelGeral implements JsonSerializable, ModelInterface
                 'mensagem' => 'Compra realizada com sucesso',
             ];
         } catch (Throwable $e) {
-            if ($pdo->inTransaction()) {
-                $pdo->rollBack();
-            }
+            $pdo->rollBack();
 
             throw $e;
         }

@@ -10,6 +10,9 @@
     <canvas id="gameCanvas"></canvas>
     <img id="player" src="../images/sprites/player-sprites.png" alt="Player Sprite" >
 
+    <span id="nome-usuario"></span>
+    <button id="sair">Sair</button>
+
     <div class="camada-interface">
             <div id="menu">
                  <a href="./builder.html" class="btn-menu" id="team-builder">
@@ -63,5 +66,19 @@
     <script type="module" src="../js/pages/main.js"></script>
     <script type="module" src="../js/pages/mapa.js"></script>
     <script src="https://kit.fontawesome.com/20f8a440c6.js" crossorigin="anonymous"></script>
+    <script type="module">
+        let usuario;
+        import verificarSessao from "../js/services/verificarSessao.js";
+        usuario = await verificarSessao();
+
+        const spanNome = document.getElementById('nome-usuario');
+        spanNome.innerHTML = usuario.nome;
+
+        const btnSair = document.getElementById('sair');
+        btnSair.addEventListener('click', async () => {
+            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/pages/login.html';
+        });
+    </script>
 </body>
 </html>

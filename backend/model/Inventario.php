@@ -32,6 +32,20 @@ class Inventario extends ModelGeral implements JsonSerializable, ModelInterface{
 
         return $result->fetchObject(self::class);
     }
+
+    public static function findByTreinador($idTreinador)
+    {
+        $sql = 'SELECT id, id_treinador AS "idTreinador", quantidade, id_item_pokeapi AS "idPokeApi"
+                FROM inventario
+                WHERE id_treinador = :idTreinador';
+
+        $result = self::getPDO()->prepare($sql);
+        $result->bindParam(':idTreinador', $idTreinador);
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
     public static function all($filter = null)
     {
         $sql = 'SELECT id, id_treinador AS "idTreinador", quantidade, id_item_pokeapi AS "idPokeApi"
