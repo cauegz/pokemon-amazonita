@@ -129,7 +129,8 @@ class Usuario extends ModelGeral implements JsonSerializable, ModelInterface
         return [
             "id"    => $this->id,
             "login" => $this->login,
-            "nome"  => $this->nome
+            "nome"  => $this->nome,
+            "dinheiro" => $this->dinheiro
         ];
     }
 }
