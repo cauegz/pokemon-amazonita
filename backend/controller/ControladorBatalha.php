@@ -44,12 +44,12 @@ class ControladorBatalha extends ControladorGeral {
      * Retorna um npc do banco com base no nome
      */
     public function npc(){
-        if(!isset($_GET['nome'])){
-            $this->responseError("nome não informado", 400);
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
         }
-        $nome = $_GET['nome'];
+        $id = $_GET['id'];
 
-        $this->responseJSON(Npc::findByNome($nome));
+        $this->responseJSON(Npc::find($id));
     }
 
     /**
@@ -78,5 +78,34 @@ class ControladorBatalha extends ControladorGeral {
         $usuario->dinheiro += $_GET['dinheiro'];
         $usuario->save();
         $this->responseJSON($usuario);
+    }
+
+    /**
+     * Salva o resultado da batalha no banco
+     * 
+     * Espera isso: 
+     * {
+     *    idTreinador1: (int),
+     *    idTreinador2: (int),
+     *    idVencedor: (int),
+     *    recompensa: (int)
+     * }
+     */
+    public function salvarLog(){
+        $dados = $this->receiveJSON();
+
+        $log = new LogBatalha();
+        $log->idTreinador1 = $dados['idTreinador1'];
+        $log->idTreinador2 = $dados['idTreinador2'];
+        $log->idVencedor = $dados['idVencedor'];
+        $log->recompensa = $dados['recompensa'];
+
+        try{
+            $log->save();
+        } catch(Exception $e){
+            $this->responseError("erro ao salvar o log da batalha", 500);
+        }
+
+        $this->responseJSON(["ok" => true, "mensagem" => "salvo com sucesso"]);
     }
 }

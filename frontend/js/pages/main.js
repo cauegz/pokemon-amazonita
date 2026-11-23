@@ -1,31 +1,19 @@
-import { Player } from "../entities/gameManager/Player.js";
-import { InputHandler } from "../entities/gameManager/InputHandler.js";
-import { Background } from "../entities/gameManager/Background.js";
-window.addEventListener('load', function(){
+import verificarSessao from "../services/verificarSessao.js";
+import Game from "../entities/gameManager/Game.js";
+import Time from "../entities/Time.js";
+
+window.addEventListener('load', async function(){
+    const usuario = await verificarSessao();
+
     const canvas = document.getElementById('gameCanvas');
     const context = canvas.getContext('2d');
     canvas.width = 1020;
     canvas.height = 586;
 
-    class Game{
-        constructor(width, height){
-            this.width = width;
-            this.height = height;
-            this.player = new Player(this);
-            this.input = new InputHandler();
-            this.background = new Background(this);
-        }
-        update(){
-            this.player.update(this.input.keys);
-        }
-        draw(context){
-            this.background.draw(context);
-            this.player.draw(context);
-        }
-    }
-
     const game = new Game(canvas.width, canvas.height); 
-    console.log(game);
+
+    const time = await Time.carregarTime(usuario.treinador);
+    console.log(time)
 
     function animate(){
         context.clearRect(0, 0, canvas.width, canvas.height); // limpa o canvas para que ao mudar objetos de posição não deixar rastro

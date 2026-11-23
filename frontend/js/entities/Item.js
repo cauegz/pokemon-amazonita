@@ -64,8 +64,8 @@ class Item{
         const itemData = await pokeApi.buscarItem(idPokeApi);
         const itemBanco = await Api.buscarItem(idBanco);
         const item = new Item(
-            itemData.id,
             itemBanco.id,
+            itemData.id,
             itemData.name,
             itemData.flavor_text_entries[0].text,
             itemData.effect_entries[0].effect,

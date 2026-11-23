@@ -5,13 +5,95 @@
     box-sizing: border-box;
 }
 
-#gameCanvas{
-    border: 5px solid black;
+#gameCanvas, .camada-interface{
     position: absolute;
     top: 50%;
-    left:50%;
+    left: 50%;
     transform: translate(-50%,-50%);
     max-width: 100%;
+}
+
+.camada-interface{
+    width: 1020px;
+    height: 586px;
+    z-index: 2;
+   
+}
+
+.interface-mapa{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.interface-mapa{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.btn-menu, .npc{
+    display: block;
+    width: 15%;
+    height: 15%;
+    position: absolute;
+}
+.btn-menu > img, .npc > img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+#centro-pokemon{
+    top:50%;
+    left:5%;
+}
+#poke-mart{
+    top:40%;
+    right:13%;
+}
+
+#menu {
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+#team-builder, #mochila {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+#team-builder > img, #mochila > img {
+    width: 100%;
+    height: 100%;
+}
+.nome-area{
+    font-family: var(--fonte-principal);
+    color: white;
+    width: 40%;
+    text-shadow:
+    -1px -1px 0 #000000,
+     1px -1px 0 #000000,
+    -1px  1px 0 #000000,
+     1px  1px 0 #000000;
+}
+.mensagem-missao{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    background-color: rgba(0, 0, 0, 0.432);
+    border-radius: 10px;
+    width: 60%;
+    padding: 5px;
+}
+#gameCanvas{
+    border: 5px solid black;
 }
 
 #player{
@@ -20,4 +102,38 @@
 body{
     background-repeat: no-repeat;
     background-size: cover;
+}
+.btn-escolher{
+    all: unset;
+    position: absolute;
+    z-index: 3;
+    width: 15%;
+    height: 15%;
+    top: 65%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+.btn-escolher >img{
+    display: block;
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    transition: transform 0.2s;
+    transform-origin: center bottom;
+}
+
+.btn-escolher:hover > img{
+    animation: balancar 0.8s ease-in-out infinite;
+}
+.npc:hover{
+    animation: balancar 0.8s ease-in-out infinite;
+}
+@keyframes balancar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
 }
