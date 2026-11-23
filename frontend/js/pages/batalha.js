@@ -20,7 +20,7 @@ async function iniciarBatalha() {
         console.log(oponente)
 
         //time e pokemons
-        inventario.carregarInventario(user.treinador);
+        await inventario.carregarInventario(user.treinador);
         console.log("Inventário carregado:", inventario);
         
         const timeJogador = await Time.carregarTime(user.treinador);

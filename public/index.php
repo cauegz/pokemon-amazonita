@@ -38,6 +38,7 @@ $router->add("/api/loja/comprar", "Loja@comprar");
 $router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
 $router->add("/api/produto/criar", "Loja@criarProduto");
 $router->add("/api/inventario",  "Inventario@getAllInventarioItems");
+$router->add("/api/inventario/remover", "Inventario@deleteInventarioItem");
 $router->add("/api/item",  "Inventario@getInventarioItem");
 
 try {

@@ -1,42 +1,59 @@
-import Produto from "../Produto.js";
+﻿import Produto from "../Produto.js";
 
-export default class LojaView{
+export default class LojaView {
     #produtos;
+    #carrinho;
 
-    constructor(loja_id){
+    constructor(loja_id) {
         this.inicializar(loja_id);
     }
-    
-    configurarEventos(){
-        this.carregarMercadoria();
-    }
-    
-    async inicializar(id){
+
+    async inicializar(id) {
         this.#produtos = await Produto.listaProdutosByLojaId(id);
-        this.configurarEventos();
+        this.carregarMercadoria();
+        this.#carrinho = []
+
+        this.#produtos.forEach(produto => {
+            document.getElementById(`produto-${produto.id}`).addEventListener("click", () => {
+                this.#carrinho.push(produto.id);
+                console.log(this.#carrinho)
+            });
+        });
+
+        document.querySelector("#botaoLimpar button").addEventListener("click", () => {
+            this.#carrinho = [];
+        })
+
+        document.querySelector("#botaoComprar button").addEventListener("click", () => {
+            Produto.comprar(this.#carrinho);
+        })
     }
 
-    carregarMercadoria(){
-        let local = document.getElementById("mesa")
-        console.log(this.#produtos);
-        this.#produtos.forEach(produto => {
-            local.innerHTML += 
-            `<div>
-                <div class="produto">
-                <div class="produtoNome">${produto.nome}</div>
-                    <div class="produtoImg"><img src="${produto.urlImagem}" alt="${produto.nome} image"></div>
+    carregarMercadoria() {
+        const local = document.getElementById("mesa");
+
+        local.innerHTML = this.#produtos.map(produto => `
+            <div>
+                <div class="produto" id="produto-${produto.id}">
+                    <div class="produtoNome">${produto.nome}</div>
+                    <div class="produtoImg">
+                        <img src="${produto.urlImagem}" alt="${produto.nome} image">
+                    </div>
                     <div class="produtoPreco">
-                    <legend>${produto.preco}</legend><img src="../../../images/moeda.png">
+                        <legend>${produto.preco}</legend>
+                        <img src="../../../images/moeda.png" alt="Moedas">
                     </div>
                 </div>
-            </div>`;
-        });
-        local.innerHTML += 
-        `<div>
-            <div id="botaoComprar">
-                <button type="button">Comprar</button>
             </div>
-        </div>`;
+        `).join("") + `
+            <div id="botoesAcao">
+                <div id="botaoLimpar">
+                    <button type="button">Limpar Carrinho</button>
+                </div>
+                <div id="botaoComprar">
+                    <button type="button">Comprar</button>
+                </div>
+            </div>
+        `;
     }
-
 }

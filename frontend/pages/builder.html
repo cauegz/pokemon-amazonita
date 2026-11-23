@@ -10,8 +10,24 @@
 
 <body>
     <div id="gameContainer">
-        <h1>team builder</h1>
-        <div id="equipe">
+        <section class="player">
+            <div id="player-info">
+                <div class="player-avatar" id="player-avatar">
+                    <span class="avatar-placeholder" aria-hidden="true">?</span>
+                    <button id="upload-player-photo" type="button">Adicionar foto</button>
+                </div>
+                <div class="player-details">
+                    <p>Treinador</p>
+                    <h2 id="info"></h2>
+                </div>
+            </div>
+            <img id="player-sprite" src="../images/sprites/player-sprite.png" alt="Sprite do treinador">
+        </section>
+        <main class="builder-main">
+            <div class="builder-title">
+                <h1>Monte seu time</h1>
+            </div>
+            <div id="equipe">
             <div class="acoes-pokemon">
                 <button class="btn-selecionar-poke" data-poke="1">
                     Selecionar pokemon 1
@@ -50,15 +66,14 @@
             </div>
 
             <dialog id="selecionar-poke">
-                <button id="fecha-modal">X</button>
+                <button id="fecha-modal" type="button">X</button>
                 <div id="pokemons">Carregando...</div>
             </dialog>
-        </div>
-        <div id="botoes">
-            <button id="enviar">
-                enviar
-            </button>
-        </div>
+            </div>
+            <div id="botoes">
+                <button id="enviar" type="button">Salvar time</button>
+            </div>
+        </main>
     </div>
     <script src="../js/pages/builder.js" type="module"></script>
 </body>
