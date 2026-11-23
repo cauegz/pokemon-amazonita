@@ -87,6 +87,7 @@ h3 {
 }
 
 .produto {
+    position: relative;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -95,6 +96,15 @@ h3 {
     width: 90%;
     border-radius: 5px;
     transition: all 0.15s;
+}
+
+.produto > .quant {
+    background-color: rgb(53, 27, 0);
+    padding: 2pt 2pt;
+    border-radius: 50px;
+    position: absolute;
+    top: 4px;
+    right: 6px;
 }
 
 .produto:hover {
@@ -216,3 +226,23 @@ h3 {
     right: 16px;
 }
 
+.quant {
+    position: absolute;
+    right: 0;
+}
+
+.animacaoPagamentoNegado{
+    animation: pagamentoNegado 1s ease-in-out infinite;
+}
+
+@keyframes pagamentoNegado {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}

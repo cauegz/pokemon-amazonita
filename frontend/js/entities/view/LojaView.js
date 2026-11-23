@@ -23,6 +23,8 @@ export default class LojaView {
                 this.#carrinho.push(produto.id);
                 this.#valorCarrinho += produto.preco;
                 this.atualizarValorCarrinho();
+                                                                                    // Pega a quant. de produtos que estão no carrinho com base no id
+                document.querySelector(`#produto-${produto.id} .quant`).innerHTML = this.#carrinho.filter(x => x === produto.id).length
                 console.log(this.#valorCarrinho);
                 console.log(this.#carrinho);
             });
@@ -33,10 +35,19 @@ export default class LojaView {
         })
 
         document.querySelector("#botaoComprar button").addEventListener("click", () => {
-            Produto.comprar(this.#carrinho);
-            this.#dinheiroUsuario -= this.#valorCarrinho;
-            this.limparCarrinho();
-            document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario
+            if(this.#valorCarrinho > this.#dinheiroUsuario){
+                //document.querySelector('#valorCarrinho span').style.backgroundColor = 'red';
+                document.getElementById('valorCarrinho').classList.add('animacaoPagamentoNegado');
+                setTimeout(()=>{
+                    document.getElementById('valorCarrinho').classList.remove('animacaoPagamentoNegado');
+                }, 3000)
+            }
+            else {
+                Produto.comprar(this.#carrinho);
+                this.#dinheiroUsuario -= this.#valorCarrinho;
+                this.limparCarrinho();
+                document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario
+            }
         })
     }
 
@@ -46,8 +57,9 @@ export default class LojaView {
         local.innerHTML = this.#produtos.map(produto => `
             <div>
                 <div class="produto" id="produto-${produto.id}">
-                    <div class="produtoNome">${produto.nome}</div>
-                    <div class="produtoImg">
+                <div class="produtoNome">${produto.nome} </div>
+                <span class='quant'></span>
+                <div class="produtoImg">
                         <img src="${produto.urlImagem}" alt="${produto.nome} image">
                     </div>
                     <div class="produtoPreco">
@@ -71,6 +83,9 @@ export default class LojaView {
     limparCarrinho(){
         this.#carrinho = [];
         this.#valorCarrinho = 0;
+        this.#produtos.forEach(produto =>{
+            document.querySelector(`#produto-${produto.id} .quant`).innerHTML = '';
+        })
         this.atualizarValorCarrinho();
     }
 
