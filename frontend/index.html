@@ -1,31 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monstrobolso</title>
+    <title>Pokémon Amazonita Version</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <h1>Monstrobolso</h1>
-    <h2 id="titulo"></h2>
-    <p id="msg">logado</p>
-    <button id="sair">Sair</button>
-
-    <a href="pages/game.html">jogar</a>
-
-    <script type="module">
-        let usuario;
-        import verificarSessao from "../js/services/verificarSessao.js";
-        usuario = await verificarSessao();
-
-        document.getElementById("titulo").innerHTML = "Olá " + usuario.nome;
-
-        const btnSair = document.getElementById('sair');
-        btnSair.addEventListener('click', async () => {
-            await fetch('/api/logout', { method: 'POST', credentials: 'include' });
-            window.location.href = '/pages/login.html';
-        });
-
-    </script>
+    <div id="container">
+        <div id="opcoes">
+            <ul>
+                <li><a href="pages/login.html">COMEÇAR</a></li>
+                <li><a>MENU</a>
+                    <ul>
+                        <li> <a class="sobre" href="pages/sobre.html">SOBRE O JOGO</a> </li>
+                    </ul>
+                </li>
+            
+            
+        </div>
+        
+            
+        
+    </div>
 </body>
 </html>

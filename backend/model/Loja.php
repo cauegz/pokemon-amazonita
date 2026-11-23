@@ -32,7 +32,7 @@ class Loja extends ModelGeral implements JsonSerializable, ModelInterface
                 }
 
                 if ($produto->estoque < $quantidade) {
-                    throw new RuntimeException('Nao tem mais estoque');
+                    throw new SemEstoqueException($produto->estoque, $quantidade);
                 }
 
                 $total += $produto->preco * $quantidade;
@@ -40,7 +40,7 @@ class Loja extends ModelGeral implements JsonSerializable, ModelInterface
             }
 
             if ($usuario->dinheiro < $total) {
-                throw new RuntimeException('Voce nao tem dinheiro');
+                throw new SemDinheiroException($usuario->dinheiro, $total);
             }
 
             foreach ($produtos as $idProduto => [$produto, $quantidade]) {

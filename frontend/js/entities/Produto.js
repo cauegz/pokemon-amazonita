@@ -1,33 +1,33 @@
 import Api from "../APIs/Api.js";
 import PokeApi from "../APIs/PokeApi.js";
 import Item from "./Item.js";
-export default class Produto extends Item{
+export default class Produto extends Item {
     #preco;
     #estoque;
 
-    constructor(id, idPokeApi, nome, descricao, efeito,urlImagem,categoria, preco, estoque){
-        super(id, idPokeApi, nome, descricao, efeito,urlImagem,categoria);
+    constructor(id, idPokeApi, nome, descricao, efeito, urlImagem, categoria, preco, estoque) {
+        super(id, idPokeApi, nome, descricao, efeito, urlImagem, categoria);
         this.#preco = preco;
         this.#estoque = estoque;
     }
 
-    get preco(){
+    get preco() {
         return this.#preco;
     }
 
-    get estoque(){
+    get estoque() {
         return this.#estoque;
     }
 
-    set estoque(estoque){
+    set estoque(estoque) {
         this.#estoque = estoque;
     }
 
-    set preco(preco){
+    set preco(preco) {
         this.#preco = preco;
     }
 
-    static async listaProdutosByLojaId(id){
+    static async listaProdutosByLojaId(id) {
         let produtosBanco = await Api.buscarProdutos(id);
 
         //O .map() vai retornar uma lista de Promises e o Promise.all() vai esperar todas as Promises serem resolvidas e retornar uma lista de Produtos
@@ -46,5 +46,9 @@ export default class Produto extends Item{
                 item.name
             );
         }));
+    }
+
+    static async comprar(produtos) {
+        return Api.comprarProdutos(produtos);
     }
 }
