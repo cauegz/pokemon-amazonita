@@ -3,6 +3,7 @@ import Game from "../entities/gameManager/Game.js";
 import Time from "../entities/Time.js";
 import Inventario from "../entities/Inventario.js";
 import PokeAPI from "../APIs/PokeApi.js";
+import CalculadoraStat from "../entities/CalculadoraStats.js";
 window.addEventListener('load', async function () {
     const usuario = await verificarSessao();
 
@@ -32,7 +33,7 @@ window.addEventListener('load', async function () {
 
     const renderizarInventario = () => {
         htmlItem.innerHTML = "";
-
+        console.log("abriu invent")
         const items = inventario.items.filter(item => item !== null);
 
         if (items.length === 0) {
@@ -53,6 +54,7 @@ window.addEventListener('load', async function () {
                 const item = items.find(
                     itemAtual => itemAtual.id === Number(botao.dataset.itemId)
                 );
+
                 escolherPokemon(item);
             })
         })
@@ -61,7 +63,7 @@ window.addEventListener('load', async function () {
 
     const escolherPokemon = async (item) => {
         let pokemons = [];
-
+        
         if (item.categoria === "revival") {
             for (const pokemon of time.pokemon) {
                 if (pokemon !== null && pokemon.hpAtual <= 0) {
@@ -107,6 +109,13 @@ window.addEventListener('load', async function () {
                 ${evolucao ? `<small> -> ${evolucao.nome}</small>` : ""}
             </button>
         `).join("");
+  
+        htmlItem.querySelectorAll(".pokemon-inventario").forEach(pokemon =>{
+         pokemon.addEventListener("click", () => {
+            CalculadoraStat.usarItem(time.pokemon[pokemon.dataset.posicao], item, usuario.treinador);
+            modal.close();
+        })
+        })
     };
 
     document.getElementById("mochila").addEventListener("click", () => {
