@@ -212,7 +212,7 @@ class Batalha {
             defensor.hpAtual = Math.max(0, defensor.hpAtual - dano);
 
             this.#view.atualizarHp(this.#jogador, this.#oponente);
-            await this.esperar(1500);
+            await this.esperar(3000);
         } catch (e) {
             console.error(e);
         }
