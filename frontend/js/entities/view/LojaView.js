@@ -1,41 +1,42 @@
-﻿import Produto from "../Produto.js";
+import Produto from "../Produto.js";
 
 export default class LojaView {
     #produtos;
     #carrinho;
     #dinheiroUsuario;
+    #valorCarrinho;
 
     constructor(loja_id, dinheiro) {
-        this.inicializar(loja_id);
         this.#dinheiroUsuario = dinheiro;
+        this.inicializar(loja_id);
     }
 
     async inicializar(id) {
         this.#produtos = await Produto.listaProdutosByLojaId(id);
         this.carregarMercadoria();
-        this.#carrinho = []
+        this.#carrinho = [];
+        this.#valorCarrinho = 0;
 
-        document.getElementById('dinheiro').innerHTML = `
-                <div>
-                    <p>
-                        ${this.#dinheiroUsuario}
-                    </p>
-                </div>
-                <img src="../../../images/moeda.png" class="moedaIcon" alt="Moedas">`
-
+        document.getElementById('dinheiro').innerHTML =  this.#dinheiroUsuario;
         this.#produtos.forEach(produto => {
             document.getElementById(`produto-${produto.id}`).addEventListener("click", () => {
                 this.#carrinho.push(produto.id);
-                console.log(this.#carrinho)
+                this.#valorCarrinho += produto.preco;
+                this.atualizarValorCarrinho();
+                console.log(this.#valorCarrinho);
+                console.log(this.#carrinho);
             });
         });
 
         document.querySelector("#botaoLimpar button").addEventListener("click", () => {
-            this.#carrinho = [];
+            this.limparCarrinho()
         })
 
         document.querySelector("#botaoComprar button").addEventListener("click", () => {
             Produto.comprar(this.#carrinho);
+            this.#dinheiroUsuario -= this.#valorCarrinho;
+            this.limparCarrinho();
+            document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario
         })
     }
 
@@ -66,4 +67,23 @@ export default class LojaView {
             </div>
         `;
     }
+
+    limparCarrinho(){
+        this.#carrinho = [];
+        this.#valorCarrinho = 0;
+        this.atualizarValorCarrinho();
+    }
+
+    atualizarValorCarrinho() {
+        let local = document.querySelector("#valorCarrinho span");
+        local.innerHTML = this.#valorCarrinho;
+
+        if (this.#valorCarrinho > this.#dinheiroUsuario){
+            local.style.color = 'red';
+        }
+        else {
+            local.style.color = 'white';
+        }
+    }
+
 }
