@@ -30,5 +30,5 @@ class Batalha {
 
         this.configurarEventos();
     }
-...
+}
 ```

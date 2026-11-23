@@ -23,5 +23,5 @@ class Time {
     adicionarPokemon(posicao, pokemon) {
         this.#pokemon[posicao - 1] = pokemon;
     }
-...
+}
 ```
