@@ -127,7 +127,10 @@ export default class Api {
     static async aumentarDinheiro(recompensa) {
         return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
     }
-    static async evoluirPokemon(idBanco,idNovoPokeApi){
-        return await this.requisicao(`/pokemon/evoluir?newid=${idNovoPokeApi}&&id=${idBanco}`)
+    static async evoluirPokemon(idBanco,pokeEvo){
+        return await this.requisicao(`/pokemon/evoluir?id=${idBanco}`, {
+            method: "POST",
+            body: pokeEvo
+        })
     }
 }
