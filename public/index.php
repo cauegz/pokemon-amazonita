@@ -42,11 +42,22 @@ $router->add("/api/inventario",  "Inventario@getAllInventarioItems");
 $router->add("/api/inventario/remover", "Inventario@deleteInventarioItem");
 $router->add("/api/item",  "Inventario@getInventarioItem");
 
+
+// Foto de perfil
+$router->add("/api/upload", "Upload@uploadArquivo");
+$router->add("/api/removerFoto", "Upload@deletarArquivo");
+$router->add("/api/fotoPerfil", "Upload@fotoPerfil");
+
 try {
     $router->executar($url);
-} catch (\Throwable $th) {
-    header('Content-Type: application/json; charset=utf-8');
+} catch (\Throwable $erro) {
+    header("Content-Type: application/json; charset=utf-8");
     http_response_code(500);
-    echo json_encode(["ok" => false, "mensagem" => "erro desconhecido", "stacktrace" => $th->getMessage()]);
-    die();
+
+    echo json_encode([
+        "ok" => false,
+        "mensagem" => $erro->getMessage(),
+        "arquivo" => $erro->getFile(),
+        "linha" => $erro->getLine()
+    ]);
 }

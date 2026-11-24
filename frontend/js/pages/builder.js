@@ -41,3 +41,24 @@ async function iniciarBuilder() {
 }
 
 iniciarBuilder();
+
+const botaoEditarFoto = document.getElementById("upload-player-photo");
+const preview = document.getElementById("foto-preview");
+const placeholder = document.getElementById("avatar-placeholder");
+
+botaoEditarFoto.addEventListener("click", () => {
+    window.location.href = "upload.html";
+});
+
+async function carregarFotoPerfil() {
+    const urlFotoServidor = "http://localhost/api/fotoPerfil"; 
+
+    preview.onload = () => {
+        preview.hidden = false;
+        placeholder.hidden = true;
+    };
+
+    preview.src = urlFotoServidor;
+}
+
+carregarFotoPerfil();

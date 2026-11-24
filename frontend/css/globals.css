@@ -15,6 +15,7 @@
     --main-height: 586px;
 
     --fonte-principal: 'Pixelify Sans', sans-serif;
+    --cor-fudndo: #1f5711;
 }
 body{
      background-image: url(../images/background/fundo.png);
