@@ -122,4 +122,5 @@ window.addEventListener('load', async function () {
         renderizarInventario();
         modal.showModal();
     });
+    document.getElementById("fechaMochila").addEventListener("click",()=> modal.close());
 })
