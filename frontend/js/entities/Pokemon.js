@@ -160,9 +160,9 @@ class Pokemon{
     }
 
 
-    static async carregaPokemon(idPokeBanco) {
+    static async carregaPokemon(idPokeBanco, pokeApi = null) {
         const pokeBanco = await Api.buscarPokemon(idPokeBanco);
-        const pokemonPokeApi = await PokeApi.buscarPokemon(pokeBanco.pokeApi);
+        const pokemonPokeApi = await PokeApi.buscarPokemon(pokeApi ?? pokeBanco.pokeApi);
         const ataquesBanco = await Api.buscarAtaques(pokeBanco.id);
 
         let efeito = null;

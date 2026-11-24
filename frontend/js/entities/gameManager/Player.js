@@ -9,8 +9,8 @@ export class Player {
         this.width = 80;
         this.height = 80;
 
-        this.x = 0;
-        this.y = this.game.height - this.height;
+        this.x = this.game.width - this.width*6.7;
+        this.y = this.game.height/1.5 - this.height;
         this.image = document.getElementById('player');
         this.speedX = 0;
         this.speedY = 0;

@@ -20,11 +20,15 @@ class ControladorPokemon extends ControladorGeral{
      * e o id do banco no get
      */
     public function evoluir(){
-        if(!isset($_GET['id'])){
-            $this->responseError("id do pokemon nao informado", 400);
-        }
+        $id = $_GET['id'];
+
         $dados = $this->receiveJSON();
-        $pokemon = Pokemon::findByPokeApiAndTreinador($dados['idPokeApi'] - 1, $dados['treinador']);
+        $pokemon = Pokemon::find($id);
+
+        if (!$pokemon) {
+            $this->responseError("pokemon nao encontrado no banco", 400);
+            return;
+        }
 
         $pokemon->ataque = $dados['ataque'];
         $pokemon->ataqueEspecial = $dados['ataqueEspecial'];
