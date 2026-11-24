@@ -1,46 +1,36 @@
 <?php
 class ControladorInventario extends ControladorGeral{
-    public function createInventarioItem($idTreinador, $quantidade, $idPokeApi){
-        $inventarioItem = new Inventario();
-        $inventarioItem->idTreinador = $idTreinador;
-        $inventarioItem->quantidade = $quantidade;
-        $inventarioItem->idPokeApi = $idPokeApi;
-
-        if ($inventarioItem->save()) {
-            $this->responseJSON($inventarioItem);
-        } else {
-            $this->responseError("Erro ao criar item de inventário", 500);
+    public function getInventarioItem(){
+        if(!isset($_GET['id'])){
+            $this->responseError("item nao enviado", 400);
         }
-    }
-    public function getInventarioItem($id){
-        $inventarioItem = Inventario::find($id);
+
+        $inventarioItem = Inventario::find($_GET['id']);
         if ($inventarioItem) {
             $this->responseJSON($inventarioItem);
-        } else {
-            $this->responseError("Item de inventário não encontrado", 404);
         }
+        $this->responseError("Item de inventario nao encontrado", 404);
     }
+
     public function getAllInventarioItems(){
-        $inventarioItems = Inventario::all();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(!isset($_SESSION['treinador'])){
+            $this->responseError("usuario nao logado", 404);
+        }
+
+        $idTreinador = $_SESSION['treinador'];
+        $inventarioItems = Inventario::findByTreinador($idTreinador);
+
         $this->responseJSON($inventarioItems);
     }
-    public function updateInventarioItem($id, $idTreinador, $quantidade, $idPokeApi){
-        $inventarioItem = Inventario::find($id);
-        if ($inventarioItem) {
-            $inventarioItem->idTreinador = $idTreinador;
-            $inventarioItem->quantidade = $quantidade;
-            $inventarioItem->idPokeApi = $idPokeApi;
 
-            if ($inventarioItem->save()) {
-                $this->responseJSON($inventarioItem);
-            } else {
-                $this->responseError("Erro ao atualizar item de inventário", 500);
-            }
-        } else {
-            $this->responseError("Item de inventário não encontrado", 404);
+    public function deleteInventarioItem(){
+        if(!isset($_GET['id'])){
+            $this->responseError("item nao enviado", 400);
         }
-    }
-    public function deleteInventarioItem($id){
+        $id = $_GET['id'];
         if (Inventario::delete($id)) {
             $this->responseJSON(["message" => "Item de inventário deletado com sucesso"]);
         } else {

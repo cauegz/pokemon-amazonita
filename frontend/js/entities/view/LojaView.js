@@ -3,15 +3,25 @@
 export default class LojaView {
     #produtos;
     #carrinho;
+    #dinheiroUsuario;
 
-    constructor(loja_id) {
+    constructor(loja_id, dinheiro) {
         this.inicializar(loja_id);
+        this.#dinheiroUsuario = dinheiro;
     }
 
     async inicializar(id) {
         this.#produtos = await Produto.listaProdutosByLojaId(id);
         this.carregarMercadoria();
         this.#carrinho = []
+
+        document.getElementById('dinheiro').innerHTML = `
+                <div>
+                    <p>
+                        ${this.#dinheiroUsuario}
+                    </p>
+                </div>
+                <img src="../../../images/moeda.png" class="moedaIcon" alt="Moedas">`
 
         this.#produtos.forEach(produto => {
             document.getElementById(`produto-${produto.id}`).addEventListener("click", () => {
@@ -41,7 +51,7 @@ export default class LojaView {
                     </div>
                     <div class="produtoPreco">
                         <legend>${produto.preco}</legend>
-                        <img src="../../../images/moeda.png" alt="Moedas">
+                        <img src="../../../images/moeda.png" class="moedaIcon" alt="Moedas">
                     </div>
                 </div>
             </div>

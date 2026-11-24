@@ -27,6 +27,7 @@ $router->add("/api/pokemon/evoluir", "Pokemon@evoluir");
 $router->add("/api/efeito", "Batalha@efeito");
 $router->add("/api/tipo", "Batalha@tipo");
 $router->add("/api/ataques",  "Batalha@ataque");
+$router->add("/api/pokemon/evoluir", "Pokemon@evoluir");
 
 // Batalha
 $router->add("/api/treinador",  "Batalha@treinador");

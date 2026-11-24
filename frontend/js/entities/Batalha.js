@@ -65,7 +65,7 @@ class Batalha {
         const botaoMochila = document.getElementById('mochila');
         if (botaoMochila) {
             botaoMochila.onclick = () => {
-                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#inventario, (pokemon, item) => {
+                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#oponente, (item) => {
                     CalculadoraStats.usarItem(this.#jogador, item);
                     this.#view.atualizarHp(this.#jogador, this.#oponente);
                 });
@@ -222,10 +222,13 @@ class Batalha {
         const ataquesValidos = oponente.ataques.filter(a => a !== null);
         const ataqueBot = ataquesValidos[Math.floor(Math.random() * ataquesValidos.length)];
 
-        const jogadorPrimeiro =
-            ataqueJogador.prioridade !== ataqueBot.prioridade
-                ? ataqueJogador.prioridade > ataqueBot.prioridade
-                : jogador.velocidade >= oponente.velocidade;
+        let jogadorPrimeiro;
+
+        if(ataqueJogador.prioridade !== ataqueBot.prioridade){
+            jogadorPrimeiro = ataqueJogador.prioridade > ataqueBot.prioridade;
+        } else {
+            jogadorPrimeiro = jogador.velocidade >= oponente.velocidade;
+        }
 
         if (jogadorPrimeiro) {
             await this.atacar(jogador, oponente, ataqueJogador);

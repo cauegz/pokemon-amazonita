@@ -188,7 +188,7 @@ export default class BatalhaView{
    mostrarMochila(inventario, jogador, oponente, calculadoraStats) {
         let mochila = document.getElementById('itens');
         mochila.innerHTML = ``;
-
+        console.log(inventario)
         for (let count = 0; count < inventario.items.length; count++) {
             const item = inventario.items[count];
             if (!item || item.categoria === "revival") continue;
