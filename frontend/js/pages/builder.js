@@ -41,3 +41,36 @@ async function iniciarBuilder() {
 }
 
 iniciarBuilder();
+
+const botaoEditarFoto = document.getElementById("upload-player-photo");
+const preview = document.getElementById("foto-preview");
+const placeholder = document.getElementById("avatar-placeholder");
+
+botaoEditarFoto.addEventListener("click", () => {
+    window.location.href = "upload.html";
+});
+
+async function carregarFotoPerfil() {
+    try {
+        const resposta = await fetch("/api/fotoPerfil", {
+            credentials: "include",
+            cache: "no-store"
+        });
+
+        if (!resposta.ok) {
+            preview.hidden = true;
+            placeholder.hidden = false;
+            return;
+        }
+
+        const imagem = await resposta.blob();
+        preview.src = URL.createObjectURL(imagem);
+        preview.hidden = false;
+        placeholder.hidden = true;
+    } catch {
+        preview.hidden = true;
+        placeholder.hidden = false;
+    }
+}
+
+carregarFotoPerfil();

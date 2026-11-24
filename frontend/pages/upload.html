@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Amazonita</title>
+    <link rel="stylesheet" href="../css/upload.css" />
+</head>
+<body>
+    <!-- Area principal com os dados do treinador e as ferramentas de perfil. -->
+    <div id="gameContainer">
+        <section class="player">
+            <!-- Previa da foto ou marcador exibido quando ainda nao ha imagem. -->
+            <div id="player-info">
+                <div class="player-avatar" id="player-avatar">
+                    <span class="avatar-placeholder" id="avatar-placeholder" aria-hidden="true">?</span>
+                    <img id="foto-preview" class="player-photo" alt="Prévia da foto de perfil" hidden />
+                    <button id="upload-player-photo" type="button" aria-label="Editar foto de perfil"
+                            title="Editar foto de perfil">
+                        ✏
+                    </button>
+                </div>
+
+                <div class="player-details">
+                    <h2 id="info">Carregando...</h2>
+                </div>
+            </div>
+
+            <img id="player-sprite" src="../images/sprites/player-sprite.png"
+                    alt="Sprite do treinador">
+        </section>
+
+        <main class="builder-main">
+            <div class="builder-title">
+                <h1>Gerencie seu perfil</h1>
+            </div>
+
+            <!-- Campo de arquivo oculto, acionado pelo botao do avatar. -->
+            <input id="arquivo" type="file" accept="image/*" hidden />
+
+            <!-- Acoes para salvar ou remover a foto de perfil. -->
+            <section class="perfil-foto">
+                <p>Escolha uma imagem e salve para atualizar sua foto de perfil.</p>
+
+                <div class="botoes perfil-botoes">
+                    <button id="enviar" type="button" disabled>Salvar foto</button>
+                    <button id="deletar" type="button">Deletar foto</button>
+                </div>
+            </section>
+
+            <!-- Retorna para a tela de montagem do time. -->
+            <a class="link-voltar" href="builder.html">VOLTAR</a>
+        </main>
+    </div>
+
+    <!-- Controla a selecao, o envio e a exclusao da foto. -->
+    <script src="../js/pages/upload.js" type="module"></script>
+</body>
+</html>
