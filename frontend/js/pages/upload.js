@@ -52,7 +52,7 @@ botaoSalvar.addEventListener("click", async () => {
             throw new Error(resultado.mensagem);
         }
 
-        console.log(responsta.mensagem);
+        alert("foto salva com sucesso")
     } catch (erro) {
         console.error(erro.message);
     } finally {
@@ -67,11 +67,9 @@ botaoDeletar.addEventListener("click", async () => {
     try {
         const resposta = await Api.removerFoto();
 
-        const resultado = await resposta.json();
-
         if (!resposta.ok) {
             throw new Error(
-                resultado.mensagem
+                resposta.mensagem
             );
         }
 
@@ -80,6 +78,7 @@ botaoDeletar.addEventListener("click", async () => {
         inputFoto.value = "";
         botaoSalvar.disabled = true;
 
+        alert("foto excluída com sucesso")
     } catch (erro) {
         alert(erro.message);
     } finally {
