@@ -102,6 +102,20 @@ class Time extends ModelGeral implements JsonSerializable, ModelInterface
         return $stmt->fetchObject(self::class);
     }
 
+    public static function findByTreinador($idTreinador)
+    {
+        $sql = 'SELECT id, id_treinador as "treinador", id_pokemon as "pokemon", posicao
+                FROM time
+                WHERE id_treinador = :idTreinador';
+
+        $result = self::getPDO()->prepare($sql);
+
+        $result->bindParam(":idTreinador", $idTreinador);
+
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
 
     public function jsonSerialize(): mixed
     {
