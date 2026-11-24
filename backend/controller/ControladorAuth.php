@@ -67,7 +67,7 @@ class ControladorAuth extends ControladorGeral {
         $user = Usuario::findByLogin($login);
 
         if (!$user || !password_verify($senha, $user->senha)) {
-            $this->responseError('Login ou senha incorretos.', 400); //login ou senha incorretos é 400(bad request)
+            $this->responseError('Login ou senha incorretos.', 404);
             return;
         }
 

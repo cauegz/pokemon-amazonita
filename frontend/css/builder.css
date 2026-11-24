@@ -353,3 +353,59 @@ body {
 .pokemon > button:hover {
     background: #c3e3a8;
 }
+.player-avatar {
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-placeholder,
+.player-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.avatar-placeholder {
+    display: grid;
+    place-items: center;
+}
+
+.player-photo {
+    z-index: 1;
+    object-fit: cover;
+}
+
+#upload-player-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+}
+
+#upload-player-photo::before {
+    content: "✏";
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #303030;
+    border-radius: 50%;
+    background: #f0e6a4;
+    box-shadow: 2px 2px 0 #303030;
+    color: #303030;
+    font-size: 15px;
+}
+
+#upload-player-photo:hover::before {
+    background: #fffbea;
+    transform: scale(1.08);
+}

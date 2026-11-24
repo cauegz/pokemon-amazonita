@@ -19,3 +19,5 @@ RUN printf '<Directory /var/www/html/public>\n\
 </Directory>\n' > /etc/apache2/conf-available/public.conf
 
 RUN a2enconf public
+
+CMD ["sh", "-c", "chown -R www-data:www-data /var/www/html/z_data/perfil && chmod -R 775 /var/www/html/z_data/perfil && apache2-foreground"]
