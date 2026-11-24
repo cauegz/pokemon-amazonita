@@ -130,7 +130,7 @@ export default class Api {
     static async evoluirPokemon(idBanco,pokeEvo){
         return await this.requisicao(`/pokemon/evoluir?id=${idBanco}`, {
             method: "POST",
-            body: pokeEvo
+            body: JSON.stringify(pokeEvo)
         })
     }
 }

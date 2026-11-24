@@ -20,7 +20,7 @@ class CalculadoraStats{
     ]);
 
 
-    static usarItem(pokemon, item, idTreinador = null){
+    static async usarItem(pokemon, item, idTreinador = null){
         if(item.categoria == "healing"){
            const quantidadeCura = CalculadoraStats.cura.get(item.nome);
            pokemon.hpAtual += quantidadeCura ;
@@ -38,11 +38,14 @@ class CalculadoraStats{
         }
         if(item.categoria == "evolution"){
             pokemon.pokeApi += 1;
-            pokemon = Pokemon.carregaPokemon(pokemon.id);
+            console.log( pokemon.pokeApi)
+          
+            pokemon = await Pokemon.carregaPokemon(pokemon.id, pokemon.pokeApi);
+            console.log(pokemon)
             Api.evoluirPokemon(pokemon.id,
                 {
                     treinador: idTreinador,
-                    idPokeApi: pokemon.PokeApi,
+                    idPokeApi: pokemon.pokeApi,
                     ataque: pokemon.ataque,
                     ataqueEspecial: pokemon.ataqueEspecial,
                     defesa: pokemon.defesa,
@@ -52,11 +55,7 @@ class CalculadoraStats{
                     hp: pokemon.hp
                 }
             );
-           /**
-             * precisa enviar
-             * (todosOsStatus),
-             * idTreinador
-            */
+            return pokemon;
 
         }
     }

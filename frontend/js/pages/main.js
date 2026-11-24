@@ -3,7 +3,7 @@ import Game from "../entities/gameManager/Game.js";
 import Time from "../entities/Time.js";
 import Inventario from "../entities/Inventario.js";
 import PokeAPI from "../APIs/PokeApi.js";
-import CalculadoraStat from "../entities/CalculadoraStats.js";
+import CalculadoraStats from "../entities/CalculadoraStats.js";
 window.addEventListener('load', async function () {
     const usuario = await verificarSessao();
 
@@ -111,8 +111,20 @@ window.addEventListener('load', async function () {
         `).join("");
   
         htmlItem.querySelectorAll(".pokemon-inventario").forEach(pokemon =>{
-         pokemon.addEventListener("click", () => {
-            CalculadoraStat.usarItem(time.pokemon[pokemon.dataset.posicao], item, usuario.treinador);
+         pokemon.addEventListener("click", async () => {
+             const posicao = pokemon.dataset.posicao;
+             const resultado = await CalculadoraStats.usarItem(
+                time.pokemon[posicao],
+                item,
+                usuario.treinador
+             );
+            if (item.categoria === "evolution" && resultado) {
+                    time.pokemon[posicao] = resultado;
+                    localStorage.setItem(
+                        "time-" + usuario.treinador,
+                        JSON.stringify(time)
+                );
+            }
             modal.close();
         })
         })
