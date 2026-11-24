@@ -104,7 +104,7 @@ class Usuario extends ModelGeral implements JsonSerializable, ModelInterface
      */
     public function setSenha($senha){
         if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha)) {
-            throw new InvalidArgumentException('A senha precisa ter no minímo 8 caracteres, com letra maiúscula e minúscula.');
+            throw new SenhaInvalidaException();
         }
         $this->senha = password_hash($senha, PASSWORD_DEFAULT);
     }

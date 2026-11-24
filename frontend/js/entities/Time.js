@@ -12,7 +12,11 @@ class Time {
         return this.#pokemon;
     }
 
-    //metodo utilizado antes do pokemon ser salvo no banco
+    /**
+     * Recebe uma instancia de pokemon e salva no objeto Time
+     * @param {int} posicao 
+     * @param {Pokemon} pokemon 
+     */
     adicionarPokemon(posicao, pokemon) {
         this.#pokemon[posicao - 1] = pokemon;
     }
