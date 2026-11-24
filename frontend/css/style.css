@@ -157,12 +157,11 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
-   
     transform: translate(-50%,-50%);
 }
 #mochilaItems {
-     position: absolute;
-    top: 65%;
+    position: absolute;
+    top: 60%;
     left: 50%;
    
     transform: translate(-50%,-50%);
@@ -174,21 +173,37 @@ body{
     place-content: center;
     place-items: center;
     padding: 12%;
+    gap:12px;
     box-sizing: border-box;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border: 0;
+    outline: 0;
+}
+
+#mochilaItems::-webkit-scrollbar {
+    display: none;
 }
 
 .item-inventario,
 .pokemon-inventario {
     appearance: none;
     all: unset;
-    width: 48px;
+    width: 58px;
     height: 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.item-inventario span,
+.pokemon-inventario span{
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .item-inventario img,
@@ -196,4 +211,23 @@ body{
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+#fechaMochila{
+    background-color: rgb(145, 41, 41);
+    color: white;
+    border-radius: 100%;
+    position: absolute;
+    top:30%;
+    left:70%;
+    width: 24px;
+    height: 24px;
+    transition: 0.2s;
+}
+#fechaMochila:hover{
+    transform: scale(1.1);
+}
+
+.item-inventario:hover,
+.pokemon-inventario:hover{
+    transform: scale(1.1);
 }
