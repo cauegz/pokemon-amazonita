@@ -22,6 +22,7 @@ class ControladorUpload extends ControladorGeral
         
         $extensoesPermitidas = [
             "jpg",
+            "jpeg",
             "png",
             "webp"
         ];
