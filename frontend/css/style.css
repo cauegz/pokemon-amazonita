@@ -99,7 +99,7 @@
     position: absolute;
     top: 5%;
     right: 10%;
-    z-index: 10;
+    z-index: 4;
     display: flex;
     align-items: center;
 }
@@ -276,11 +276,11 @@ body{
 }
 
 #menu-time {
-    position: fixed;
-    top: 19%;
-    left: 5%; 
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
     width: 260px;
-    height: 100vh;
 
     display: flex;
     flex-direction: column;
