@@ -3,7 +3,7 @@ services:
     image: nginx:alpine
     container_name: frontend
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
       - ../frontend:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

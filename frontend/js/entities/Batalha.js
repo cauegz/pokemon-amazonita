@@ -84,8 +84,9 @@ class Batalha {
 
         const botaoFugir = document.getElementById('fugir');
         if (botaoFugir) {
-            botaoFugir.onclick = () => {
-                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+            botaoFugir.onclick = async () => {
+                await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
+                localStorage.setItem("time-" + this.#idTreinador, JSON.stringify(this.#timeJogador));
                 window.location.href = "game.html";
             };
         }
@@ -105,7 +106,7 @@ class Batalha {
 
                 //atualiza o time do jogador no banco e no localStorage
                 await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
-                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+                localStorage.setItem("time-" + this.#idTreinador, JSON.stringify(this.#timeJogador));
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
 
                 //salva o log da batalha no banco
@@ -155,7 +156,7 @@ class Batalha {
                 );
 
                 //salva o time pos batalha no localStorage para evitar multiplas buscas na PokeAPI
-                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+                localStorage.setItem("time-" + this.#idTreinador, JSON.stringify(this.#timeJogador));
 
                 //salva no localStorage que voce derrotou o inimigo
                 const npcOponente = this.#mapaNpcs[this.#idOponente];

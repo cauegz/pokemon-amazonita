@@ -16,7 +16,7 @@ window.addEventListener('load', async function () {
     // Instancia o jogo e carrega o time salvo do treinador
     const game = new Game(canvas.width, canvas.height);
     const time = await Time.carregarTime(usuario.treinador);
-    console.log(time)
+    console.log(time);
 
     // Loop principal de frames: limpa a tela, atualiza estado e redesenha
     function animate() {
@@ -151,5 +151,49 @@ window.addEventListener('load', async function () {
         renderizarInventario();
         modal.showModal();
     });
-    document.getElementById("fechaMochila").addEventListener("click",()=> modal.close());
-})
+    document
+        .getElementById("fechaMochila")
+        .addEventListener("click", () => modal.close());
+
+    function mostraTime(time) {
+        const divTime = document.getElementById("menu-time");
+        let htmlFinal = "";
+        let cont = 1;
+
+        time.forEach(pokemon => {
+            if(!pokemon){
+                return;
+            }
+            const porcentagemHp = (pokemon.hpAtual * 100) / pokemon.hp;
+            
+            let classeCor = "hp-verde";
+            if (pokemon.hpAtual < (pokemon.hp / 2)) {
+                classeCor = "hp-laranja";
+            }
+
+            if (pokemon.hpAtual < (pokemon.hp / 4)) {
+                classeCor = "hp-vermelho";
+            } 
+
+            //deixa a primeira letra maiusucla
+            pokemon.nome = pokemon.nome.charAt(0).toUpperCase() + pokemon.nome.slice(1);
+
+            htmlFinal += `
+                <div id="pokeTime-${cont}" class="card-pokemon">
+                    <img src="${pokemon.urlImagem}" alt="${pokemon.nome}" />
+                    <div class="info-pokemon">
+                        <p>${pokemon.nome}</p>
+                        <span id="barra-hp-${cont}" class="barra-hp">
+                            <span id="hp-${cont}" class="hp-preenchimento ${classeCor}" style="width: ${porcentagemHp}%;"></span>
+                        </span>
+                    </div>
+                </div>
+            `;
+            cont++;
+        });
+
+        divTime.innerHTML = htmlFinal;
+    }
+
+    mostraTime(time.pokemon);
+});

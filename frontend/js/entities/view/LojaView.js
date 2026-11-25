@@ -1,4 +1,4 @@
-import Produto from "../Produto.js";
+﻿import Produto from "../Produto.js";
 
 export default class LojaView {
     #produtos;
@@ -30,6 +30,7 @@ export default class LojaView {
             });
         });
 
+        
         document.querySelector("#botaoLimpar button").addEventListener("click", () => {
             this.limparCarrinho()
         })
@@ -49,6 +50,9 @@ export default class LojaView {
                 document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario
             }
         })
+
+        this.animacaoCarregar();
+
     }
 
     carregarMercadoria() {
@@ -57,7 +61,7 @@ export default class LojaView {
         local.innerHTML = this.#produtos.map(produto => `
             <div>
                 <div class="produto" id="produto-${produto.id}">
-                <div class="produtoNome">${produto.nome} </div>
+                <div class="produtoNome">${produto.nomeFormatado} </div>
                 <span class='quant'></span>
                 <div class="produtoImg">
                         <img src="${produto.urlImagem}" alt="${produto.nome} image">
@@ -101,4 +105,17 @@ export default class LojaView {
         }
     }
 
+    animacaoCarregar(){
+        const loading = document.getElementById('loading');
+        const jogo = document.getElementById('jogo');
+
+        setTimeout(() => {
+            loading.style.animation = 'FadeOut 1s, ZoomOut 1s'
+            setTimeout(()=>{
+                loading.style.display = 'none'
+                jogo.style.display = 'flex'   
+                jogo.style.animation = ' FadeIn 1s'
+            }, 1000)
+        }, 1000)
+    }
 }
