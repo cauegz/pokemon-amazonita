@@ -1,4 +1,4 @@
-import Produto from "../Produto.js";
+﻿import Produto from "../Produto.js";
 
 export default class LojaView {
     #produtos;
@@ -57,7 +57,7 @@ export default class LojaView {
         local.innerHTML = this.#produtos.map(produto => `
             <div>
                 <div class="produto" id="produto-${produto.id}">
-                <div class="produtoNome">${produto.nome} </div>
+                <div class="produtoNome">${produto.nomeFormatado} </div>
                 <span class='quant'></span>
                 <div class="produtoImg">
                         <img src="${produto.urlImagem}" alt="${produto.nome} image">
