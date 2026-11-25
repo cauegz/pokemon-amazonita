@@ -3,6 +3,9 @@
 }
 
 #loading {
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: 5;
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -17,6 +20,7 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
+    color: white;
     -webkit-text-stroke-width: 0.75px;
     /* Espessura do contorno */
     -webkit-text-stroke-color: black;

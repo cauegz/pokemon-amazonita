@@ -1,4 +1,5 @@
 ﻿import Produto from "../Produto.js";
+import animacaoCarregar from "../../services/loading.js";
 
 export default class LojaView {
     #produtos;
@@ -51,7 +52,7 @@ export default class LojaView {
             }
         })
 
-        this.animacaoCarregar();
+        animacaoCarregar();
 
     }
 
@@ -103,21 +104,5 @@ export default class LojaView {
         else {
             local.style.color = 'white';
         }
-    }
-
-    animacaoCarregar(){
-        const loadingBody = document.getElementById('loading');
-        const loading = document.querySelector('#loading div');
-        const jogo = document.getElementById('jogo');
-        const outTime = 0.6
-        setTimeout(() => {
-            loadingBody.style.animation = `FadeOut ${outTime}s`
-            loading.style.animation = `ZoomOut ${outTime}s ease-out`
-            setTimeout(()=>{
-                loadingBody.style.display = 'none'
-                jogo.style.display = 'flex'   
-                jogo.style.animation = ' FadeIn 1s' 
-            }, outTime * 1000)
-        }, 1000)
     }
 }

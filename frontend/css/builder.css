@@ -1,4 +1,5 @@
 @import url(./globals.css);
+@import url(./loading.css);
 
 * {
     box-sizing: border-box;
@@ -19,11 +20,9 @@ body {
 }
 
 #gameContainer {
-    width: 100%;
-    max-width: 1020px;
-    height: 92vh;
-    max-height: 586px;
-    min-height: 440px;
+    position: relative;
+    width: var(--main-width);
+    height: var(--main-height);
     display: grid;
     grid-template-columns: minmax(190px, 0.68fr) minmax(0, 2fr);
     overflow: hidden;
