@@ -33,10 +33,13 @@ class Batalha {
 
     #abrirMenuTroca(turnoAposTroca) {
         this.#view.trocar(
-            pokemon => this.trocarPokemon(pokemon, turnoAposTroca),
-            this.#inventario,
-            (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
-            () => this.#view.atualizarHp(this.#jogador, this.#oponente)
+            pokemon => this.trocarPokemon(pokemon, turnoAposTroca), // callback pra fazer a troca
+            
+            //necessario pra poder usar o revive
+            this.#inventario, 
+            (pokemon, item) => CalculadoraStats.usarItem(pokemon, item), 
+
+            () => this.#view.atualizarHp(this.#jogador, this.#oponente) //callback pra atualizar hp
         );
     }
 

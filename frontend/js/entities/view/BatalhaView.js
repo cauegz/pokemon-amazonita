@@ -108,82 +108,88 @@ export default class BatalhaView{
         if(oponente.efeito) this.#stsInimigo.innerHTML = oponente.efeito;
         
     }
-    trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback) {
-        const objTime = this.#time;
-        const containerTime = document.getElementById('time');
-        const reviveItem = inventario?.items?.find(
-            item => item && item.categoria === "revival"
-        );
+    
+   trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback) {
+    // Pega o time atual e o container onde os cards vão entrar
+    const time = this.#time;
+    const container = document.getElementById('time');
+    const items = inventario?.items || [];
+    const revive = items.find(i => i?.categoria === 'revival'); //dentro dos itens, procurar o que tem categoria revival
 
-        containerTime.innerHTML = ``;
+    // Limpa a tela antes de montar os cards de novo
+    container.innerHTML = '';
 
-        for (let i = 0; i < objTime.pokemon.length; i++) {
-            const poke = objTime.pokemon[i];
-            if (!poke) continue;
+    // Monta o card de cada pokémon do time
+    for (let i = 0; i < time.pokemon.length; i++) {
+        const poke = time.pokemon[i];
+        if (!poke) continue;
 
-            const estaDesmaiado = poke.hpAtual <= 0;
-            const disabled = estaDesmaiado ? "disabled" : "";
-            const classeDisabled = estaDesmaiado ? "poke-time-disabled" : "";
-            const frase = estaDesmaiado ? "Derrotado :(" : `Escolher ${poke.nome}`;
+        //logica pra disabilitar pokemons mortos
+        const morto = poke.hpAtual <= 0;
+        const disabled = morto ? 'disabled' : '';
+        const classeMorto = morto ? 'poke-time-disabled' : '';
+        const textoBotao = morto ? 'Derrotado :(' : `Escolher ${poke.nome}`;
 
-            const botaoReviverHtml = (estaDesmaiado && reviveItem) ? `
+        // Só mostra o botão de reviver se o pokémon estiver nocauteado e tiver item
+        const btnReviver = morto && revive
+            ? `
                 <div class="revive-acao">
-                    <img src="${reviveItem.urlImagem}" alt="${reviveItem.nome}" class="img-revive" />
+                    <img src="${revive.urlImagem}" alt="${revive.nome}" class="img-revive" />
                     <button type="button" class="btn-reviver" data-posicao="${i}">Reviver</button>
                 </div>
-            ` : "";
+            `
+            : '';
 
-            containerTime.innerHTML += `
-                <div class="poke-time-container ${classeDisabled}" id="${poke.id}">
-                    <img src="${poke.urlImagem}" alt="${poke.nome}" />
-                    <span class="hp-time">HP: ${poke.hpAtual}/${poke.hp}</span>
-                    <button type="button" class="poke-time" data-posicao="${i}" ${disabled}>${frase}</button>
-                    ${botaoReviverHtml}
-                </div>
-            `;
-        }
-
-        const botoesEscolher = containerTime.querySelectorAll('.poke-time');
-        for (const botao of botoesEscolher) {
-            botao.addEventListener('click', () => {
-                const pos = Number(botao.dataset.posicao);
-                this.#posicaoAtual = pos;
-                trocarPokemon(objTime.pokemon[pos]);
-                document.getElementById('trocaPokeAtivo').hidePopover();
-            });
-        }
-
-        const botoesReviver = containerTime.querySelectorAll('.btn-reviver');
-        for (const botaoRevive of botoesReviver) {
-            botaoRevive.addEventListener('click', async () => {
-                const pos = Number(botaoRevive.dataset.posicao);
-                const pokeAlvo = objTime.pokemon[pos];
-                const indiceRevive = inventario.items.findIndex(
-                    item => item && item.categoria === "revival"
-                );
-
-                if (!pokeAlvo || indiceRevive === -1) return;
-
-                const itemUsado = inventario.items[indiceRevive];
-                const hpAnterior = pokeAlvo.hpAtual;
-                const efeitoAnterior = pokeAlvo.efeito;
-                if (calculadoraStats(pokeAlvo, itemUsado) === false) return;
-                try {
-                    await inventario.removerItem(itemUsado.id);
-                } catch (error) {
-                    pokeAlvo.hpAtual = hpAnterior;
-                    pokeAlvo.efeito = efeitoAnterior;
-                    console.error("Não foi possível consumir o Revive:", error);
-                    return;
-                }
-
-                atualizarHpCallback();
-                this.trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback);
-            });
-        }
+        container.innerHTML += `
+            <div class="poke-time-container ${classeMorto}" id="${poke.id}">
+                <img src="${poke.urlImagem}" alt="${poke.nome}" />
+                <span class="hp-time">HP: ${poke.hpAtual}/${poke.hp}</span>
+                <button type="button" class="poke-time" data-posicao="${i}" ${disabled}>${textoBotao}</button>
+                ${btnReviver}
+            </div>
+        `;
     }
-    fugir(){
+
+    // Liga o clique dos botões de escolher pokémon
+    for (const btn of container.querySelectorAll('.poke-time')) {
+        btn.addEventListener('click', () => {
+            const pos = Number(btn.dataset.posicao);
+            this.#posicaoAtual = pos;
+            trocarPokemon(time.pokemon[pos]);
+            document.getElementById('trocaPokeAtivo').hidePopover();
+        });
     }
+
+    // Liga o clique dos botões de reviver
+    for (const btn of container.querySelectorAll('.btn-reviver')) {
+        btn.addEventListener('click', async () => {
+            const pos = Number(btn.dataset.posicao);
+            const poke = time.pokemon[pos];
+            
+            // Acha a posição (índice) do item 'revive' dentro do array, retorna -1 se não achar
+            const idx = inventario.items.indexOf(revive);
+            if (!poke || idx === -1) return;
+
+            const item = inventario.items[idx];
+
+            // Aplica a cura/efeito, se falhar ou não fizer sentido usar, cancela
+            if (calculadoraStats(poke, item) === false) return;
+
+            // Tenta remover do inventário
+            try {
+                await inventario.removerItem(item.id);
+            } catch (err) {
+                console.error('Erro ao gastar revive:', err);
+                return;
+            }
+
+            // Atualiza HUD e re-renderiza a lista pra refletir o novo HP e inventário
+            atualizarHpCallback();
+            this.trocar(trocarPokemon, inventario, calculadoraStats, atualizarHpCallback);
+        });
+    }
+}
+  
 
    mostrarMochila(inventario, jogador, oponente, calculadoraStats) {
         let mochila = document.getElementById('itens');
