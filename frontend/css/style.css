@@ -32,6 +32,47 @@
     position: relative;
     width: 100%;
     height: 100%;
+}   
+
+#player-info{
+    width: 10%;
+    height: 5vh;
+    background-color: #f5efd2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+
+    position: absolute;
+    top:10%;
+    left: 65%;
+    padding: 12px;
+    box-sizing: border-box;
+
+    border: 4px solid #293d37;
+    border-radius: 9px;
+    background: #f5efd2;
+    box-shadow: 0 5px 0 rgb(35 48 43 / 60%);
+    font-family: var(--fonte-principal);
+}
+#foto-perfil{
+    width: 33%;
+    height: 100%;
+}
+.player-photo{
+    border-radius: 100%;
+    object-fit: cover;
+    width:100%;
+    height: 100%;
+}
+
+#sair{
+    padding: 6px;
+    border-color: #8e4035;
+    background: #dc6955;
+    color: white;
+    border-radius: 20%;
 }
 .btn-menu, .npc{
     display: block;

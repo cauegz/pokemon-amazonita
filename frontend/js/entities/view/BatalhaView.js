@@ -200,8 +200,7 @@ export default class BatalhaView{
         console.log(inventario)
         for (let count = 0; count < inventario.items.length; count++) {
             const item = inventario.items[count];
-            if (!item || item.categoria === "revival") continue;
-
+            if (!item || item.categoria === "revival" || item.categoria === "evolution") continue;
             mochila.innerHTML += `
                 <div class="item-container" id="${item.id}">
                     <img src="${item.urlImagem}" alt="${item.nome}" />

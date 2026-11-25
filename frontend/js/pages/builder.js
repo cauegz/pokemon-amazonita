@@ -9,7 +9,7 @@ async function iniciarBuilder() {
         //sessao
         const usuario = await verificarSessao();
         if (!usuario) return;
-
+        
         // Carrega o time 
         const objTime = await Time.carregarTime(usuario.treinador);
         console.log("time: ")
