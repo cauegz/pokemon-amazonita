@@ -106,13 +106,15 @@ export default class LojaView {
     }
 
     animacaoCarregar(){
-        const loading = document.getElementById('loading');
+        const loadingBody = document.getElementById('loading');
+        const loading = document.querySelector('#loading div');
         const jogo = document.getElementById('jogo');
         const outTime = 0.6
         setTimeout(() => {
-            loading.style.animation = `FadeOut ${outTime}s, ZoomOut ${outTime}s ease-out`
+            loadingBody.style.animation = `FadeOut ${outTime}s`
+            loading.style.animation = `ZoomOut ${outTime}s ease-out`
             setTimeout(()=>{
-                loading.style.display = 'none'
+                loadingBody.style.display = 'none'
                 jogo.style.display = 'flex'   
                 jogo.style.animation = ' FadeIn 1s' 
             }, outTime * 1000)
