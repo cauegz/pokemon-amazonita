@@ -31,10 +31,18 @@ class ControladorInventario extends ControladorGeral{
             $this->responseError("item nao enviado", 400);
         }
         $id = $_GET['id'];
-        if (Inventario::delete($id)) {
-            $this->responseJSON(["message" => "Item de inventário deletado com sucesso"]);
+        
+        $inventario = Inventario::find($id);
+
+        if($inventario->quantidade <= 1){
+            Inventario::delete($id);
+            $restante = 0;
         } else {
-            $this->responseError("Erro ao deletar item de inventário", 500);
+            $inventario->quantidade -= 1;
+            $restante = $inventario->quantidade;
+            $inventario->save();
         }
+
+        $this->responseJSON(["restante" => $restante]);
     }
 }
