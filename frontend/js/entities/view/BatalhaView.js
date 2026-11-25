@@ -94,6 +94,9 @@ export default class BatalhaView{
         let botoes = opcoesBatalha.querySelectorAll('.btn-opc');
         for(const botao of botoes){
             botao.addEventListener("click", ()=>{
+                for(const botao of botoes){
+                    botao.disabled = "true";
+                }
                 let posicaoAtaque = botao.id.match(/\d+/g)[0];
 
                 escolheAtaque(ataques[posicaoAtaque - 1]);

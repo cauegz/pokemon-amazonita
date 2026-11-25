@@ -148,6 +148,9 @@ window.addEventListener("load", async function () {
         let cont = 1;
 
         time.forEach(pokemon => {
+            if(!pokemon){
+                return;
+            }
             const porcentagemHp = (pokemon.hpAtual * 100) / pokemon.hp;
             
             let classeCor = "hp-verde";
