@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Monstrobolso</title>
         <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="../css/bruxish.css">
     </head>
     <body>
         <canvas id="gameCanvas"></canvas>
@@ -37,6 +38,17 @@
 
             <div class="interface-mapa" data-mapa-id="2">
                 <h1 class="nome-area">Pokemart e Centro Pokemon</h1>
+                <div id="interface-bruxish" popover="manual">
+                    <img src="../images/brushish.png" alt="bruxish o maioral">
+                    <div id="caixa-dialogo">
+                        Ola aqui e o bruxish
+                        <div id="div-botao-fechar">
+                            <button popovertarget="interface-bruxish" popovertargetaction="hide" id="botao-fechar-bruxish">
+                                Ok, continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <a href="./loja.html" class="npc" id="poke-mart">
                     <img src="../images/brushish.png" />
@@ -88,6 +100,7 @@
 
         <script type="module" src="../js/pages/main.js"></script>
         <script type="module" src="../js/pages/mapa.js"></script>
+        <script src="../js/services/bruxish.js"></script>
         <script
             src="https://kit.fontawesome.com/20f8a440c6.js"
             crossorigin="anonymous"
