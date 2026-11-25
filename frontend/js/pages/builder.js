@@ -58,7 +58,7 @@ botaoEditarFoto.addEventListener("click", () => {
 });
 
 async function carregarFotoPerfil() {
-    const urlFotoServidor = "http://localhost/api/fotoPerfil"; 
+    const urlFotoServidor = "http://localhost:8080/api/fotoPerfil";
 
     preview.onload = () => {
         preview.hidden = false;
