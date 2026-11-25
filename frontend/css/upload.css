@@ -1,0 +1,179 @@
+@import url(./globals.css);
+@import url(./builder.css);
+
+#deletar {
+    min-width: 170px;
+    padding: 12px 20px;
+    border: 3px solid #303030;
+    border-radius: 5px;
+    color: #fffdf0;
+    background: #d44f43;
+    box-shadow: 0 4px 0 #8e3934;
+    font: inherit;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+#deletar:hover {
+    transform: translateY(-2px);
+    background: #e15e4e;
+    box-shadow: 0 6px 0 #8e3934;
+}
+
+#deletar:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #8e3934;
+}
+
+#deletar:disabled {
+    opacity: 0.65;
+}
+
+#upload-player-photo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 28px;
+    padding: 3px 2px;
+    border: 0;
+    border-top: 2px solid #303030;
+    color: #fffbea;
+    background: rgba(48, 48, 48, 0.88);
+    font: inherit;
+    font-size: 0.62rem;
+    cursor: pointer;
+}
+
+.perfil-foto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 24px;
+    border: 2px solid #303030;
+    border-radius: 5px;
+    background: var(--cor-card-pokemon);
+    box-shadow: 3px 3px 0 #303030;
+    text-align: center;
+}
+
+.perfil-foto > p {
+    color: var(--cor-fonte-btns);
+}
+
+.perfil-botoes {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 0;
+}
+
+.perfil-botoes #enviar,
+.perfil-botoes #deletar {
+    margin: 0;
+}
+
+.perfil-botoes #enviar {
+    background: #4c8b45;
+}
+
+.perfil-botoes #deletar {
+    background: #d44f43;
+}
+
+.link-voltar {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin-left: auto;
+    margin-top: 16px;
+    padding: 8px 18px;
+    border: 2px solid #303030;
+    border-radius: 5px;
+    color: #303030;
+    background: #fff;
+    box-shadow: 0 4px 0 #303030;
+    font-family: var(--fonte-principal);
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.link-voltar:hover,
+.link-voltar:focus-visible {
+    transform: translateY(-2px);
+    background: #fffbea;
+    box-shadow: 0 6px 0 #303030;
+}
+
+.link-voltar:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #303030;
+}
+
+.player-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.player-avatar {
+    overflow: hidden;
+}
+
+.player-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#upload-player-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    background: transparent;
+    font-size: 0;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+
+#upload-player-photo::before {
+    content: "✏";
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #303030;
+    border-radius: 50%;
+    background: #f0e6a4;
+    color: #303030;
+    box-shadow: 2px 2px 0 #303030;
+    font-size: 16px;
+    line-height: 1;
+    text-indent: 0;
+}
+
+#upload-player-photo:hover::before {
+    background: #fffbea;
+    transform: scale(1.08);
+}

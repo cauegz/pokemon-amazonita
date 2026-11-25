@@ -115,15 +115,16 @@ export default class Api {
     static async buscarProdutos(loja_id) {
         return await this.requisicao(`/loja/listarProdutos?id=${loja_id}`)
     }
+
     static async comprarProdutos(produtos) {
         let itens = { itens: produtos }
 
         return await this.requisicao("/loja/comprar", {
-            method: "POST",
-            body: JSON.stringify(itens)
-        }
-        )
+                method: "POST",
+                body: JSON.stringify(itens)
+        })
     }
+
     static async aumentarDinheiro(recompensa) {
         return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
     }
@@ -132,5 +133,20 @@ export default class Api {
             method: "POST",
             body: JSON.stringify(pokeEvo)
         })
+    }
+    /**
+     * Envia a foto a partir de um FormData para o PHP
+     * @param {FormData} dados 
+     */
+    static async enviarFoto(dados) {
+        return fetch(`${this.url}/upload`, {
+            method: "POST",
+            body: dados,
+            credentials: "include"
+        });
+    }
+
+    static async removerFoto() {
+        return await this.requisicao("/removerFoto")
     }
 }
