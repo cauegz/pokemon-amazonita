@@ -36,8 +36,8 @@ export default class BatalhaView{
         document.getElementById('hp').innerHTML = `${jogador.hpAtual}/${jogador.hp}`; 
         document.getElementById('hpInimigo').innerHTML = `${oponente.hpAtual}/${oponente.hp}`; 
         
-        this.#hpPlayer.style.width=(jogador.hpAtual*100)/jogador.hp + "%";
-        this.#hpInimigo.style.width=(oponente.hpAtual*100)/oponente.hp + "%";
+        this.#hpPlayer.style.width = (jogador.hpAtual*100)/jogador.hp + "%";
+        this.#hpInimigo.style.width = (oponente.hpAtual*100)/oponente.hp + "%";
 
         this.#hpPlayer.style.backgroundColor=`green`;
         this.#hpInimigo.style.backgroundColor=`green`;

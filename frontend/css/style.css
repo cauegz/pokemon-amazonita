@@ -231,3 +231,82 @@ body{
 .pokemon-inventario:hover{
     transform: scale(1.1);
 }
+
+#menu-time {
+    position: fixed;
+    top: 19%;
+    left: 5%; 
+    width: 260px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-pokemon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #174717;
+    border: 1px solid #00f836;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: all 0.2s ease;
+    font-family: var(--fonte-principal);
+}
+
+.card-pokemon:hover {
+    background-color: #038334;
+    border-color: #51ff00;
+    transform: translateX(4px);
+}
+
+.card-pokemon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+    padding: 4px;
+}
+
+.card-pokemon p {
+    margin-bottom: 6px;
+    color: white;
+    font-weight: 600;
+}
+
+.info-pokemon {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+
+.barra-hp {
+    display: block;
+    width: 100%;
+    height: 8px;
+    background-color: #14171d;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #3c4352;
+}
+
+.hp-preenchimento {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.hp-verde {
+    background-color: #22c55e;
+}
+
+.hp-laranja {
+    background-color: #f59e0b;
+}
+
+.hp-vermelho {
+    background-color: #ef4444;
+}
