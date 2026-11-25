@@ -30,6 +30,7 @@ export default class LojaView {
             });
         });
 
+        
         document.querySelector("#botaoLimpar button").addEventListener("click", () => {
             this.limparCarrinho()
         })
@@ -49,6 +50,9 @@ export default class LojaView {
                 document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario
             }
         })
+
+        this.animacaoCarregar();
+
     }
 
     carregarMercadoria() {
@@ -101,4 +105,17 @@ export default class LojaView {
         }
     }
 
+    animacaoCarregar(){
+        const loading = document.getElementById('loading');
+        const jogo = document.getElementById('jogo');
+
+        setTimeout(() => {
+            loading.style.animation = 'FadeOut 1s, ZoomOut 1s'
+            setTimeout(()=>{
+                loading.style.display = 'none'
+                jogo.style.display = 'flex'   
+                jogo.style.animation = ' FadeIn 1s'
+            }, 1000)
+        }, 1000)
+    }
 }
