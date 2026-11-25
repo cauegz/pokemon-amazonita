@@ -68,10 +68,12 @@ class Batalha {
         const botaoMochila = document.getElementById('mochila');
         if (botaoMochila) {
             botaoMochila.onclick = () => {
-                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#oponente, (item) => {
-                    CalculadoraStats.usarItem(this.#jogador, item);
-                    this.#view.atualizarHp(this.#jogador, this.#oponente);
-                });
+                this.#view.mostrarMochila(
+                    this.#inventario,
+                    this.#jogador,
+                    this.#oponente,
+                    (pokemon, item) => CalculadoraStats.usarItem(pokemon, item)
+                );
             };
         }
 

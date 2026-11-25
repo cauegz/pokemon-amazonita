@@ -218,7 +218,8 @@ export default class BatalhaView{
 
                 const hpAnterior = jogador.hpAtual;
                 const efeitoAnterior = jogador.efeito;
-                calculadoraStats(jogador, itemEscolhido);
+                const itemAplicado = await calculadoraStats(jogador, itemEscolhido);
+                if (itemAplicado === false) return;
                 try {
                     await inventario.removerItem(itemEscolhido.id);
                 } catch (error) {
