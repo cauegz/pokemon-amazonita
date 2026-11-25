@@ -1,5 +1,6 @@
 import PokeApi from "../../APIs/PokeApi.js";
 import Pokemon from "../Pokemon.js";
+import animacaoCarregar from "../../services/loading.js";
 
 export default class BuilderView {
     #time;
@@ -61,6 +62,8 @@ export default class BuilderView {
             }
         });
         this.carregaTimeBanco();
+        animacaoCarregar();
+        
     }
 
     mostrarJogador(usuario) {
