@@ -154,6 +154,9 @@ window.addEventListener('load', async function () {
     document
         .getElementById("fechaMochila")
         .addEventListener("click", () => modal.close());
+   
+    const foto = usuario.foto;
+    document.getElementById("foto-perfil").innerHTML =`<img class="player-photo" src="http://localhost:8080/api/fotoPerfil">` //ta funcionando deixa assim =/
 
     function mostraTime(time) {
         const divTime = document.getElementById("menu-time");
