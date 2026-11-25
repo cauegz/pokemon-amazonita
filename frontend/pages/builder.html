@@ -13,10 +13,15 @@
         <section class="player">
             <div id="player-info">
                 <div class="player-avatar" id="player-avatar">
-                    <span class="avatar-placeholder" aria-hidden="true">?</span>
-                    <button id="upload-player-photo" type="button">Adicionar foto</button>
+                    <span class="avatar-placeholder" id="avatar-placeholder" aria-hidden="true">?</span>
+                    <img id="foto-preview" class="player-photo" alt="Foto de perfil" hidden />
+
+                    <button id="upload-player-photo" type="button"
+                            aria-label="Editar foto de perfil"
+                            title="Editar foto de perfil">
+                    </button>
                 </div>
-                <div class="player-details">
+                    <div class="player-details">
                     <p>Treinador</p>
                     <h2 id="info"></h2>
                 </div>
