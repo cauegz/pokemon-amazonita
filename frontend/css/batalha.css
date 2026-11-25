@@ -1,249 +1,434 @@
 @import url(./globals.css);
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-#gameContainer{
-   position: absolute;
+
+body {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    overflow: hidden;
+}
+
+#gameContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    width: var(--main-width);
+    height: var(--main-height);
+    padding: 20px;
+    overflow: hidden;
+    isolation: isolate;
+    border: 4px solid #293d37;
+    border-radius: 12px;
+    background: url(../images/background/battlescreen-2.jpg) center / cover no-repeat;
+    box-shadow: 0 16px 38px rgb(22 34 31 / 40%);
+    font-family: var(--fonte-principal);
+}
+
+.pokemonsEmBatalha {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    min-height: 0;
+}
+
+.pokemonsEmBatalha > span.pokemon {
+    display: none;
+}
+
+.pokemon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+}
+
+#pokeOponente {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: row-reverse;
+    transform: translate(-60px, 116px);
+}
+
+#pokeUser {
+    grid-column: 1;
+    grid-row: 2;
+    transform: translate(60px, 40px);
+}
+
+.pokeImg {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.pokeImg img {
+    display: block;
+    width: 180px;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 7px 3px rgb(27 37 31 / 42%));
+    transform: translateY(55px);
+}
+
+.pokeInfo {
+    display: flex;
+    flex: 1 1 190px;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 11px 14px;
+    border: 3px solid #303d39;
+    border-radius: 9px;
+    background: #f7f3df;
+    box-shadow: 4px 4px 0 rgb(35 48 43 / 60%);
+}
+
+.pokeInfo > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+#pokeNome,
+#pokeNomeInimigo {
+    overflow-wrap: anywhere;
+    color: #303d39;
+    font-size: 16px;
+}
+
+.sts {
+    flex: 0 0 auto;
+    padding: 2px 7px;
+    border: 1px solid #a34a32;
+    border-radius: 4px;
+    background: #d66b45;
+    color: #fff;
+    font-size: 0.75rem;
+}
+
+.sts:empty {
+    display: none;
+}
+
+.hp-bar {
+    display: flex;
+    width: 100%;
+    height: 17px;
+    padding: 2px;
+    overflow: hidden;
+    border: 2px solid #303d39;
+    border-radius: 4px;
+    background: #d6d3c4;
+}
+
+.life {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    border-radius: 2px;
+    background: #79b947;
+    transition: width 350ms ease, background-color 250ms ease;
+}
+
+.hp-bar > .life > span {
+    overflow: hidden;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-shadow: 0 1px 2px #303030;
+    white-space: nowrap;
+}
+
+#menuBatalha {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    flex: 0 0 142px;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 12px;
+    width: 100%;
+    padding: 13px;
+    border: 4px solid #293d37;
+    border-radius: 9px;
+    background: #f5efd2;
+    box-shadow: 0 5px 0 rgb(35 48 43 / 60%);
+}
+
+#mensagemBatalha {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 3px solid #777451;
+    border-radius: 6px;
+    background: #fffdf2;
+    color: #34372d;
+    font-size: 17px;
+    line-height: 1.45;
+}
+
+#opcoesBatalha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    min-width: 0;
+    padding-top: 8px;
+}
+
+.btn-opc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 6px 10px;
+    border: 3px solid #8e4035;
+    border-radius: 6px;
+    background: #dc6955;
+    box-shadow: 0 3px 0 rgb(41 48 42 / 45%);
+    color: white;
+    cursor: pointer;
+    font-family: var(--fonte-principal);
+    font-size: 16px;
+    text-shadow: 1px 1px 0 #34372d;
+    transition: transform 140ms ease, filter 140ms ease;
+}
+
+.btn-opc:not(:disabled):hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+.btn-opc:focus-visible,
+#voltar:focus-visible,
+.close-popover:focus-visible,
+.poke-time:focus-visible,
+.btn-reviver:focus-visible,
+.item:focus-visible {
+    outline: 3px solid #252b28;
+    outline-offset: 3px;
+}
+
+#fugir {
+    border-color: #79632b;
+    background: #c6a84d;
+}
+
+#trocar {
+    border-color: #3e6483;
+    background: #668fbd;
+}
+
+#mochila {
+    border-color: #526e3d;
+    background: #789a50;
+}
+
+#voltar {
+    position: absolute;
+    top: -15px;
+    right: 12px;
+    z-index: 1;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 3px solid #293d37;
+    border-radius: 6px;
+    background: #fffdf2;
+    color: #34372d;
+    cursor: pointer;
+    transition: transform 140ms ease, background-color 140ms ease;
+}
+
+#voltar:hover {
+    transform: translateY(-2px);
+    background: #e7dfbd;
+}
+
+#trocaPokeAtivo,
+#abreMochila {
+    position: fixed;
     top: 50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    width: 1020px;
-    height: 586px;
-    border: 1px solid black;  
-    background-image: url(../images/background/fundo-batalha.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 1%;
-    box-sizing: border-box;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: 560px;
+    height: 500px;
+    margin: 0;
+    padding: 20px;
+    overflow: auto;
+    transform: translate(-50%, -50%);
+    border: 4px solid #293d37;
+    border-radius: 10px;
+    background: #f5efd2;
+    box-shadow: 8px 8px 0 rgb(31 48 42 / 55%);
+    color: #34372d;
+    font-family: var(--fonte-principal);
+}
+
+#trocaPokeAtivo:popover-open,
+#abreMochila:popover-open {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    font-family: var(--fonte-principal);
-}
-
-.pokemon{
-    display: flex;
-    flex-direction: row;
-    width: 70%;
-    height: 70%;
-}
-.pokeInfo{
-    background-color: var(--cor-input-text);
-    width: 20dvw;
-    height: 5dvh;
-
-    border: 1px solid #303030;
-    border-radius: 8px;
-    box-shadow: 6px 6px 0 #303030;
-    padding: 2%;
-}
-.hp-bar{
-    display: flex;
-    width: 80%;
-    height: 30%;
-    border:1px solid #303030;
-    background-color: #ffffff;
-    border-radius: 7px;
-    padding: 2px;
-}
-.hp-bar > span{
-    font-size: 0.8rem;
-    color: white;
-}
-.life{
-    background-color: rgb(145, 214, 42);
-    border-radius: 7px;
-    padding: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.sts{
- color:red;
-}
-#trocaPokeAtivo, #abreMochila{
-    width: 40%;
-    height: 50%;
-    align-self: center;
-    justify-self: center;
-    background-color: var(--cor-input-text);
-    border-radius: 10px;
-    box-shadow: 6px 6px 0 #303030;
-    box-sizing: border-box;
-    padding: 10px;
-}
-#trocaPokeAtivo > p{
+    gap: 12px;
     text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
 }
-.poke-time-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    border: 1px solid #303030;
-    background-color: var(--cor-card-pokemon-popup);
+
+#trocaPokeAtivo:popover-open .close-popover,
+#abreMochila:popover-open .close-popover {
+    align-self: center;
 }
-.poke-time-container:hover{
-    background-color: var(--cor-card-pokemon-hover);
+
+#trocaPokeAtivo::backdrop,
+#abreMochila::backdrop {
+    background: rgb(19 34 30 / 62%);
+    backdrop-filter: blur(3px);
 }
-.poke-time{
-    font-family: var(--fonte-principal);
-    width: 70%;
-    height: 20%;
-    background-color: var(--cor-btn-menus);
-    color: var(--cor-fonte-btns);
-    border-radius: 6px;
-    border: 1px solid yellow;
-    padding: 5px 10px;
-    transition: 0.2s;
+
+#trocaPokeAtivo > p,
+#abreMochila > p {
+    color: #34372d;
+    font-size: 17px;
+    line-height: 1.4;
 }
-.poke-time-disabled{
-    background-color: rgb(216, 71, 71);
-}
-.poke-time-disabled:hover{
-    background-color: rgb(184, 43, 43);
-}
-.close-popover{
-    all: unset;
+
+.close-popover,
+.poke-time,
+.btn-reviver,
+.item {
+    min-height: 38px;
+    padding: 7px 11px;
+    border: 2px solid #3f6245;
+    border-radius: 5px;
+    background: #71934c;
+    color: white;
     cursor: pointer;
-    background-color: var(--cor-btn-menus);
-    color: var(--cor-fonte-btns);
-    border-radius: 6px;
-    border: 1px solid yellow;
-    padding: 5px 10px;
-    transition: 0.2s;
-}
-.poke-time:hover{
-    background-color: var(--cor-hover-btn-menus);
-    transform: scale(1.03);
-}
-.pokemonsEmBatalha{
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    height: 40%;
-    width: 65%;
-}
-.pokemon{
-    width: 50%;
-    height: 50%;
-}
-.pokeImg >img{
-    object-fit: cover;
-    width: 7vw;
-    height: 17vh;
+    font-family: var(--fonte-principal);
+    font-size: 0.9rem;
+    transition: transform 140ms ease, filter 140ms ease;
 }
 
-#menuBatalha{
-    width: 80%;
-    height: 30%;
-    
-    display: flex;
-    flex-direction: row;
-    justify-self: flex-end;
-    background-color: var(--cor-menus);
-
-    border: 2px solid #303030;
-    border-radius: 8px;
-    box-shadow: 6px 6px 0 #303030;
+.close-popover:hover,
+.poke-time:not(:disabled):hover,
+.btn-reviver:hover,
+.item:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
 }
-#mensagemBatalha{
-    background-color:  var(--cor-input-text);
-    width: 50%;
-    height: 100%;
-    box-sizing: border-box;
 
-    padding-top: 3%;
-    padding-left: 1%;
-    
-    border-radius: 15px;
-    border: 2px solid #303030;
-    font-size: 1.3rem;
+.close-popover {
+    align-self: flex-end;
+    border-color: #8e4035;
+    background: #dc6955;
 }
-#opcoesBatalha{
+
+#time,
+#itens {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 50%;
-    height: 100%;
-    position: relative;
+    grid-template-columns: 1fr;
+    gap: 9px;
+    height: 300px;
+    width: 100%;
+    overflow: auto;
+    padding: 2px;
 }
-.btn-opc{
-    all: unset;
-    display: flex;
-    justify-content: center;
+
+.poke-time-container,
+.item-container {
+    display: grid;
+    grid-template-columns: 54px 1fr auto;
     align-items: center;
-
-    border: 1px solid rgb(243, 242, 242);
-    border-radius: 25px;
-    text-shadow:
-    -1px -1px 0 #000000,
-     1px -1px 0 #000000,
-    -1px  1px 0 #000000,
-     1px  1px 0 #000000;
-
-    font-size: 1.5rem;
-    color:white;
-   
-    transition: 0.2s;
-    box-shadow: 6px 6px 0 #303030;
-
-    background-color: rgb(241, 128, 128);
-    border:7px solid rgb(216, 71, 71);
-}
-.btn-opc:hover{
-    font-size:1.7rem;
+    gap: 7px 11px;
+    min-width: 0;
+    padding: 9px;
+    border: 2px solid #c8c09c;
+    border-radius: 7px;
+    background: #fffdf2;
 }
 
-#atacar{
-    background-color: rgb(241, 128, 128);
-    border:7px solid rgb(216, 71, 71);
-}
-#atacar:hover{
-    background-color:rgb(241, 167, 167);
+.poke-time-container:hover,
+.item-container:hover {
+    border-color: #799754;
+    background: #f0f3df;
 }
 
-#fugir{
-    background-color: rgb(206, 176, 102);
-    border:7px solid rgb(182, 145, 51)
-}
-#fugir:hover{
-    background-color: rgb(228, 204, 145);
-}
-
-#trocar{
-    background-color: rgb(151, 180, 233);
-    border:7px solid rgb(118, 155, 223);
-}
-#trocar:hover{
-    background-color: rgb(170, 191, 230);
+.item-container > img {
+    grid-row: 1 / span 2;
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
 }
 
-#mochila{
-    background-color: rgb(192, 136, 219);
-    border:7px solid rgb(172, 102, 207);
+.poke-time-container > img {
+    grid-row: 1 / span 2;
+    width: 148px;
+    height: 148px;
+    object-fit: contain;
 }
-#mochila:hover{
-    background-color: rgb(203, 167, 221)
-}
-#voltar{
-    all: unset;
-    background-color:  var(--cor-input-text);
-    border-radius: 15px;
-    border: 2px solid #303030;
-    height: 5%;
 
-    z-index: 10;
-    position: absolute;
-    right:11%;
-    transition:0.2s
+.hp-time {
+    grid-column: 2;
+    justify-self: center;
+    color: #45483c;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
 }
-#voltar:hover{
-    font-size: 1.3rem;
+
+.poke-time,
+.item {
+    grid-column: 2;
+    justify-self: start;
+}
+
+.poke-time {
+    width: 240px;
+    min-height: 46px;
+    padding: 9px 14px;
+    justify-self: center;
+    font-size: 1rem;
+}
+
+.poke-time:disabled {
+    border-color: #85514b;
+    background: #af6960;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.poke-time-disabled {
+    background: #f4e7df;
+}
+
+.revive-acao {
+    display: flex;
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-items: center;
+    gap: 7px;
+}
+
+.img-revive {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }

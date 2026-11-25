@@ -22,34 +22,37 @@
     </div>
 
     <script>
-    document.getElementById('form-login').addEventListener('submit', async (event) => {
-        event.preventDefault();
+        localStorage.clear();
+        sessionStorage.clear();
 
-        const payload = {
-            login: document.getElementById('username').value.trim(),
-            senha: document.getElementById('password').value
-        };
+        document.getElementById('form-login').addEventListener('submit', async (event) => {
+            event.preventDefault();
 
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify(payload)
-            });
-            const data = await response.json();
-            console.log(data)
+            const payload = {
+                login: document.getElementById('username').value.trim(),
+                senha: document.getElementById('password').value
+            };
 
-            if (data.ok) {
-                window.location.href = 'game.html'; //proteger a rota depois, pra quem nao esta acessado nao conseguir entrar na página
-            } else {
-                alert(data.mensagem || 'Não foi possível entrar.');
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                console.log(data)
+
+                if (data.ok) {
+                    window.location.href = './builder.html';
+                } else {
+                    alert(data.mensagem || 'Não foi possível entrar.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Erro de conexão com o servidor.');
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Erro de conexão com o servidor.');
-        }
-    });
+        });
     </script>
 </body>
 </html>

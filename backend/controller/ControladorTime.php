@@ -108,8 +108,6 @@ class ControladorTime extends ControladorGeral{
                 }
 
                 $time = Time::findByTreinadorAndPosicao($pokemon->treinador, $indice+1);
-
-                
                 
                 if ($time) {
                     $time->pokemon = $pokemon->id;
@@ -157,6 +155,30 @@ class ControladorTime extends ControladorGeral{
         }
 
         $this->responseJSON(["ok" => true]);
+    }
+
+    public function curarTime(){
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+
+        $idTreinador = $_SESSION['treinador'];
+
+        $time = Time::findByTreinador($idTreinador);
+
+        try{
+            foreach($time as $pokemon){
+                $pokemonObj = Pokemon::find($pokemon->pokemon);
+                $pokemonObj->hpAtual = $pokemonObj->hp;
+                $pokemonObj->save();
+            }
+        }catch(Exception $e){
+            $this->responseError("Erro ao curar", 500);
+        }
+
+        $this->responseJSON(["ok" => true, "mensagem" => "pokemons curados com sucesso"]);
+
     }
 
     /**

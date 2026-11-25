@@ -1,0 +1,44 @@
+@import url(./globals.css);
+@import url(./builder.css);
+
+#interface{
+    width: 100%;
+    max-width: 1020px;
+    height: 92vh;
+    max-height: 586px;
+    min-height: 440px;
+    border: 2px solid #303030;
+    border-radius: 4px;
+    box-shadow: 6px 6px 0 rgba(30, 42, 48, 0.3);
+    background-image: url(../images/background/background_centro.png);
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+#botoes{
+    display: flex;
+    margin-bottom: 2%;
+    margin-left: 10%;
+    gap: 10%;
+    cursor: pointer;
+}
+
+.botao-centro{
+    all: unset;
+    margin: 5px;
+    font-size: 20pt;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 6px;
+    color: white;
+}
+
+#curar{
+    background-image: url(../images/background/botao-comprar-bg.png);
+}
+
+#voltar{
+    background-image: url(../images/background/botao-limpar-bg.png);
+}

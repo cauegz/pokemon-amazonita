@@ -70,8 +70,8 @@ INSERT INTO loja (nome) VALUES
 
 INSERT INTO npc (nome, id_tipo_npc, recompensa) VALUES
 ('Marcio Bigolin', 1, 1000),
-('Raissa Scheeren', 2, 1000),
-('Jacqueline Akazaki', 3, 1000);
+('Raissa Scheeren', 1, 1000),
+('Jacqueline Akazaki', 1, 1000);
 
 -- =========================================
 -- 7. Treinadores
@@ -105,49 +105,6 @@ INSERT INTO produto
 (27, 300.00, 50, 1), -- Full Heal: cura todas as condições de status
 (28, 1500.00, 30, 1), -- Revive: revive um Pokémon desmaiado com metade do HP
 (85, 5000.00, 6, 1); -- Pedra da evolução
-
--- =========================================
--- 9. Inventários dos treinadores
--- =========================================
-
-INSERT INTO inventario (id_item_pokeapi, id_treinador, quantidade) VALUES
-(4, 1, 5),
-(17, 1, 3),
-(19, 1, 2),
-(28, 1, 1),
-(4, 2, 10),
-(18, 2, 2),
-(17, 3, 4);
-
--- =========================================
--- 10. Compras
--- =========================================
-
-INSERT INTO itens_compra (quantidade, id_produto, id_usuario) VALUES
-(5, 1, 1),
-(2, 2, 1),
-(3, 1, 2),
-(1, 3, 3);
-
--- =========================================
--- 11. Vendas
--- =========================================
-
-INSERT INTO venda (id_itens_compra, id_loja) VALUES
-(1, 1),
-(2, 2),
-(3, 1),
-(4, 3);
-
--- =========================================
--- 12. Logs de usuários
--- =========================================
-
-INSERT INTO log_usuario (usuario_id, acao, mensagem) VALUES
-(1, 'cadastro', 'Conta criada'),
-(1, 'compra', 'Pokébolas compradas'),
-(2, 'login', 'Login realizado'),
-(3, 'compra', 'Poção comprada');
 
 
 -- =========================================

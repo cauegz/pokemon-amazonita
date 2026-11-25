@@ -148,14 +148,6 @@ CREATE TABLE IF NOT EXISTS usuario
   PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS venda
-(
-  id              INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  id_itens_compra INT NOT NULL,
-  id_loja         INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
 ALTER TABLE npc DROP CONSTRAINT IF EXISTS FK_tipo_npc_TO_npc;
 ALTER TABLE npc
   ADD CONSTRAINT FK_tipo_npc_TO_npc
@@ -185,18 +177,6 @@ ALTER TABLE inventario
   ADD CONSTRAINT FK_treinador_TO_inventario
     FOREIGN KEY (id_treinador)
     REFERENCES treinador (id);
-
-ALTER TABLE venda DROP CONSTRAINT IF EXISTS FK_loja_TO_venda;
-ALTER TABLE venda
-  ADD CONSTRAINT FK_loja_TO_venda
-    FOREIGN KEY (id_loja)
-    REFERENCES loja (id);
-
-ALTER TABLE venda DROP CONSTRAINT IF EXISTS FK_itens_compra_TO_venda;
-ALTER TABLE venda
-  ADD CONSTRAINT FK_itens_compra_TO_venda
-    FOREIGN KEY (id_itens_compra)
-    REFERENCES itens_compra (id);
 
 ALTER TABLE itens_compra DROP CONSTRAINT IF EXISTS FK_produto_TO_itens_compra;
 ALTER TABLE itens_compra

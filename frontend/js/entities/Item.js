@@ -4,6 +4,7 @@ class Item{
     _id;
     _idPokeApi;
     _nome;
+    _nomeFormatado;
     _descricao;
     _efeito;
     _urlImagem;
@@ -13,6 +14,7 @@ class Item{
         this._id = id;
         this._idPokeApi = idPokeApi;
         this._nome = nome;
+        this.nomeFormatado = nome;
         this._descricao = descricao;
         this._efeito = efeito;
         this._urlImagem = urlImagem;
@@ -39,6 +41,11 @@ class Item{
     get urlImagem() {
         return this._urlImagem;
     }
+
+    get nomeFormatado() {
+        return this._nomeFormatado;
+    }
+
     set urlImagem(urlImagem) {
         this._urlImagem = urlImagem;
     }
@@ -53,8 +60,23 @@ class Item{
     }
     set descricao(descricao) {
         this._descricao = descricao;
-    }set nome(nome) {
+    }
+    set nome(nome) {
         this._nome = nome;
+    }
+    set nomeFormatado(nome){
+        if (nome != 'leaf-stone'){
+            this._nomeFormatado = nome
+            .replaceAll("-", " ")
+            .toLowerCase()
+            .split(" ")
+            .map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+            .join(" ");
+        }
+
+        else {
+            this._nomeFormatado = 'Evolution Stone'
+        }
     }
     set id(id) {
         this._id = id;
