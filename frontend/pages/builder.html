@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Team Builder</title>
     <link rel="stylesheet" href="../css/builder.css" />
+    <link rel="stylesheet" href="../css/bruxish.css">
 </head>
 
 <body>
     <div id="gameContainer" class="game-container">
+        <div id="loading">
+            <div>
+                <img src="../images/loading-pokeball.png">
+                <h2>Carregando jogo...</h2>
+            </div>
+        </div>
         <section class="player">
             <div id="player-info">
                 <div class="player-avatar" id="player-avatar">
@@ -29,6 +36,19 @@
             <img id="player-sprite" src="../images/sprites/player-sprite.png" alt="Sprite do treinador">
         </section>
         <main class="builder-main">
+            <div class="interface-bruxish" id="builder" popover="manual">
+                <img src="../images/brushish.png" alt="bruxish o maioral">
+                <div class="caixa-dialogo">
+                    Olá <span id="nome-usuario"></span> bem-vindo ao mundo pokemon em Manaus/AM, aqui você enfrentará diversos adversários e viverá altas aventuras,
+                     porém, antes disso, você deve montar seu time de pokemons.
+                    <div class="div-botao-fechar">
+                        <button popovertarget="builder" popovertargetaction="hide" class="botao-fechar-bruxish">
+                            Ok, continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="builder-title">
                 <h1>Monte seu time</h1>
             </div>
@@ -81,6 +101,7 @@
         </main>
     </div>
     <script src="../js/pages/builder.js" type="module"></script>
+    <script type="module" src="../js/services/bruxish.js"></script>
 </body>
 
 </html>
