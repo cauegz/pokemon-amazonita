@@ -169,8 +169,9 @@ class ControladorTime extends ControladorGeral{
 
         try{
             foreach($time as $pokemon){
-                $pokemon->hpAtual = $pokemon->hp;
-                $pokemon->save();
+                $pokemonObj = Pokemon::find($pokemon->pokemon);
+                $pokemonObj->hpAtual = $pokemonObj->hp;
+                $pokemonObj->save();
             }
         }catch(Exception $e){
             $this->responseError("Erro ao curar", 500);
