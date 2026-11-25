@@ -4,7 +4,10 @@ import Time from "../entities/Time.js";
 import Inventario from "../entities/Inventario.js";
 import PokeAPI from "../APIs/PokeApi.js";
 import CalculadoraStats from "../entities/CalculadoraStats.js";
+import { mostrarLoading, esconderLoading } from "../services/loading.js";
+
 window.addEventListener('load', async function () {
+    mostrarLoading();
     const usuario = await verificarSessao();
 
     // Configura o canvas e o tamanho da área de jogo
@@ -198,5 +201,6 @@ window.addEventListener('load', async function () {
         divTime.innerHTML = htmlFinal;
     }
 
+    esconderLoading();
     mostraTime(time.pokemon);
 });
