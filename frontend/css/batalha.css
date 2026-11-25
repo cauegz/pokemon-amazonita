@@ -13,7 +13,7 @@ body {
     overflow: hidden;
 }
 
-#gameContainer {
+.game-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -24,8 +24,6 @@ body {
     padding: 20px;
     overflow: hidden;
     isolation: isolate;
-    border: 4px solid #293d37;
-    border-radius: 12px;
     background: url(../images/background/battlescreen-2.jpg) center / cover no-repeat;
     box-shadow: 0 16px 38px rgb(22 34 31 / 40%);
     font-family: var(--fonte-principal);

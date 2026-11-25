@@ -18,7 +18,7 @@ body {
     background-size: cover;
 }
 
-#gameContainer {
+.game-container {
     width: 100%;
     max-width: 1020px;
     height: 92vh;
@@ -27,8 +27,6 @@ body {
     display: grid;
     grid-template-columns: minmax(190px, 0.68fr) minmax(0, 2fr);
     overflow: hidden;
-    border: 2px solid #303030;
-    border-radius: 4px;
     background: var(--cor-menus);
     box-shadow: 6px 6px 0 rgba(30, 42, 48, 0.3);
 }
