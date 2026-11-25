@@ -179,6 +179,7 @@ button {
 
 .produtoNome {
     text-align: center;
+    z-index: 2;
     height: 15%;
     width: 100%;
 }
