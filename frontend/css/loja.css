@@ -12,6 +12,10 @@ body {
     
 }
 
+.invisivel {
+    display: none !important;
+}
+
 main {
     display: flex;
     position: absolute;
@@ -308,5 +312,72 @@ button {
     }
     100%{
         transform: scale(1);
+    }
+}
+
+#loading {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center; 
+    margin: 0 auto;
+    -webkit-text-stroke-width: 0.75px;
+    /* Espessura do contorno */
+    -webkit-text-stroke-color: black;
+    text-align: center;
+    gap: -12px;
+    animation: FadeIn 1s, ZoomIn 1s;
+
+}
+
+#loading img {
+    height: 25%;
+    width: auto;
+    animation: loadingRotate 1s infinite;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes loadingRotate {
+    0% {
+        rotate: 0deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
+
+@keyframes ZoomIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes ZoomOut {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(0);
+    }
+}
+
+@keyframes FadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes FadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }

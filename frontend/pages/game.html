@@ -1,67 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monstrobolso</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-    <img id="player" src="../images/sprites/player-sprites.png" alt="Player Sprite" >
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Monstrobolso</title>
+        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="../css/bruxish.css">
+    </head>
+    <body>
+        <canvas id="gameCanvas"></canvas>
+        <img
+            id="player"
+            src="../images/sprites/player-sprites.png"
+            alt="Player Sprite"
+        />
 
-    <div class="camada-interface">
+        <span id="nome-usuario"></span>
+        <button id="sair">Sair</button>
+
+        <div id="menu-time">
+
+        </div>
+        <div class="camada-interface">
             <div id="menu">
-                 <a href="./builder.html" class="btn-menu" id="team-builder">
-                <img src="../images/Pokeball.png">
+                <a href="./builder.html" class="btn-menu" id="team-builder">
+                    <img src="../images/Pokeball.png" />
                 </a>
-                <a href="#" class="btn-menu" id="mochila">
-                    <img src="../images/bag.png">
+                <a class="btn-menu" id="mochila">
+                    <img src="../images/bag.png" />
                 </a>
             </div>
-        <div class="interface-mapa" data-mapa-id="2">
-            <h1 class="nome-area">
-                Pokemart e Centro Pokemon
-            </h1>
-           
-            <a href="./loja.html" class="npc" id="poke-mart">
-                <img src="../images/brushish.png">
-            </a>
-            <a href="#" class="npc" id="centro-pokemon">
-                <img src="../images/ze_gotinha.png">
-            </a>
-        </div>
-        <div class="interface-mapa" data-mapa-id="0" hidden>
-            <h1 class="nome-area">
-                Ribeirinhos
-                <p class="mensagem-missao"> <i class="fa-solid fa-compass"></i>Batalhe com Marcio Bigolin</p>
-            </h1>
-            <button data-id="1" class="btn-escolher">
-                <img src="../images/npcs/sprite-bigolin.png">
-            </button>
-        </div>
-        <div class="interface-mapa" data-mapa-id="1" hidden>
-            <h1 class="nome-area">
-                Museu
-                <p class="mensagem-missao"> <i class="fa-solid fa-compass"></i>Batalhe com Raissa Scheeren</p>
-            </h1>
-            <button data-id="2" class="btn-escolher">
-                <img src="../images/npcs/sprite-raissa.png">
-            </button>
-        </div>
-        <div class="interface-mapa" data-mapa-id="3" hidden>
-            <h1 class="nome-area">
-                Lago
-                <p class="mensagem-missao"> <i class="fa-solid fa-compass"></i>Batalhe com Jacqueline Akazaki</p>
-            </h1>
-            <button data-id="3" class="btn-escolher">
-              <img src="../images/npcs/sprite-jaque.png">
-            </button>
-        </div>
-    </div>
 
-    <script type="module" src="../js/pages/main.js"></script>
-    <script type="module" src="../js/pages/mapa.js"></script>
-    <script src="https://kit.fontawesome.com/20f8a440c6.js" crossorigin="anonymous"></script>
-</body>
+            <dialog id="abreMochila">
+                <button id="fechaMochila">X</button>
+                <span id="mochilaItems"></span>
+            </dialog>
+
+            <div class="interface-mapa" data-mapa-id="2">
+                <h1 class="nome-area">Pokemart e Centro Pokemon</h1>
+                <div id="interface-bruxish" popover="manual">
+                    <img src="../images/brushish.png" alt="bruxish o maioral">
+                    <div id="caixa-dialogo">
+                        Ola aqui e o bruxish
+                        <div id="div-botao-fechar">
+                            <button popovertarget="interface-bruxish" popovertargetaction="hide" id="botao-fechar-bruxish">
+                                Ok, continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="./loja.html" class="npc" id="poke-mart">
+                    <img src="../images/brushish.png" />
+                </a>
+                <a href="./centro.html" class="npc" id="centro-pokemon">
+                    <img src="../images/ze_gotinha.png" />
+                </a>
+            </div>
+
+            <div class="interface-mapa" data-mapa-id="0" hidden>
+                <h1 class="nome-area">
+                    Ribeirinhos
+                    <p class="mensagem-missao">
+                        <i class="fa-solid fa-compass"></i>Batalhe com Marcio
+                        Bigolin
+                    </p>
+                </h1>
+                <button data-id="1" class="btn-escolher">
+                    <img src="../images/npcs/sprite-bigolin.png" />
+                </button>
+            </div>
+
+            <div class="interface-mapa" data-mapa-id="1" hidden>
+                <h1 class="nome-area">
+                    Museu
+                    <p class="mensagem-missao">
+                        <i class="fa-solid fa-compass"></i>Batalhe com Raissa
+                        Scheeren
+                    </p>
+                </h1>
+                <button data-id="2" class="btn-escolher">
+                    <img src="../images/npcs/sprite-raissa.png" />
+                </button>
+            </div>
+
+            <div class="interface-mapa" data-mapa-id="3" hidden>
+                <h1 class="nome-area">
+                    Lago
+                    <p class="mensagem-missao">
+                        <i class="fa-solid fa-compass"></i>Batalhe com
+                        Jacqueline Akazaki
+                    </p>
+                </h1>
+                <button data-id="3" class="btn-escolher">
+                    <img src="../images/npcs/sprite-jaque.png" />
+                </button>
+            </div>
+        </div>
+
+        <script type="module" src="../js/pages/main.js"></script>
+        <script type="module" src="../js/pages/mapa.js"></script>
+        <script src="../js/services/bruxish.js"></script>
+        <script
+            src="https://kit.fontawesome.com/20f8a440c6.js"
+            crossorigin="anonymous"
+        ></script>
+        <script type="module">
+            let usuario;
+            import verificarSessao from "../js/services/verificarSessao.js";
+            usuario = await verificarSessao();
+
+            const spanNome = document.getElementById("nome-usuario");
+            spanNome.innerHTML = usuario.nome;
+
+            const btnSair = document.getElementById("sair");
+            btnSair.addEventListener("click", async () => {
+                await fetch("/api/logout", {
+                    method: "POST",
+                    credentials: "include",
+                });
+                window.location.href = "/pages/login.html";
+            });
+        </script>
+    </body>
 </html>

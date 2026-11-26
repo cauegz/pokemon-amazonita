@@ -97,9 +97,7 @@ export default class Api {
     }
 
     static async removerItemInventario(id) {
-        return await this.requisicao(`/inventario/remover?id=${id}`, {
-            method: "DELETE"
-        });
+        return await this.requisicao(`/inventario/remover?id=${id}`);
     }
 
     static async buscarItem(id) {
@@ -132,7 +130,8 @@ export default class Api {
     }
 
     /**
-     * Envia a foto a partir de um FormData para o PHP
+     * Envia a foto a partir de um FormData para o PHP, não usa o this.requisicao 
+     * por causa do content-type/json
      * @param {FormData} dados 
      */
     static async enviarFoto(dados) {
@@ -145,5 +144,20 @@ export default class Api {
 
     static async removerFoto() {
         return await this.requisicao("/removerFoto")
+    }
+
+    static async curarTime() {
+        return await this.requisicao(`/time/curar`);
+    }
+    
+    static async evoluirPokemon(idBanco,idNovoPokeApi){
+        return await this.requisicao(`/pokemon/evoluir?newid=${idNovoPokeApi}&&id=${idBanco}`);
+    }
+    
+    static async evoluirPokemon(idBanco,pokeEvo){
+        return await this.requisicao(`/pokemon/evoluir?id=${idBanco}`, {
+            method: "POST",
+            body: JSON.stringify(pokeEvo)
+        })
     }
 }

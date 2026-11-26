@@ -1,3 +1,6 @@
+import Api from "../APIs/Api.js";
+import Pokemon from "./Pokemon.js";
+import Time from "./Time.js"
 class CalculadoraStats{
     static cura = new Map([
         ["potion", 20],
@@ -17,7 +20,7 @@ class CalculadoraStats{
     ]);
 
 
-    static usarItem(pokemon, item){
+    static async usarItem(pokemon, item, idTreinador = null){
         if(item.categoria == "healing"){
            const quantidadeCura = CalculadoraStats.cura.get(item.nome);
            pokemon.hpAtual += quantidadeCura ;
@@ -32,6 +35,28 @@ class CalculadoraStats{
             pokemon.hpAtual = Math.ceil(pokemon.hp / 2);
             pokemon.efeito = null;
             return true;
+        }
+        if(item.categoria == "evolution"){
+            pokemon.pokeApi += 1;
+            console.log( pokemon.pokeApi)
+          
+            pokemon = await Pokemon.carregaPokemon(pokemon.id, pokemon.pokeApi);
+            console.log(pokemon)
+            Api.evoluirPokemon(pokemon.id,
+                {
+                    treinador: idTreinador,
+                    idPokeApi: pokemon.pokeApi,
+                    ataque: pokemon.ataque,
+                    ataqueEspecial: pokemon.ataqueEspecial,
+                    defesa: pokemon.defesa,
+                    defesaEspecial: pokemon.defesaEspecial,
+                    velocidade: pokemon.velocidade,
+                    hpAtual: pokemon.hpAtual,
+                    hp: pokemon.hp
+                }
+            );
+            return pokemon;
+
         }
     }
 }

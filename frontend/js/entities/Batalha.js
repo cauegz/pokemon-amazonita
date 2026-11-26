@@ -33,10 +33,13 @@ class Batalha {
 
     #abrirMenuTroca(turnoAposTroca) {
         this.#view.trocar(
-            pokemon => this.trocarPokemon(pokemon, turnoAposTroca),
-            this.#inventario,
-            (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
-            () => this.#view.atualizarHp(this.#jogador, this.#oponente)
+            pokemon => this.trocarPokemon(pokemon, turnoAposTroca), // callback pra fazer a troca
+            
+            //necessario pra poder usar o revive
+            this.#inventario, 
+            (pokemon, item) => CalculadoraStats.usarItem(pokemon, item), 
+
+            () => this.#view.atualizarHp(this.#jogador, this.#oponente) //callback pra atualizar hp
         );
     }
 
@@ -65,7 +68,7 @@ class Batalha {
         const botaoMochila = document.getElementById('mochila');
         if (botaoMochila) {
             botaoMochila.onclick = () => {
-                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#inventario, (pokemon, item) => {
+                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#oponente, (item) => {
                     CalculadoraStats.usarItem(this.#jogador, item);
                     this.#view.atualizarHp(this.#jogador, this.#oponente);
                 });
@@ -81,8 +84,9 @@ class Batalha {
 
         const botaoFugir = document.getElementById('fugir');
         if (botaoFugir) {
-            botaoFugir.onclick = () => {
-                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+            botaoFugir.onclick = async () => {
+                await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
+                localStorage.setItem("time-" + this.#idTreinador, JSON.stringify(this.#timeJogador));
                 window.location.href = "game.html";
             };
         }
@@ -102,7 +106,7 @@ class Batalha {
 
                 //atualiza o time do jogador no banco e no localStorage
                 await Api.atualizarTime(this.#timeJogador, this.#idTreinador);
-                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+                localStorage.setItem("time-" + this.#idTreinador, JSON.stringify(this.#timeJogador));
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
 
                 //salva o log da batalha no banco
@@ -152,7 +156,7 @@ class Batalha {
                 );
 
                 //salva o time pos batalha no localStorage para evitar multiplas buscas na PokeAPI
-                localStorage.setItem("time", JSON.stringify(this.#timeJogador));
+                localStorage.setItem("time-" + this.#idTreinador, JSON.stringify(this.#timeJogador));
 
                 //salva no localStorage que voce derrotou o inimigo
                 const npcOponente = this.#mapaNpcs[this.#idOponente];
@@ -222,10 +226,13 @@ class Batalha {
         const ataquesValidos = oponente.ataques.filter(a => a !== null);
         const ataqueBot = ataquesValidos[Math.floor(Math.random() * ataquesValidos.length)];
 
-        const jogadorPrimeiro =
-            ataqueJogador.prioridade !== ataqueBot.prioridade
-                ? ataqueJogador.prioridade > ataqueBot.prioridade
-                : jogador.velocidade >= oponente.velocidade;
+        let jogadorPrimeiro;
+
+        if(ataqueJogador.prioridade !== ataqueBot.prioridade){
+            jogadorPrimeiro = ataqueJogador.prioridade > ataqueBot.prioridade;
+        } else {
+            jogadorPrimeiro = jogador.velocidade >= oponente.velocidade;
+        }
 
         if (jogadorPrimeiro) {
             await this.atacar(jogador, oponente, ataqueJogador);
