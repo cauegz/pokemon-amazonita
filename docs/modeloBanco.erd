@@ -247,7 +247,8 @@
           "rE6nIC5t9UAoVHfRjCueJ",
           "FN_8GE-lMiJ99oXF597rQ",
           "tiBKrpydXNztrOesPrzUP",
-          "WTOovn4yG2wLuYzguav-U"
+          "WTOovn4yG2wLuYzguav-U",
+          "03hb67udbmt9d4qbxwog8v7am"
         ],
         "ui": {
           "x": 471.2154,
@@ -665,6 +666,14 @@
         "tableId": "U1y3zoV102grouoIhzNN2",
         "name": "nome",
         "dataType": "VARCHAR(100)",
+        "options": 8
+      },
+      "03hb67udbmt9d4qbxwog8v7am": {
+        "id": "03hb67udbmt9d4qbxwog8v7am",
+        "tableId": "g7EZwS9-TOE2gtJoDXBiH",
+        "name": "comprado_em",
+        "dataType": "timestamp",
+        "default": "CURRENT_TIMESTAMP",
         "options": 8
       },
       "FN_8GE-lMiJ99oXF597rQ": {

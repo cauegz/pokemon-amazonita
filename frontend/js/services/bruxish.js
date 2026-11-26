@@ -14,7 +14,7 @@ popovers.forEach(popover => {
     console.log(sessionStorage.getItem("bruxish-" + popover.id))
     if(!sessionStorage.getItem("bruxish-" + popover.id)){
         // descomente isso para o bruxish nao ficar voltando
-        // sessionStorage.setItem("bruxish-" + popover.id, true); 
+        sessionStorage.setItem("bruxish-" + popover.id, true); 
         popover.showPopover();
     }
 });
