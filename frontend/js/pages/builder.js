@@ -3,13 +3,14 @@ import verificarSessao from "../services/verificarSessao.js";
 import Time from "../entities/Time.js";
 import Api from "../APIs/Api.js";
 import BuilderView from "../entities/view/BuilderView.js";
+import { mostrarLoading, esconderLoading } from "../services/loading.js";
 
 async function iniciarBuilder() {
     try {
         //sessao
         const usuario = await verificarSessao();
         if (!usuario) return;
-
+        
         // Carrega o time 
         const objTime = await Time.carregarTime(usuario.treinador);
         console.log("time: ")
@@ -19,8 +20,16 @@ async function iniciarBuilder() {
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
+
+                //verifica se o time inteiro é completamente nulo
+                if (objTime.pokemon.every((pokemon) => pokemon == null)) {
+                    alert("Você deve selecionar pokémons para o seu time");
+                    return;
+                }
+
                 const botao = document.getElementById("enviar");
                 botao.disabled = true;
+                mostrarLoading();
 
                 try {
                     await Api.enviarTime(objTime);
@@ -30,6 +39,7 @@ async function iniciarBuilder() {
                     window.location.href = "game.html";
                 } catch (erro) {
                     console.error("erro ao enviar o time:", erro);
+                    esconderLoading();
                     botao.disabled = false;
                     alert("Não foi possível salvar o time. Tente novamente.");
                 }
@@ -51,7 +61,7 @@ botaoEditarFoto.addEventListener("click", () => {
 });
 
 async function carregarFotoPerfil() {
-    const urlFotoServidor = "http://localhost/api/fotoPerfil"; 
+    const urlFotoServidor = "http://localhost:8080/api/fotoPerfil";
 
     preview.onload = () => {
         preview.hidden = false;

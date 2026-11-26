@@ -11,7 +11,7 @@ body, input, button, a{
     color: var(--cor-fontes);
 }
 
-#canvas{
+.game-container{
     position: absolute;
     top: 50%;
     left:50%;
@@ -23,7 +23,7 @@ body, input, button, a{
     align-items: center;
     background-image:
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.525)),
-    url('../images/background/bg-pokebola.jpg');
+    url('../images/background/bg-pokebola.png');
     background-size: cover;
     border-radius: 10px;
 }

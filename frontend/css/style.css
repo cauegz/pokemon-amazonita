@@ -12,14 +12,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    max-width: 100%;
+}
+
+#gameCanvas,
+.camada-interface{
+    width: min(1020px, 100vw, calc((100vh - 16px) * 1.74));
+    aspect-ratio: 1020 / 586;
 }
 
 .camada-interface{
-    width: 1020px;
-    height: 586px;
     z-index: 2;
-   
 }
 
 .interface-mapa{
@@ -32,6 +34,78 @@
     position: relative;
     width: 100%;
     height: 100%;
+}   
+
+#player-info{
+    position: absolute;
+    top: 2.5%;
+    right: 2%;
+    z-index: 10;
+    width: 35%;
+    min-height: 66px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 7px 52px 7px 66px;
+    border: 4px solid #293d37;
+    border-radius: 9px;
+    background: #f5efd2;
+    box-shadow: 0 5px 0 rgb(35 48 43 / 60%);
+    font-family: var(--fonte-principal);
+}
+#foto-perfil{
+    position: absolute;
+    top: 50%;
+    left: 7px;
+    display: block;
+    overflow: hidden;
+    width: 55px;
+    height: 55px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    border: 2px solid #1f5711;
+}
+#nome-usuario{
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.player-photo{
+    display: block;
+    border-radius: 100%;
+    object-fit: cover;
+    width:100%;
+    height: 100%;
+}
+#dinheiro{
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+#moeda{
+    width: 20%;
+    height: 90%;
+    display: block;
+    object-fit: contain;
+}
+#sair{
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    padding: 6px;
+    border-color: #8e4035;
+    background: #dc6955;
+    color: white;
+    border-radius: 20%;
+    transform: translateY(-50%);
+    transition: 0.2s;
+    font-family: var(--fonte-principal);
+}
+#sair:hover{
+    border-color: #dc6955;
+    background: #db8879;
+    font-size: 1.1rem;
 }
 .btn-menu, .npc{
     display: block;
@@ -56,9 +130,9 @@
 
 #menu {
     position: absolute;
-    top: 5%;
-    right: 10%;
-    z-index: 10;
+    top: 16%;
+    right: 12%;
+    z-index: 4;
     display: flex;
     align-items: center;
 }
@@ -74,6 +148,7 @@
     height: 100%;
 }
 .nome-area{
+    margin:12px;
     font-family: var(--fonte-principal);
     color: white;
     width: 40%;
@@ -94,10 +169,6 @@
     width: 60%;
     padding: 5px;
 }
-#gameCanvas{
-    border: 5px solid black;
-}
-
 #player{
     display: none;
 }
@@ -236,32 +307,39 @@ body{
 
 #menu-time {
     position: fixed;
-    top: 19%;
-    left: 5%; 
-    width: 260px;
-    height: 100vh;
-
+    top: 50%;
+    left: 20px;
+    width: 20vw;
+    min-width: 180px;
+    max-width: 220px;
+    transform: translateY(-50%);
     display: flex;
+    background-color: #0000006c;
+    padding:10px;
+    border-radius: 12px;
     flex-direction: column;
     gap: 12px;
 }
 
 .card-pokemon {
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     gap: 12px;
-    background-color: #174717;
-    border: 1px solid #00f836;
-    border-radius: 8px;
     padding: 10px 12px;
     transition: all 0.2s ease;
+
+    border: 4px solid #293d37;
+    border-radius: 9px;
+    background: #f5efd2;
+    box-shadow: 0 5px 0 rgb(35 48 43 / 60%);
     font-family: var(--fonte-principal);
 }
 
 .card-pokemon:hover {
-    background-color: #038334;
-    border-color: #51ff00;
-    transform: translateX(4px);
+    background-color: var(--cor-card-pokemon-hover);
+    border-color: #667b4c;
+    transform: translateX(3px);
 }
 
 .card-pokemon img {
@@ -274,7 +352,6 @@ body{
 
 .card-pokemon p {
     margin-bottom: 6px;
-    color: white;
     font-weight: 600;
 }
 

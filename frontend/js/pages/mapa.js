@@ -1,6 +1,7 @@
 import Api from "../APIs/Api.js";
 import Time from "../entities/Time.js";
 import verificarSessao from "../services/verificarSessao.js";
+import { mostrarLoading, esconderLoading } from "../services/loading.js";
 
 const user = await verificarSessao();
 
@@ -43,19 +44,27 @@ botoes.forEach(botao => {
     }
     botao.addEventListener("click", (event) => {
         const idNpc = event.currentTarget.dataset.id;
-        batalhar(idNpc);
+        batalhar(idNpc, event.currentTarget);
     });
 });
 
-async function batalhar(idNpc) {
-    mapa[idNpc].isBatalhando = true;
-    const oponente = await Api.buscarTreinadorByNpc(idNpc);
+async function batalhar(idNpc, botao) {
+    botao.disabled = true;
+    mostrarLoading();
 
-    let timeOponente = await Time.carregarTime(oponente.id);
-    
-    sessionStorage.setItem("oponente", mapa[idNpc].npc);
+    try {
+        mapa[idNpc].isBatalhando = true;
+        const oponente = await Api.buscarTreinadorByNpc(idNpc);
+        await Time.carregarTime(oponente.id);
 
-    localStorage.setItem("npcs", JSON.stringify(mapa));
+        sessionStorage.setItem("oponente", mapa[idNpc].npc);
+        localStorage.setItem("npcs", JSON.stringify(mapa));
 
-    window.location.href = "./batalha.html";
+        window.location.href = "./batalha.html";
+    } catch (erro) {
+        console.error("Erro ao iniciar a batalha:", erro);
+        esconderLoading();
+        botao.disabled = false;
+        alert("Não foi possível iniciar a batalha. Tente novamente.");
+    }
 }

@@ -62,16 +62,16 @@ export default class BuilderView {
             }
         });
         this.carregaTimeBanco();
-        animacaoCarregar();
+        animacaoCarregar("gameContainer", "grid");
         
     }
 
     mostrarJogador(usuario) {
         const nome = document.getElementById("info");
         const avatar = document.getElementById("player-avatar");
-        const foto = usuario.foto; //depois adicionar lógica do upload
-        nome.innerHTML = usuario.nome || "Treinador";
-
+        const foto = usuario.foto; 
+        nome.innerHTML = usuario.nome;
+        console.log(usuario);
         if (foto) {
             avatar.innerHTML = `<img class="player-photo" src="${foto}" alt="Foto de ${nome.textContent}">`;
         }

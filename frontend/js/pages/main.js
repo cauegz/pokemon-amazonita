@@ -4,7 +4,10 @@ import Time from "../entities/Time.js";
 import Inventario from "../entities/Inventario.js";
 import PokeAPI from "../APIs/PokeApi.js";
 import CalculadoraStats from "../entities/CalculadoraStats.js";
+import { mostrarLoading, esconderLoading } from "../services/loading.js";
+
 window.addEventListener('load', async function () {
+    mostrarLoading();
     const usuario = await verificarSessao();
 
     // Configura o canvas e o tamanho da área de jogo
@@ -133,14 +136,16 @@ window.addEventListener('load', async function () {
                 usuario.treinador
              );
 
-             // Se for evolução e deu certo, substitui o pokémon no time e persiste no localStorage
+             // Se for evolução e deu certo, substitui o pokémon no time
             if (item.categoria === "evolution" && resultado) {
                     time.pokemon[posicao] = resultado;
-                    localStorage.setItem(
+            }
+
+            localStorage.setItem(
                         "time-" + usuario.treinador,
                         JSON.stringify(time)
                 );
-            }
+            mostraTime(time.pokemon);
             modal.close();
         })
         })
@@ -154,6 +159,10 @@ window.addEventListener('load', async function () {
     document
         .getElementById("fechaMochila")
         .addEventListener("click", () => modal.close());
+
+    console.log(usuario)
+    document.getElementById("dinheiro").innerHTML =`<img id="moeda" src="../images/moeda.png"/><p>${usuario.dinheiro}</p>`;
+    document.getElementById("foto-perfil").innerHTML =`<img class="player-photo" src="http://localhost:8080/api/fotoPerfil">` //ta funcionando deixa assim =/
 
     function mostraTime(time) {
         const divTime = document.getElementById("menu-time");
@@ -195,5 +204,6 @@ window.addEventListener('load', async function () {
         divTime.innerHTML = htmlFinal;
     }
 
+    esconderLoading();
     mostraTime(time.pokemon);
 });

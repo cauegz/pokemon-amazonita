@@ -52,7 +52,7 @@ export default class LojaView {
             }
         })
 
-        animacaoCarregar();
+        animacaoCarregar("jogo", "flex");
 
     }
 
