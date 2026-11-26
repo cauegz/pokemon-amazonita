@@ -63,7 +63,6 @@ export default class LojaView {
             <div>
                 <div class="produto" id="produto-${produto.id}">
                 <div class="produtoNome">${produto.nomeFormatado} </div>
-                <div class="produtoNome">${produto.nomeFormatado} </div>
                 <span class='quant'></span>
                 <div class="produtoImg">
                         <img src="${produto.urlImagem}" alt="${produto.nome} image">
