@@ -20,9 +20,11 @@ class Inventario {
     }
 
     async removerItem(idItem){
-        await Api.removerItemInventario(idItem);
-        const indice = this.#items.findIndex(item => item?.id === Number(idItem));
-        if (indice !== -1) this.#items.splice(indice, 1);
+        const resultado = await Api.removerItemInventario(idItem);
+        if (!resultado.restante) {
+            const indice = this.#items.findIndex(item => item?.id === Number(idItem));
+            if (indice !== -1) this.#items.splice(indice, 1);
+        }
     }
 }
 export default Inventario;

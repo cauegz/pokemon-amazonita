@@ -31,9 +31,9 @@ class Batalha {
         this.configurarEventos();
     }
 
-    #abrirMenuTroca(turnoAposTroca) {
+    #abrirMenuTroca(trocaForcada = false) {
         this.#view.trocar(
-            pokemon => this.trocarPokemon(pokemon, turnoAposTroca), // callback pra fazer a troca
+            pokemon => this.trocarPokemon(pokemon, trocaForcada),
             
             //necessario pra poder usar o revive
             this.#inventario, 
@@ -61,17 +61,19 @@ class Batalha {
         const botaoTrocar = document.getElementById('trocar');
         if (botaoTrocar) {
             botaoTrocar.onclick = async () => {
-              this.#abrirMenuTroca(false);
+              this.#abrirMenuTroca();
             };
         }
 
         const botaoMochila = document.getElementById('mochila');
         if (botaoMochila) {
             botaoMochila.onclick = () => {
-                this.#view.mostrarMochila(this.#inventario, this.#jogador, this.#oponente, (item) => {
-                    CalculadoraStats.usarItem(this.#jogador, item);
-                    this.#view.atualizarHp(this.#jogador, this.#oponente);
-                });
+                this.#view.mostrarMochila(
+                    this.#inventario,
+                    this.#jogador,
+                    this.#oponente,
+                    (pokemon, item) => CalculadoraStats.usarItem(pokemon, item)
+                );
             };
         }
 
@@ -172,10 +174,21 @@ class Batalha {
         }
     }
 
-    trocarPokemon(novoPokemon) {
+    async trocarPokemon(novoPokemon, trocaForcada = false) {
+        if (novoPokemon === this.#jogador) {
+            this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
+            return;
+        }
+
         this.#jogador = novoPokemon;
         this.#view.mostrarPokemon(this.#jogador, this.#oponente);
-        this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
+
+        if (trocaForcada) {
+            this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
+            return;
+        }
+
+        await this.executarTurno(false);
     }
 
     trocarOponente(novoPokemon) {
@@ -186,16 +199,11 @@ class Batalha {
 
     async executarTurno(ataque) {
         try {
-            // se o parametro ataque for false, é uma troca e nao um ataque, e se for uma troca sem o pokemon
-            // do jogador ter desmaiado o bot ataca o novo pokemon
             if (!ataque) {
-                this.#view.trocar(async novoPokemon => {
-                    this.trocarPokemon(novoPokemon);
-                    const ataquesValidos = this.#oponente.ataques.filter(a => a !== null);
-                    const ataqueBot = ataquesValidos[Math.floor(Math.random() * ataquesValidos.length)];
-                    await this.ataqueBot(ataqueBot);
-                    await this.verificarFimDeTurno();
-                });
+                const ataquesValidos = this.#oponente.ataques.filter(a => a !== null);
+                const ataqueBot = ataquesValidos[Math.floor(Math.random() * ataquesValidos.length)];
+                await this.ataqueBot(ataqueBot);
+                this.#view.mostrarMenuPrincipal(() => this.configurarEventos());
                 return;
             }
 

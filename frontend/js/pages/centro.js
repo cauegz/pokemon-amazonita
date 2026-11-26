@@ -14,8 +14,10 @@ botaoCurar.addEventListener("click", async () => {
 
     //atualiza a vida no localStorage tambem
     let time = JSON.parse(localStorage.getItem("time-" + user.treinador));
-    
     for(const pokeTime of time){
+        if(pokeTime == null){
+            continue;
+        }
         pokeTime.hpAtual = pokeTime.hp;
         console.log(pokeTime)
     }

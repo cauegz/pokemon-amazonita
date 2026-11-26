@@ -1,6 +1,6 @@
 @import url(./globals.css);
 
-#interface-bruxish {
+.interface-bruxish {
     position: absolute;
     inset: auto;
     top: auto;
@@ -16,7 +16,7 @@
     color: black;
 }
 
-#interface-bruxish > img {
+.interface-bruxish > img {
     position: absolute;
     z-index: 1;
     bottom: -15px;
@@ -25,28 +25,30 @@
     height: 182px;
 }
 
-#caixa-dialogo {
+.caixa-dialogo {
     position: relative;
     min-height: 132px;
     margin-left: 78px;
     padding: 22px 24px 16px 100px;
     border: 4px solid #f7e7b0;
     border-radius: 18px;
+    font-size: 1.25rem;
     background: white;
     font-family: var(--fonte-principal);
 }
 
-#div-botao-fechar {
+.div-botao-fechar {
     display: flex;
     justify-content: flex-end;
     margin-top: 12px;
 }
 
-#botao-fechar-bruxish {
+.botao-fechar-bruxish {
     padding: 8px 16px;
     border: 2px solid #174b61;
     border-radius: 999px;
     background: #27a8ae;
+    font-size: 1.25rem;
     color: white;
     font-family: var(--fonte-principal);
     cursor: pointer;
