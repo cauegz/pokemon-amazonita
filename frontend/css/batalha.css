@@ -123,6 +123,7 @@ body {
 }
 
 .hp-bar {
+    position: relative;
     display: flex;
     width: 100%;
     height: 17px;
@@ -134,9 +135,6 @@ body {
 }
 
 .life {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     min-width: 0;
     height: 100%;
     border-radius: 2px;
@@ -145,7 +143,13 @@ body {
 }
 
 .hp-bar > .life > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    max-width: 100%;
     overflow: hidden;
+    transform: translate(-50%, -50%);
     color: white;
     font-family: Arial, sans-serif;
     font-size: 0.65rem;

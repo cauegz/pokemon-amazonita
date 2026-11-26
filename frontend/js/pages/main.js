@@ -133,14 +133,16 @@ window.addEventListener('load', async function () {
                 usuario.treinador
              );
 
-             // Se for evolução e deu certo, substitui o pokémon no time e persiste no localStorage
+             // Se for evolução e deu certo, substitui o pokémon no time
             if (item.categoria === "evolution" && resultado) {
                     time.pokemon[posicao] = resultado;
-                    localStorage.setItem(
+            }
+
+            localStorage.setItem(
                         "time-" + usuario.treinador,
                         JSON.stringify(time)
                 );
-            }
+            mostraTime(time.pokemon);
             modal.close();
         })
         })
@@ -154,8 +156,9 @@ window.addEventListener('load', async function () {
     document
         .getElementById("fechaMochila")
         .addEventListener("click", () => modal.close());
-   
-    const foto = usuario.foto;
+
+    console.log(usuario)
+    document.getElementById("dinheiro").innerHTML =`<img id="moeda" src="../images/moeda.png"/><p>${usuario.dinheiro}</p>`;
     document.getElementById("foto-perfil").innerHTML =`<img class="player-photo" src="http://localhost:8080/api/fotoPerfil">` //ta funcionando deixa assim =/
 
     function mostraTime(time) {
