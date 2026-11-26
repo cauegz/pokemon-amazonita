@@ -38,7 +38,7 @@ async function iniciarBatalha() {
 
         if (posicaoPokeVivo === undefined) {
             alert('voce deve ter ao menos um pokemon vivo!');
-            window.location.href = './game.html';
+            window.location.href = '/pages/game.html';
             return;
         }
 
