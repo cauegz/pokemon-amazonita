@@ -23,12 +23,24 @@ class CalculadoraStats{
     static async usarItem(pokemon, item, idTreinador = null){
         if(item.categoria == "healing"){
            const quantidadeCura = CalculadoraStats.cura.get(item.nome);
+           if(item.nome == "max-potion"){
+                pokemon.hpAtual = pokemon.hp;
+           }
+           if(item.nome == "full-restore"){
+                pokemon.hpAtual = pokemon.hp;
+                pokemon.efeito = null;      
+           }
+          
            pokemon.hpAtual += quantidadeCura ;
            if(pokemon.hpAtual>pokemon.hp) pokemon.hpAtual= pokemon.hp;
         }
         if(item.categoria == "status-cures"){
             const efeitoCura = CalculadoraStats.statusCures.get(item.nome);
-            if(pokemon.efeito == efeitoCura) pokemon.efeito = null;
+            if(item.nome == "full-heal"){
+                pokemon.efeito = null;   
+            }else{
+                if(pokemon.efeito == efeitoCura) pokemon.efeito = null;
+            }
         }
         if(item.categoria == "revival"){
             if (pokemon.hpAtual > 0) return false;
