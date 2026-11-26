@@ -32,6 +32,7 @@ class Batalha {
     }
 
     #abrirMenuTroca(trocaForcada = false) {
+        document.querySelector("#trocaPokeAtivo .close-popover").hidden = trocaForcada;
         this.#view.trocar(
             pokemon => this.trocarPokemon(pokemon, trocaForcada),
             
@@ -130,6 +131,7 @@ class Batalha {
                     (pokemon, item) => CalculadoraStats.usarItem(pokemon, item),
                     () => this.#view.atualizarHp(this.#jogador, this.#oponente)
                 );
+                document.querySelector("#trocaPokeAtivo .close-popover").hidden = true;
                 document.getElementById("trocaPokeAtivo").showPopover();
             }
         }

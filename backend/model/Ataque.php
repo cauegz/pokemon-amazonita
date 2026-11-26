@@ -69,7 +69,7 @@ class Ataque extends ModelGeral implements JsonSerializable, ModelInterface
         } else {
 
             $sql = "UPDATE ataque
-                    SET pokeApi = :pokeApi,
+                    SET poke_api = :pokeApi,
                         pokemon_id = :pokemonId,
                         tipo_id = :tipoId
                     WHERE id = :id";

@@ -8,15 +8,17 @@ class Inventario {
     get items() {
         return this.#items;
     }
+
     async carregarInventario(idTreinador) {
         const inventarioData = await Api.buscarInventario(idTreinador);
-        let items = new Array(20).fill(null);
     
         for(let i=0; i < inventarioData.length; i++){
-           this.items[i] = await Item.carregarItem(inventarioData[i].idPokeApi,inventarioData[i].id);
+           this.items[i] = await Item.carregarItem(
+                inventarioData[i].idPokeApi, 
+                inventarioData[i].id
+            );
         }
-        console.log(items);
-        return items;
+        return this.#items;
     }
 
     async removerItem(idItem){

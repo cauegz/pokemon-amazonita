@@ -89,7 +89,6 @@ Escolha apenas uma das opções abaixo para bonificação:
 * [ ] Orientação a Objetos em **JavaScript** *(opcional)*
 * [ ] **Autoload** nas classes
 * [ ] **Encapsulamento** e **Polimorfismo**
-* [ ] **Sobrecarga** de métodos
 * [ ] Relações entre classes: **Composição, Agregação e Associação**
 * [ ] Tratamento de erros com no mínimo **3 exceções** (sendo **1 customizada**)
 

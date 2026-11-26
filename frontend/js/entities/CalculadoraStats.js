@@ -1,6 +1,5 @@
 import Api from "../APIs/Api.js";
 import Pokemon from "./Pokemon.js";
-import Time from "./Time.js"
 class CalculadoraStats{
     static cura = new Map([
         ["potion", 20],
@@ -50,11 +49,9 @@ class CalculadoraStats{
         }
         if(item.categoria == "evolution"){
             pokemon.pokeApi += 1;
-            console.log( pokemon.pokeApi)
-          
+
             pokemon = await Pokemon.carregaPokemon(pokemon.id, pokemon.pokeApi);
-            console.log(pokemon)
-            Api.evoluirPokemon(pokemon.id,
+            await Api.evoluirPokemon(pokemon.id,
                 {
                     treinador: idTreinador,
                     idPokeApi: pokemon.pokeApi,

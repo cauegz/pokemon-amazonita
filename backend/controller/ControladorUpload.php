@@ -34,9 +34,16 @@ class ControladorUpload extends ControladorGeral
         $diretorio = __DIR__ . "/../../z_data/perfil/";
 
         // Remove a foto anterior para manter apenas a imagem atual do usuario.
-        foreach (scandir($diretorio) as $nomeAntigo) {
-            if (str_starts_with($nomeAntigo, $idUsuario)) {
-                unlink($diretorio . $nomeAntigo);
+        foreach (scandir($diretorio) as $nome) {
+            if ($nome == '.' || $nome == '..') {
+                continue;
+            }
+
+            $posicaoPonto = strpos($nome, ".");
+            $nomeSemExtensao = substr($nome, 0, $posicaoPonto);
+            
+            if ($nomeSemExtensao == $idUsuario) {
+                unlink($diretorio . $nome);
             }
         }
 
@@ -65,7 +72,14 @@ class ControladorUpload extends ControladorGeral
         $removida = false;
 
         foreach (scandir($diretorio) as $nome) {
-            if (str_starts_with($nome, $idUsuario)) {
+            if ($nome == '.' || $nome == '..') {
+                continue;
+            }
+
+            $posicaoPonto = strpos($nome, ".");
+            $nomeSemExtensao = substr($nome, 0, $posicaoPonto);
+            
+            if ($nomeSemExtensao == $idUsuario) {
                 if (unlink($diretorio . $nome)) {
                     $removida = true;
                 }
@@ -95,9 +109,16 @@ class ControladorUpload extends ControladorGeral
         $diretorio = __DIR__ . "/../../z_data/perfil/";
 
         foreach (scandir($diretorio) as $nome) {
-            if (!str_starts_with($nome, $idUsuario)) {
+             if ($nome == '.' || $nome == '..') {
                 continue;
             }
+
+            $posicaoPonto = strpos($nome, ".");
+            $nomeSemExtensao = substr($nome, 0, $posicaoPonto);
+            
+            if ($nomeSemExtensao != $idUsuario) {
+                continue;
+            }            
 
             $caminho = $diretorio . $nome;
 

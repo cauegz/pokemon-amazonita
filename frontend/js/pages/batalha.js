@@ -27,7 +27,22 @@ async function iniciarBatalha() {
         const timeOponente = await Time.carregarTime(oponente.id);
 
         const view = new BatalhaView(timeJogador);
-        const pokemonJogador = timeJogador.pokemon[0];
+
+        let posicaoPokeVivo;
+        for(let i = 0; i < 6; i++){
+            if(timeJogador.pokemon[i] && timeJogador.pokemon[i].hpAtual > 0){
+                posicaoPokeVivo = i;
+                break;
+            }
+        }
+
+        if (posicaoPokeVivo === undefined) {
+            alert('voce deve ter ao menos um pokemon vivo!');
+            window.location.href = './game.html';
+            return;
+        }
+
+        const pokemonJogador = timeJogador.pokemon[posicaoPokeVivo];
         const pokemonOponente = timeOponente.pokemon[0];
 
         new Batalha(pokemonJogador, timeJogador, pokemonOponente, timeOponente, view, oponente, inventario, user.treinador);
