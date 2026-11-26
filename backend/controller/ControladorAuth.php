@@ -94,7 +94,8 @@ class ControladorAuth extends ControladorGeral {
             'ok' => true, 
             'nome' => $usuario->nome,
             'treinador' => $treinador->id,
-            'login' => $usuario->login 
+            'login' => $usuario->login,
+            'dinheiro' => $usuario->dinheiro
         ]);
     }
 

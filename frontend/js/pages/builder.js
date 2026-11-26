@@ -51,26 +51,14 @@ botaoEditarFoto.addEventListener("click", () => {
 });
 
 async function carregarFotoPerfil() {
-    try {
-        const resposta = await fetch("/api/fotoPerfil", {
-            credentials: "include",
-            cache: "no-store"
-        });
+    const urlFotoServidor = "http://localhost/api/fotoPerfil"; 
 
-        if (!resposta.ok) {
-            preview.hidden = true;
-            placeholder.hidden = false;
-            return;
-        }
-
-        const imagem = await resposta.blob();
-        preview.src = URL.createObjectURL(imagem);
+    preview.onload = () => {
         preview.hidden = false;
         placeholder.hidden = true;
-    } catch {
-        preview.hidden = true;
-        placeholder.hidden = false;
-    }
+    };
+
+    preview.src = urlFotoServidor;
 }
 
 carregarFotoPerfil();
