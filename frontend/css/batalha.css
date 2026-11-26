@@ -13,7 +13,7 @@ body {
     overflow: hidden;
 }
 
-#gameContainer {
+.game-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -24,8 +24,6 @@ body {
     padding: 20px;
     overflow: hidden;
     isolation: isolate;
-    border: 4px solid #293d37;
-    border-radius: 12px;
     background: url(../images/background/battlescreen-2.jpg) center / cover no-repeat;
     box-shadow: 0 16px 38px rgb(22 34 31 / 40%);
     font-family: var(--fonte-principal);
@@ -125,6 +123,7 @@ body {
 }
 
 .hp-bar {
+    position: relative;
     display: flex;
     width: 100%;
     height: 17px;
@@ -136,9 +135,6 @@ body {
 }
 
 .life {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     min-width: 0;
     height: 100%;
     border-radius: 2px;
@@ -147,7 +143,13 @@ body {
 }
 
 .hp-bar > .life > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    max-width: 100%;
     overflow: hidden;
+    transform: translate(-50%, -50%);
     color: white;
     font-family: Arial, sans-serif;
     font-size: 0.65rem;

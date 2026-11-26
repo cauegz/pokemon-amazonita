@@ -128,7 +128,6 @@ export default class Api {
     static async aumentarDinheiro(recompensa) {
         return await this.requisicao(`/usuario/recompensa?dinheiro=${recompensa}`)
     }
-
     /**
      * Envia a foto a partir de um FormData para o PHP, não usa o this.requisicao 
      * por causa do content-type/json
@@ -148,10 +147,6 @@ export default class Api {
 
     static async curarTime() {
         return await this.requisicao(`/time/curar`);
-    }
-    
-    static async evoluirPokemon(idBanco,idNovoPokeApi){
-        return await this.requisicao(`/pokemon/evoluir?newid=${idNovoPokeApi}&&id=${idBanco}`);
     }
     
     static async evoluirPokemon(idBanco,pokeEvo){

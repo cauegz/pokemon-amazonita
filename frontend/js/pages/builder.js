@@ -9,7 +9,7 @@ async function iniciarBuilder() {
         //sessao
         const usuario = await verificarSessao();
         if (!usuario) return;
-
+        
         // Carrega o time 
         const objTime = await Time.carregarTime(usuario.treinador);
         console.log("time: ")
@@ -19,6 +19,13 @@ async function iniciarBuilder() {
 
         document.getElementById("enviar")
             .addEventListener("click", async () => {
+
+                //verifica se o time inteiro é completamente nulo
+                if (objTime.pokemon.every((pokemon) => pokemon == null)) {
+                    alert("Você deve selecionar pokémons para o seu time");
+                    return;
+                }
+
                 const botao = document.getElementById("enviar");
                 botao.disabled = true;
 

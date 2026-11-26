@@ -18,8 +18,12 @@
     --cor-fudndo: #1f5711;
 }
 body{
-     background-image: url(../images/background/fundo.png);
-     background-repeat: no-repeat;
-     background-size: cover;
+    background-image: url(../images/background/fundo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     background-color: #1f5711;
+}
+.game-container{
+    border: 4px solid #293d37;
+    border-radius: 12px;
 }

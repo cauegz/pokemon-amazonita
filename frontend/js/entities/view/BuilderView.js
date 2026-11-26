@@ -1,5 +1,6 @@
 import PokeApi from "../../APIs/PokeApi.js";
 import Pokemon from "../Pokemon.js";
+import animacaoCarregar from "../../services/loading.js";
 
 export default class BuilderView {
     #time;
@@ -61,14 +62,16 @@ export default class BuilderView {
             }
         });
         this.carregaTimeBanco();
+        animacaoCarregar();
+        
     }
 
     mostrarJogador(usuario) {
         const nome = document.getElementById("info");
         const avatar = document.getElementById("player-avatar");
-        const foto = usuario.foto; //depois adicionar lógica do upload
-        nome.innerHTML = usuario.nome || "Treinador";
-
+        const foto = usuario.foto; 
+        nome.innerHTML = usuario.nome;
+        console.log(usuario);
         if (foto) {
             avatar.innerHTML = `<img class="player-photo" src="${foto}" alt="Foto de ${nome.textContent}">`;
         }
