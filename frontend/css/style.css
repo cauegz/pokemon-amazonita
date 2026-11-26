@@ -130,9 +130,9 @@
 
 #menu {
     position: absolute;
-    top: 16%;
-    right: 12%;
-    z-index: 10;
+    top: 12%;
+    right: 8%;
+    z-index: 4;
     display: flex;
     align-items: center;
 }
@@ -307,12 +307,11 @@ body{
 
 #menu-time {
     position: fixed;
-    top: 50%;
-    left: 20px;
-    width: 20vw;
-    min-width: 180px;
-    max-width: 220px;
-    transform: translateY(-50%);
+    top: 19%;
+    left: 5%; 
+    width: 260px;
+    height: 100vh;
+
     display: flex;
     background-color: #0000006c;
     padding:10px;

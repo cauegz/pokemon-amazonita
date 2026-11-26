@@ -3,6 +3,7 @@ import verificarSessao from "../services/verificarSessao.js";
 import Time from "../entities/Time.js";
 import Api from "../APIs/Api.js";
 import BuilderView from "../entities/view/BuilderView.js";
+import { mostrarLoading, esconderLoading } from "../services/loading.js";
 
 async function iniciarBuilder() {
     try {
@@ -28,6 +29,7 @@ async function iniciarBuilder() {
 
                 const botao = document.getElementById("enviar");
                 botao.disabled = true;
+                mostrarLoading();
 
                 try {
                     await Api.enviarTime(objTime);
@@ -37,6 +39,7 @@ async function iniciarBuilder() {
                     window.location.href = "game.html";
                 } catch (erro) {
                     console.error("erro ao enviar o time:", erro);
+                    esconderLoading();
                     botao.disabled = false;
                     alert("Não foi possível salvar o time. Tente novamente.");
                 }
@@ -58,7 +61,7 @@ botaoEditarFoto.addEventListener("click", () => {
 });
 
 async function carregarFotoPerfil() {
-    const urlFotoServidor = "http://localhost/api/fotoPerfil"; 
+    const urlFotoServidor = "http://localhost:8080/api/fotoPerfil";
 
     preview.onload = () => {
         preview.hidden = false;

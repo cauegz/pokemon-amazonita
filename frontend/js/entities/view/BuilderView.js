@@ -62,7 +62,7 @@ export default class BuilderView {
             }
         });
         this.carregaTimeBanco();
-        animacaoCarregar();
+        animacaoCarregar("gameContainer", "grid");
         
     }
 

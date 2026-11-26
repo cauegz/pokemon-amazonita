@@ -19,12 +19,20 @@
 
         </div>
         <div class="camada-interface">
+            <div id="loading" style="display: none;">
+                <div>
+                    <img src="../images/loading-pokeball.png" alt="">
+                    <h2>Carregando...</h2>
+                </div>
+            </div>
+
             <div id="player-info">
                 <span id="foto-perfil"></span>
                 <span id="dinheiro"></span>
                 <span id="nome-usuario"></span>
                 <button id="sair">Sair</button>
             </div>
+
             <div id="menu">
                 <a href="./builder.html" class="btn-menu" id="team-builder">
                     <img src="../images/Pokeball.png" />
@@ -44,7 +52,9 @@
                 <div class="interface-bruxish" id="mapa" popover="manual">
                     <img src="../images/brushish.png" alt="bruxish o maioral">
                     <div class="caixa-dialogo">
-                        Ola aqui e o bruxish no centro pokemon uhuuuul
+                        Bem-vindo bravo treinador, nesse lugar você irá encontrar o Centro Pokemon, ao clicar no
+                        Zé Gotinha, e a loja, ao cliar em mim ali ao lado, ande com  ←, ↑, ↓ e →, para explorar as
+                        outras áreas
                         <div class="div-botao-fechar">
                             <button popovertarget="mapa" popovertargetaction="hide" class="botao-fechar-bruxish">
                                 Ok, continuar
@@ -54,7 +64,7 @@
                 </div>
 
                 <a href="./loja.html" class="npc" id="poke-mart">
-                    <img src="../images/brushish.png" />
+                    <img src="../images/brushish-mc.png" />
                 </a>
                 <a href="./centro.html" class="npc" id="centro-pokemon">
                     <img src="../images/ze_gotinha.png" />
@@ -65,7 +75,9 @@
                 <div class="interface-bruxish" id="ribeirinhos" popover="manual">
                     <img src="../images/brushish.png" alt="bruxish o maioral">
                     <div class="caixa-dialogo">
-                        Ola aqui e o bruxish nos ribeirinhos uhuuuul
+                        Nesse lugar perigoso e de difícil acesso, tal qual o laboratório D6, você encontra o Marcio
+                        Bigolin em seu ambiente natural, clique nele para iniciar a batalha, te desejo sorte! Pois irá
+                        precisar
                         <div class="div-botao-fechar">
                             <button popovertarget="ribeirinhos" popovertargetaction="hide" class="botao-fechar-bruxish">
                                 Ok, continuar
@@ -91,7 +103,8 @@
                 <div class="interface-bruxish" id="museu" popover="manual">
                     <img src="../images/brushish.png" alt="bruxish o maioral">
                     <div class="caixa-dialogo">
-                        Ola aqui e o bruxish no museu uhuuuul
+                        Aqui você encontrará a treinadora Raissa, uma implacável mestra pokemon, que vai tentar de
+                        tudo para te derrotar, inclusive a própria orientação a objetos.
                         <div class="div-botao-fechar">
                             <button popovertarget="museu" popovertargetaction="hide" class="botao-fechar-bruxish">
                                 Ok, continuar
@@ -117,7 +130,8 @@
                 <div class="interface-bruxish" id="lago" popover="manual">
                     <img src="../images/brushish.png" alt="bruxish o maioral">
                     <div class="caixa-dialogo">
-                        Ola aqui e o bruxish no lago uhuuuul
+                        Aqui nesse lago, você encontrará a Jacqueline Akazaki, uma incrível doutora Pokemon, e, se
+                         você bobear, todos os seus dados irão deixar de existir
                         <div class="div-botao-fechar">
                             <button popovertarget="lago" popovertargetaction="hide" class="botao-fechar-bruxish">
                                 Ok, continuar
@@ -141,7 +155,7 @@
 
         <script type="module" src="../js/pages/main.js"></script>
         <script type="module" src="../js/pages/mapa.js"></script>
-        <script src="../js/services/bruxish.js"></script>
+        <script type="module" src="../js/services/bruxish.js"></script>
         <script
             src="https://kit.fontawesome.com/20f8a440c6.js"
             crossorigin="anonymous"

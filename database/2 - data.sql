@@ -106,44 +106,43 @@ INSERT INTO produto
 (28, 1500.00, 30, 1), -- Revive: revive um Pokémon desmaiado com metade do HP
 (85, 5000.00, 6, 1); -- Pedra da evolução
 
-
 -- =========================================
--- 13. Pokémon
+-- 13. Pokémon (Dificuldade Mediana | Tema: Manaus/AM + Disciplinas)
 -- =========================================
 
 INSERT INTO pokemon 
 (id_pokeapi, hp, hp_atual, ataque, defesa, ataque_especial, defesa_especial, velocidade, id_efeito, id_treinador) 
 VALUES
--- Treinador ID 4 (Marcio Bigolin)
-(445, 108, 108, 130, 95,  80,  85, 102, NULL, 4), -- 1. Garchomp
-(376,  80,  1, 135, 150, 95,  90,  70, NULL, 4), -- 2. Metagross
-(479,  50,  1,  65, 107, 105, 107,  86, NULL, 4), -- 3. Rotom-Wash
-(637,  85,  1,  60,  65, 135, 105, 100, NULL, 4), -- 4. Volcarona
-(730,  80,  1,  74,  74, 126, 116,  60, NULL, 4), -- 5. Primarina
-(823,  98,  1,  87, 105,  53,  85,  67, NULL, 4), -- 6. Corviknight
+-- Treinador ID 4: Marcio Bigolin (Linguagens para a Internet II + Amazônia)
+(596, 70, 70, 77, 60, 97, 60, 108, NULL, 4), -- 1. Galvantula (Web/Teia + Aranha Amazônica)
+(479, 50, 50, 50, 77, 95, 77,  91, NULL, 4), -- 2. Rotom Base (Rede/Sistemas Web)
+(233, 85, 85, 80, 90, 105, 95, 60, NULL, 4), -- 3. Porygon2 (Programação Web/Dados)
+(469, 86, 86, 76, 86, 116, 56, 95, NULL, 4), -- 4. Yanmega (Libélula gigante da Amazônia)
+(279, 60, 60, 50, 100, 95, 70, 65, NULL, 4), -- 5. Pelipper (Chuvas constantes de Manaus)
+(114, 65, 65, 55, 115, 100, 40, 60, NULL, 4), -- 6. Tangela (Cipós da floresta / Cabos de rede)
 
--- Treinador ID 5 (Raissa Scheeren)
-(248, 100, 100, 134, 110,  95, 100,  61, NULL, 5), -- 7. Tyranitar
-(530, 110, 1, 135,  60,  50,  65,  88, NULL, 5), -- 8. Excadrill
-(94,   60,  1,  65,  60, 130,  75, 110, NULL, 5), -- 9. Gengar
-(130,  95,  1, 125,  79,  60, 100,  81, NULL, 5), -- 10. Gyarados
-(468,  85,  1,  50,  95, 120, 115,  80, NULL, 5), -- 11. Togekiss
-(212,  70,  1, 130, 100,  55,  80,  65, NULL, 5), -- 12. Scizor
+-- Treinador ID 5: Raissa Scheeren (Programação Orientada a Objetos I + Amazônia)
+(352, 60, 60, 90, 70, 60, 120, 40, NULL, 5), -- 7. Kecleon (Polimorfismo / Camaleão)
+(132, 75, 75, 68, 68, 68, 68,  68, NULL, 5), -- 8. Ditto (Herança e Clonagem de Objetos - stats ajustados)
+(90,  50, 50, 65, 100, 45, 45, 40, NULL, 5), -- 9. Shellder (Encapsulamento / Concha)
+(286, 60, 60, 110, 80, 60, 60, 70, NULL, 5), -- 10. Breloom (Flora tropical / Fungos da mata)
+(195, 95, 95, 85, 85, 65, 65,  35, NULL, 5), -- 11. Quagsire (Rios e igarapés amazônicos)
+(164, 100, 100, 50, 50, 86, 96, 70, NULL, 5), -- 12. Noctowl (Coruja da floresta)
 
--- Treinador ID 6 (Jacqueline Akazaki)
-(149,  91,  91, 134,  95, 100, 100,  80, NULL, 6), -- 13. Dragonite
-(681,  60,  1,  50, 140,  50, 140,  60, NULL, 6), -- 14. Aegislash
-(635,  92,  1, 105,  90, 125,  90,  98, NULL, 6), -- 15. Hydreigon
-(350,  95,  1,  60,  79, 100, 125,  81, NULL, 6), -- 16. Milotic
-(448,  70,  1, 110,  70, 115,  70,  90, NULL, 6), -- 17. Lucario
-(778,  55,  1,  90,  80,  50, 105,  96, NULL, 6); -- 18. Mimikyu
+-- Treinador ID 6: Jacqueline Akazaki (Banco de Dados II + Amazônia)
+(375, 60, 60, 75, 100, 55, 80, 50, NULL, 6), -- 13. Metang (Indexação e Processamento de Dados)
+(437, 67, 67, 89, 116, 79, 116, 33, NULL, 6), -- 14. Bronzong (Triggers e Alertas do SGBD)
+(388, 75, 75, 89, 85, 55, 65,  36, NULL, 6), -- 15. Grotle (Árvore B+ / Vegetação amazônica)
+(342, 63, 63, 105, 85, 90, 55, 55, NULL, 6), -- 16. Crawdaunt (Crustáceo dos rios de Manaus)
+(28,  75, 75, 95, 105, 45, 55, 65, NULL, 6), -- 17. Sandslash (Mineração e Busca/Queries)
+(171, 110, 110, 58, 58, 76, 76, 67, NULL, 6); -- 18. Lanturn (Profundezas do Rio Negro / Data Mining)
 
 -- =========================================
 -- 14. Times dos Treinadores
 -- =========================================
 
 INSERT INTO time (posicao, id_treinador, id_pokemon) VALUES
-(1, 4, 1), -- (2, 4, 2), (3, 4, 3), (4, 4, 4), (5, 4, 5), (6, 4, 6),
+(1, 4, 1), (2, 4, 2), (3, 4, 3), (4, 4, 4), (5, 4, 5), (6, 4, 6),
 (1, 5, 7), (2, 5, 8), (3, 5, 9), (4, 5, 10), (5, 5, 11), (6, 5, 12),
 (1, 6, 13), (2, 6, 14), (3, 6, 15), (4, 6, 16), (5, 6, 17), (6, 6, 18);
 
@@ -152,135 +151,134 @@ INSERT INTO time (posicao, id_treinador, id_pokemon) VALUES
 -- =========================================
 
 INSERT INTO ataque (poke_api, pokemon_id, tipo_id) VALUES
--- Pokémon 1: Garchomp
-(337, 1, 16),  -- Dragon Claw (Dragão)
-(89,  1, 5),   -- Earthquake (Terra)
-(53,  1, 10),  -- Flamethrower (Fogo)
-(444, 1, 6),   -- Stone Edge (Pedra)
+-- Pokémon 1: Galvantula
+(405, 1, 7),   -- Bug Buzz (Inseto)
+(435, 1, 13),  -- Discharge (Elétrico)
+(202, 1, 12),  -- Giga Drain (Grama)
+(527, 1, 13),  -- Electroweb (Elétrico)
 
--- Pokémon 2: Metagross
-(309, 2, 9),   -- Meteor Mash (Aço)
-(428, 2, 14),  -- Zen Headbutt (Psíquico)
-(418, 2, 9),   -- Bullet Punch (Aço)
-(444, 2, 6),   -- Stone Edge (Pedra)
+-- Pokémon 2: Rotom
+(85,  2, 13),  -- Thunderbolt (Elétrico)
+(247, 2, 8),   -- Shadow Ball (Fantasma)
+(521, 2, 13),  -- Volt Switch (Elétrico)
+(351, 2, 13),  -- Shock Wave (Elétrico)
 
--- Pokémon 3: Rotom-Wash
-(56,  3, 11),  -- Hydro Pump (Água)
+-- Pokémon 3: Porygon2
+(161, 3, 1),   -- Tri Attack (Normal)
+(58,  3, 15),  -- Ice Beam (Gelo)
 (85,  3, 13),  -- Thunderbolt (Elétrico)
-(521, 3, 13),  -- Volt Switch (Elétrico)
-(247, 3, 8),   -- Shadow Ball (Fantasma)
+(94,  3, 14),  -- Psychic (Psíquico)
 
--- Pokémon 4: Volcarona
-(126, 4, 10),  -- Fire Blast (Fogo)
-(202, 4, 12),  -- Giga Drain (Grama)
+-- Pokémon 4: Yanmega
 (405, 4, 7),   -- Bug Buzz (Inseto)
-(257, 4, 10),  -- Heat Wave (Fogo)
+(403, 4, 3),   -- Air Slash (Voador)
+(202, 4, 12),  -- Giga Drain (Grama)
+(246, 4, 6),   -- Ancient Power (Pedra)
 
--- Pokémon 5: Primarina
-(664, 5, 11),  -- Sparkling Aria (Água)
-(585, 5, 18),  -- Moonblast (Fada)
+-- Pokémon 5: Pelipper
+(503, 5, 11),  -- Scald (Água)
+(403, 5, 3),   -- Air Slash (Voador)
+(352, 5, 11),  -- Water Pulse (Água)
 (58,  5, 15),  -- Ice Beam (Gelo)
-(57,  5, 11),  -- Surf (Água)
 
--- Pokémon 6: Corviknight
-(413, 6, 3),   -- Brave Bird (Voador)
-(442, 6, 9),   -- Iron Head (Aço)
-(776, 6, 2),   -- Body Press (Lutador)
-(332, 6, 3),   -- Aerial Ace (Voador)
+-- Pokémon 6: Tangela
+(202, 6, 12),  -- Giga Drain (Grama)
+(438, 6, 12),  -- Power Whip (Grama)
+(246, 6, 6),   -- Ancient Power (Pedra)
+(282, 6, 17),  -- Knock Off (Sombrio)
 
--- Pokémon 7: Tyranitar
-(157, 7, 6),   -- Rock Slide (Pedra)
-(242, 7, 17),  -- Crunch (Sombrio)
-(89,  7, 5),   -- Earthquake (Terra)
-(276, 7, 2),   -- Superpower (Lutador)
+-- Pokémon 7: Kecleon
+(163, 7, 1),   -- Slash (Normal)
+(425, 7, 8),   -- Shadow Sneak (Fantasma)
+(7,   7, 10),  -- Fire Punch (Fogo)
+(280, 7, 2),   -- Brick Break (Lutador)
 
--- Pokémon 8: Excadrill
-(89,  8, 5),   -- Earthquake (Terra)
-(442, 8, 9),   -- Iron Head (Aço)
-(444, 8, 6),   -- Stone Edge (Pedra)
-(372, 8, 17),  -- Assurance (Sombrio)
+-- Pokémon 8: Ditto
+(33,  8, 1),   -- Tackle (Normal)
+(129, 8, 1),   -- Swift (Normal)
+(34,  8, 1),   -- Body Slam (Normal)
+(247, 8, 8),   -- Shadow Ball (Fantasma)
 
--- Pokémon 9: Gengar
-(247, 9, 8),   -- Shadow Ball (Fantasma)
-(188, 9, 4),   -- Sludge Bomb (Veneno)
-(85,  9, 13),  -- Thunderbolt (Elétrico)
-(411, 9, 2),   -- Focus Blast (Lutador)
+-- Pokémon 9: Shellder
+(333, 9, 15),  -- Icicle Spear (Gelo)
+(534, 9, 11),  -- Razor Shell (Água)
+(420, 9, 15),  -- Ice Shard (Gelo)
+(61,  9, 11),  -- Bubble Beam (Água)
 
--- Pokémon 10: Gyarados
-(127, 10, 11), -- Waterfall (Água)
-(242, 10, 17), -- Crunch (Sombrio)
-(423, 10, 15), -- Ice Fang (Gelo)
-(200, 10, 16), -- Outrage (Dragão)
+-- Pokémon 10: Breloom
+(402, 10, 12), -- Seed Bomb (Grama)
+(183, 10, 2),  -- Mach Punch (Lutador)
+(280, 10, 2),  -- Brick Break (Lutador)
+(317, 10, 6),  -- Rock Tomb (Pedra)
 
--- Pokémon 11: Togekiss
-(403, 11, 3),  -- Air Slash (Voador)
-(605, 11, 18), -- Dazzling Gleam (Fada)
-(53,  11, 10), -- Flamethrower (Fogo)
-(94,  11, 14), -- Psychic (Psíquico)
+-- Pokémon 11: Quagsire
+(89,  11, 5),  -- Earthquake (Terra)
+(503, 11, 11), -- Scald (Água)
+(426, 11, 5),  -- Mud Bomb (Terra)
+(8,   11, 15), -- Ice Punch (Gelo)
 
--- Pokémon 12: Scizor
-(418, 12, 9),  -- Bullet Punch (Aço)
-(404, 12, 7),  -- X-Scissor (Inseto)
-(276, 12, 2),  -- Superpower (Lutador)
-(282, 12, 17), -- Knock Off (Sombrio)
+-- Pokémon 12: Noctowl
+(403, 12, 3),  -- Air Slash (Voador)
+(94,  12, 14), -- Psychic (Psíquico)
+(247, 12, 8),  -- Shadow Ball (Fantasma)
+(585, 12, 18), -- Moonblast (Fada)
 
--- Pokémon 13: Dragonite
-(200, 13, 16), -- Outrage (Dragão)
-(542, 13, 3),  -- Hurricane (Voador)
-(89,  13, 5),   -- Earthquake (Terra)
-(7,   13, 10), -- Fire Punch (Fogo)
+-- Pokémon 13: Metang
+(309, 13, 9),  -- Meteor Mash (Aço)
+(428, 13, 14), -- Zen Headbutt (Psíquico)
+(418, 13, 9),  -- Bullet Punch (Aço)
+(523, 13, 5),  -- Bulldoze (Terra)
 
--- Pokémon 14: Aegislash
-(442, 14, 9),  -- Iron Head (Aço)
-(425, 14, 8),  -- Shadow Sneak (Fantasma)
-(533, 14, 2),  -- Sacred Sword (Lutador)
+-- Pokémon 14: Bronzong
+(430, 14, 9),  -- Flash Cannon (Aço)
+(94,  14, 14), -- Psychic (Psíquico)
 (247, 14, 8),  -- Shadow Ball (Fantasma)
+(326, 14, 14), -- Extrasensory (Psíquico)
 
--- Pokémon 15: Hydreigon
-(399, 15, 17), -- Dark Pulse (Sombrio)
-(434, 15, 16), -- Draco Meteor (Dragão)
-(53,  15, 10), -- Flamethrower (Fogo)
-(430, 15, 9),  -- Flash Cannon (Aço)
+-- Pokémon 15: Grotle
+(75,  15, 12), -- Razor Leaf (Grama)
+(44,  15, 17), -- Bite (Sombrio)
+(402, 15, 12), -- Seed Bomb (Grama)
+(523, 15, 5),  -- Bulldoze (Terra)
 
--- Pokémon 16: Milotic
-(56,  16, 11), -- Hydro Pump (Água)
-(58,  16, 15), -- Ice Beam (Gelo)
-(503, 16, 11), -- Scald (Água)
-(406, 16, 16), -- Dragon Pulse (Dragão)
+-- Pokémon 16: Crawdaunt
+(152, 16, 11), -- Crabhammer (Água)
+(242, 16, 17), -- Crunch (Sombrio)
+(453, 16, 11), -- Aqua Jet (Água)
+(282, 16, 17), -- Knock Off (Sombrio)
 
--- Pokémon 17: Lucario
-(370, 17, 2),  -- Close Combat (Lutador)
-(430, 17, 9),  -- Flash Cannon (Aço)
-(245, 17, 1),  -- Extreme Speed (Normal)
-(247, 17, 8),  -- Shadow Ball (Fantasma)
+-- Pokémon 17: Sandslash
+(91,  17, 5),  -- Dig (Terra)
+(163, 17, 1),  -- Slash (Normal)
+(157, 17, 6),  -- Rock Slide (Pedra)
+(404, 17, 7),  -- X-Scissor (Inseto)
 
--- Pokémon 18: Mimikyu
-(583, 18, 18), -- Play Rough (Fada)
-(421, 18, 8),  -- Shadow Claw (Fantasma)
-(425, 18, 8),  -- Shadow Sneak (Fantasma)
-(409, 18, 2);  -- Drain Punch (Lutador)
+-- Pokémon 18: Lanturn
+(435, 18, 13), -- Discharge (Elétrico)
+(57,  18, 11), -- Surf (Água)
+(58,  18, 15), -- Ice Beam (Gelo)
+(324, 18, 7);  -- Signal Beam (Inseto)
 
 -- =========================================
 -- 16. Tipagem dos Pokémon dos Treinadores
 -- =========================================
 
 INSERT INTO tipo_pokemon (pokemon_id, tipo_id) VALUES
-(1, 16), (1, 5),   -- Garchomp: Dragão (16) / Terra (5)
-(2, 9),  (2, 14),  -- Metagross: Aço (9) / Psíquico (14)
-(3, 13), (3, 11),  -- Rotom-Wash: Elétrico (13) / Água (11)
-(4, 7),  (4, 10),  -- Volcarona: Inseto (7) / Fogo (10)
-(5, 11), (5, 18),  -- Primarina: Água (11) / Fada (18)
-(6, 3),  (6, 9),   -- Corviknight: Voador (3) / Aço (9)
-(7, 6),  (7, 17),  -- Tyranitar: Pedra (6) / Sombrio (17)
-(8, 5),  (8, 9),   -- Excadrill: Terra (5) / Aço (9)
-(9, 8),  (9, 4),   -- Gengar: Fantasma (8) / Veneno (4)
-(10, 11),(10, 3),  -- Gyarados: Água (11) / Voador (3)
-(11, 18),(11, 3),  -- Togekiss: Fada (18) / Voador (3)
-(12, 7), (12, 9),  -- Scizor: Inseto (7) / Aço (9)
-(13, 16),(13, 3),  -- Dragonite: Dragão (16) / Voador (3)
-(14, 9), (14, 8),  -- Aegislash: Aço (9) / Fantasma (8)
-(15, 17),(15, 16), -- Hydreigon: Sombrio (17) / Dragão (16)
-(16, 11),          -- Milotic: Água (11)
-(17, 2), (17, 9),  -- Lucario: Lutador (2) / Aço (9)
-(18, 8), (18, 18); -- Mimikyu: Fantasma (8) / Fada (18)
-
+(1, 7),  (1, 13),  -- Galvantula: Inseto (7) / Elétrico (13)
+(2, 13), (2, 8),   -- Rotom: Elétrico (13) / Fantasma (8)
+(3, 1),            -- Porygon2: Normal (1)
+(4, 7),  (4, 3),   -- Yanmega: Inseto (7) / Voador (3)
+(5, 11), (5, 3),   -- Pelipper: Água (11) / Voador (3)
+(6, 12),           -- Tangela: Grama (12)
+(7, 1),            -- Kecleon: Normal (1)
+(8, 1),            -- Ditto: Normal (1)
+(9, 11),           -- Shellder: Água (11)
+(10, 12),(10, 2),  -- Breloom: Grama (12) / Lutador (2)
+(11, 11),(11, 5),  -- Quagsire: Água (11) / Terra (5)
+(12, 1), (12, 3),  -- Noctowl: Normal (1) / Voador (3)
+(13, 9), (13, 14), -- Metang: Aço (9) / Psíquico (14)
+(14, 9), (14, 14), -- Bronzong: Aço (9) / Psíquico (14)
+(15, 12),          -- Grotle: Grama (12)
+(16, 11),(16, 17), -- Crawdaunt: Água (11) / Sombrio (17)
+(17, 5),           -- Sandslash: Terra (5)
+(18, 11),(18, 13); -- Lanturn: Água (11) / Elétrico (13)

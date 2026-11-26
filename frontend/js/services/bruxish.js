@@ -1,6 +1,7 @@
 import verificarSessao from "../services/verificarSessao.js";
 
 const usuario = await verificarSessao();
+console.log("bruxish")
 
 const popovers = document.querySelectorAll(".interface-bruxish");
 

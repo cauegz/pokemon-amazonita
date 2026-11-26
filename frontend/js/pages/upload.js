@@ -90,7 +90,7 @@ async function carregarUsuario() {
     const usuario = await verificarSessao();
     nomeUsuario.innerHTML = usuario.nome;
 
-    const urlFotoServidor = "http://localhost/api/fotoPerfil"; 
+    const urlFotoServidor = "http://localhost:8080/api/fotoPerfil";
 
     preview.onload = () => {
         preview.hidden = false;
