@@ -186,12 +186,12 @@ window.addEventListener('load', async function () {
 
             //deixa a primeira letra maiusucla
             pokemon.nome = pokemon.nome.charAt(0).toUpperCase() + pokemon.nome.slice(1);
-
+            let efeito = pokemon.efeito ? pokemon.efeito : "";
             htmlFinal += `
                 <div id="pokeTime-${cont}" class="card-pokemon">
                     <img src="${pokemon.urlImagem}" alt="${pokemon.nome}" />
                     <div class="info-pokemon">
-                        <p>${pokemon.nome}</p>
+                        <p>${pokemon.nome}</p><p class="efeito">${efeito}</p>
                         <span id="barra-hp-${cont}" class="barra-hp">
                             <span id="hp-${cont}" class="hp-preenchimento ${classeCor}" style="width: ${porcentagemHp}%;"></span>
                         </span>
