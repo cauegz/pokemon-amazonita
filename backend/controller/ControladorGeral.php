@@ -11,7 +11,7 @@ abstract class ControladorGeral{
      * @return null só printa os dados na tela
      */
     public function responseJSON($dados){
-        if(!$dados){
+        if($dados === null || $dados === false){
             $this->responseError("dados inexistentes", 400);
         }
         header('Content-Type: application/json; charset=utf-8');

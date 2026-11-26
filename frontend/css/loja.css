@@ -11,6 +11,10 @@ body {
     
 }
 
+.invisivel {
+    display: none !important;
+}
+
 main {
     display: flex;
     position: absolute;
@@ -33,11 +37,70 @@ h3 {
     /* Cor do contorno */
 }
 
+button {
+    cursor: pointer;
+    clip-path: polygon(
+        12px 0,
+        calc(100% - 12px) 0,
+        calc(100% - 12px) 4px,
+        calc(100% - 8px) 4px,
+        calc(100% - 8px) 8px,
+        calc(100% - 4px) 8px,
+        calc(100% - 4px) 12px,
+        100% 12px,
+        100% calc(100% - 12px),
+        calc(100% - 4px) calc(100% - 12px),
+        calc(100% - 4px) calc(100% - 8px),
+        calc(100% - 8px) calc(100% - 8px),
+        calc(100% - 8px) calc(100% - 4px),
+        calc(100% - 12px) calc(100% - 4px),
+        calc(100% - 12px) 100%,
+        12px 100%,
+        12px calc(100% - 4px),
+        8px calc(100% - 4px),
+        8px calc(100% - 8px),
+        4px calc(100% - 8px),
+        4px calc(100% - 12px),
+        0 calc(100% - 12px),
+        0 12px,
+        4px 12px,
+        4px 8px,
+        8px 8px,
+        8px 4px,
+        12px 4px
+    );
+}
+
 #menuLateral {
     display: block;
     width: 40%;
     height: 100%;
     overflow: hidden;
+}
+
+#menuLateral button {
+    margin: 8px 0 0 8px;
+    padding: 18px;
+    position: absolute;
+    box-sizing: border-box;
+    isolation: isolate;
+    background-color: rgb(121, 64, 6);
+    color: white;
+    border: 0;
+}
+
+#menuLateral button::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    z-index: -1;
+    background-color: rgb(95, 49, 4);
+    clip-path: inherit;
+}
+
+
+#menuLateral button:hover{
+    filter: brightness(0.7);
 }
 
 #menuCima {
@@ -120,6 +183,7 @@ h3 {
 
 .produtoNome {
     text-align: center;
+    z-index: 2;
     height: 15%;
     width: 100%;
 }
@@ -157,39 +221,41 @@ h3 {
 }
 
 #botaoComprar button {
-    background-image: url(../images/background/botao-comprar-bg.png);
+    background-color: #222;
 }
 
 #botaoLimpar button {
-    background-image: url(../images/background/botao-limpar-bg.png);
+    background-color: #222;
 }
 
 #botoesAcao button {
-    cursor: pointer;
     color: white;
-    background-size: contain;
-    /*background-color: rgb(0, 167, 0);*/
-    border: solid 4px #222;
-    clip-path: polygon(
-        8px 0,
-        calc(100% - 8px) 0,
-        calc(100% - 8px) 8px,
-        100% 8px,
-        100% calc(100% - 8px),
-        calc(100% - 8px) calc(100% - 8px),
-        calc(100% - 8px) 100%,
-        8px 100%,
-        8px calc(100% - 8px),
-        0 calc(100% - 8px),
-        0 8px,
-        8px 8px
-    );
+    position: relative;
+    box-sizing: border-box;
+    isolation: isolate;
+    border: 0;
     width: 95%;
     height: 95%;
     font-family: var(--fonte-principal);
     font-size: 21pt;
-    border-radius: 12px;
     transition: all 0.3s;
+}
+
+#botoesAcao button::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    z-index: -1;
+    background-size: contain;
+    clip-path: inherit;
+}
+
+#botaoComprar button::before {
+    background-image: url(../images/background/botao-comprar-bg.png);
+}
+
+#botaoLimpar button::before {
+    background-image: url(../images/background/botao-limpar-bg.png);
 }
 
 #botoesAcao button:hover {
@@ -235,6 +301,7 @@ h3 {
     animation: pagamentoNegado 1s ease-in-out infinite;
 }
 
+
 @keyframes pagamentoNegado {
     0% {
         transform: scale(1);
@@ -244,5 +311,72 @@ h3 {
     }
     100%{
         transform: scale(1);
+    }
+}
+
+#loading {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center; 
+    margin: 0 auto;
+    -webkit-text-stroke-width: 0.75px;
+    /* Espessura do contorno */
+    -webkit-text-stroke-color: black;
+    text-align: center;
+    gap: -12px;
+    animation: FadeIn 1s, ZoomIn 1s;
+
+}
+
+#loading img {
+    height: 25%;
+    width: auto;
+    animation: loadingRotate 1s infinite;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes loadingRotate {
+    0% {
+        rotate: 0deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
+
+@keyframes ZoomIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes ZoomOut {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(0);
+    }
+}
+
+@keyframes FadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes FadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
