@@ -45,9 +45,9 @@ INSERT INTO loja (nome) VALUES
 ('l3');
 
 INSERT INTO npc (nome, id_tipo_npc, recompensa) VALUES
-('Marcio Bigolin', 1, 1000),
-('Raissa Scheeren', 1, 1000),
-('Jacqueline Akazaki', 1, 1000);
+('Marcio Bigolin', 1, 5000),
+('Raissa Scheeren', 1, 5000),
+('Jacqueline Akazaki', 1, 5000);
 
 INSERT INTO treinador (id_npc, id_usuario) VALUES
 (NULL, 1),
