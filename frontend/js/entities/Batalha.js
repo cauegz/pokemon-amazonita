@@ -122,7 +122,7 @@ class Batalha {
                     }
                 );
 
-                window.location.href = "./game.html";
+                window.location.href = "/pages/game.html";
                 return;
             } else {
                this.#view.trocar(
@@ -170,7 +170,7 @@ class Batalha {
 
                 localStorage.setItem("npcs", JSON.stringify(this.#mapaNpcs));
 
-                window.location.href = "./game.html";
+                window.location.href = "/pages/game.html";
                 return;
             }
         }

@@ -470,3 +470,21 @@ body{
 .hp-vermelho {
     background-color: #ef4444;
 }
+
+#tela-final{
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+}
+
+#tela-final > img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain
+}
