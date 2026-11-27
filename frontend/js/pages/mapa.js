@@ -33,6 +33,17 @@ if(!localStorage.getItem('npcs')){
 
 const mapa = JSON.parse(localStorage.getItem("npcs"));
 
+const todosDerrotados =
+    Object.values(mapa).every((npc) => npc.defeated);
+
+if (todosDerrotados) {
+    document.getElementById("tela-final").style.display = "flex";
+    
+    document.querySelectorAll(".interface-bruxish").forEach((p) => {
+        p.style.display = "none";
+    });
+}
+
 const botoes = document.querySelectorAll('.btn-escolher');
 
 botoes.forEach(botao => {
@@ -60,7 +71,7 @@ async function batalhar(idNpc, botao) {
         sessionStorage.setItem("oponente", mapa[idNpc].npc);
         localStorage.setItem("npcs", JSON.stringify(mapa));
 
-        window.location.href = "./batalha.html";
+        window.location.href = "/pages/batalha.html";
     } catch (erro) {
         console.error("Erro ao iniciar a batalha:", erro);
         esconderLoading();

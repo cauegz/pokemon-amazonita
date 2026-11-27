@@ -12,10 +12,10 @@ class CalculadoraDano{
 
         if(classeAtaque == "physical"){
             statAtaque = pokeAtaque.ataque;    
-            statDefesa = pokeAtaque.defesa;   
+            statDefesa = pokeDefesa.defesa;   
         } else if(classeAtaque == "special"){
             statAtaque = pokeAtaque.ataqueEspecial;    
-            statDefesa = pokeAtaque.defesaEspecial; 
+            statDefesa = pokeDefesa.defesaEspecial; 
         } else {
             throw new Error("ainda não implementado");
         }

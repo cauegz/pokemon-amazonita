@@ -5,6 +5,7 @@ import Inventario from "../entities/Inventario.js";
 import PokeAPI from "../APIs/PokeApi.js";
 import CalculadoraStats from "../entities/CalculadoraStats.js";
 import { mostrarLoading, esconderLoading } from "../services/loading.js";
+import Api from "../APIs/Api.js";
 
 window.addEventListener('load', async function () {
     mostrarLoading();
@@ -126,27 +127,43 @@ window.addEventListener('load', async function () {
             </button>
         `).join("");
         
-        // Aplica o item no pokémon escolhido e salva se houve evolução
+        // Aplica o item no pokémon escolhido, consome do inventário e persiste no banco
         htmlItem.querySelectorAll(".pokemon-inventario").forEach(pokemon =>{
          pokemon.addEventListener("click", async () => {
-             const posicao = pokemon.dataset.posicao;
-             const resultado = await CalculadoraStats.usarItem(
-                time.pokemon[posicao],
-                item,
-                usuario.treinador
-             );
+             const posicao = Number(pokemon.dataset.posicao);
 
-             // Se for evolução e deu certo, substitui o pokémon no time
-            if (item.categoria === "evolution" && resultado) {
-                    time.pokemon[posicao] = resultado;
-            }
-
-            localStorage.setItem(
-                        "time-" + usuario.treinador,
-                        JSON.stringify(time)
+             try {
+                const resultado = await CalculadoraStats.usarItem(
+                    time.pokemon[posicao],
+                    item,
+                    usuario.treinador
                 );
-            mostraTime(time.pokemon);
-            modal.close();
+
+                if (resultado === false) {
+                    return;
+                }
+
+                await inventario.removerItem(item.id);
+
+                // Se for evolução e deu certo, substitui o pokémon no time, caso contrário persiste HP atualizado
+                if (item.categoria === "evolution" && resultado) {
+                    time.pokemon[posicao] = resultado;
+                } else {
+                    await Api.atualizarTime(time, usuario.treinador);
+                }
+
+                localStorage.setItem(
+                    "time-" + usuario.treinador,
+                    JSON.stringify(time)
+                );
+
+                mostraTime(time.pokemon);
+
+                modal.close();
+             } catch (erro) {
+                console.error("Erro ao usar item:", erro);
+                alert(erro.message);
+             }
         })
         })
     };
@@ -186,12 +203,12 @@ window.addEventListener('load', async function () {
 
             //deixa a primeira letra maiusucla
             pokemon.nome = pokemon.nome.charAt(0).toUpperCase() + pokemon.nome.slice(1);
-
+            let efeito = pokemon.efeito ? pokemon.efeito : "";
             htmlFinal += `
                 <div id="pokeTime-${cont}" class="card-pokemon">
                     <img src="${pokemon.urlImagem}" alt="${pokemon.nome}" />
                     <div class="info-pokemon">
-                        <p>${pokemon.nome}</p>
+                        <p>${pokemon.nome}</p><p class="efeito">${efeito}</p>
                         <span id="barra-hp-${cont}" class="barra-hp">
                             <span id="hp-${cont}" class="hp-preenchimento ${classeCor}" style="width: ${porcentagemHp}%;"></span>
                         </span>

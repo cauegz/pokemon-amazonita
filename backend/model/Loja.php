@@ -11,7 +11,9 @@ class Loja extends ModelGeral implements JsonSerializable, ModelInterface
 
         foreach ($itens as $idProduto) {
             $idProduto = (int)$idProduto;
-
+            if(!isset($quantidades[$idProduto])){
+                $quantidades[$idProduto] = 0;
+            }
             $quantidades[$idProduto] += 1;
         }
 

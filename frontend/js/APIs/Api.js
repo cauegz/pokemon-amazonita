@@ -14,7 +14,11 @@ export default class Api {
         });
 
         if (!resposta.ok) {
-            throw new Error(`${resposta.stacktrace}`);
+            const erro = await resposta.json().catch(() => null);
+            if(!erro){
+                throw new Error(`Erro HTTP ${resposta.status}`);
+            }
+            throw new Error(erro.mensagem);
         }
 
         return await resposta.json();

@@ -1,263 +1,134 @@
-
-CREATE TABLE IF NOT EXISTS ataque
+CREATE TABLE efeito
 (
-  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  poke_api   INT NOT NULL,
-  pokemon_id INT NOT NULL,
-  tipo_id    INT NOT NULL,
-  PRIMARY KEY (id)
+  id   SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS efeito
+CREATE TABLE loja
 (
-  id   INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome VARCHAR(100) NOT NULL UNIQUE,
-  PRIMARY KEY (id)
+  id   SERIAL PRIMARY KEY,
+  nome CHAR(2) NOT NULL UNIQUE CHECK (nome IN ('l1', 'l2', 'l3'))
 );
 
-CREATE TABLE IF NOT EXISTS inventario
+CREATE TABLE tipo
 (
-  id              INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  id_item_pokeapi INT NOT NULL,
-  id_treinador    INT NOT NULL,
-  quantidade      INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS itens_compra
-(
-  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  quantidade INT NOT NULL,
-  id_produto INT NOT NULL,
-  id_usuario INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS log_batalha
-(
-  id             INT       NOT NULL GENERATED ALWAYS AS IDENTITY,
-  recompensa     INT       NOT NULL,
-  criado_em      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  id_treinador_1 INT       NOT NULL,
-  id_treinador_2 INT       NOT NULL,
-  id_vencedor    INT      ,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS log_usuario
-(
-  id         INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
-  usuario_id INT          NOT NULL,
-  acao       VARCHAR(12)  NOT NULL,
-  mensagem   VARCHAR(200) NOT NULL,
-  criado_em  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS loja
-(
-  id   INT     NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome CHAR(2) NOT NULL UNIQUE,
-  PRIMARY KEY (id)
-);
-
-COMMENT ON COLUMN loja.nome IS 'CHECK (nome IN (''l1'',''l2'',''l3''))';
-
-CREATE TABLE IF NOT EXISTS npc
-(
-  id          INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
-  recompensa  INT          NOT NULL DEFAULT 100,
-  nome        VARCHAR(100) NOT NULL,
-  id_tipo_npc INT          NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS pokemon
-(
-  id              INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  id_pokeapi      INT NOT NULL,
-  hp              INT NOT NULL DEFAULT 0,
-  hp_atual        INT NOT NULL DEFAULT 0,
-  ataque          INT NOT NULL DEFAULT 0,
-  defesa          INT NOT NULL DEFAULT 0,
-  ataque_especial INT NOT NULL DEFAULT 0,
-  defesa_especial INT NOT NULL DEFAULT 0,
-  velocidade      INT NOT NULL DEFAULT 0,
-  id_efeito       INT,
-  id_treinador    INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS produto
-(
-  id              INT           NOT NULL GENERATED ALWAYS AS IDENTITY,
-  id_item_pokeapi INT           NOT NULL UNIQUE,
-  preco           DECIMAL(10,2) NOT NULL,
-  estoque         INT           NOT NULL,
-  loja_id         INT           NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS time
-(
-  id           INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  posicao      INT NOT NULL,
-  id_treinador INT NOT NULL,
-  id_pokemon   INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS tipo
-(
-  id       INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  id       SERIAL PRIMARY KEY,
   nome     VARCHAR(100) NOT NULL UNIQUE,
-  poke_api INT          NOT NULL UNIQUE,
-  PRIMARY KEY (id)
+  poke_api INT          NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS tipo_npc
+CREATE TABLE tipo_npc
 (
-  id   INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
-  nome VARCHAR(100) NOT NULL,
-  PRIMARY KEY (id)
+  id   SERIAL PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS tipo_pokemon
+CREATE TABLE usuario
 (
-  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  tipo_id    INT NOT NULL,
-  pokemon_id INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS treinador
-(
-  id         INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-  id_npc     INT,
-  id_usuario INT,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS usuario
-(
-  id       INT          NOT NULL GENERATED ALWAYS AS IDENTITY,
+  id       SERIAL PRIMARY KEY,
   login    VARCHAR(100) NOT NULL UNIQUE,
   senha    VARCHAR(255) NOT NULL,
   nome     VARCHAR(100),
-  dinheiro INT          DEFAULT 100,
-  PRIMARY KEY (id)
+  dinheiro INT          DEFAULT 100 CHECK (dinheiro >= 0)
 );
 
-ALTER TABLE npc DROP CONSTRAINT IF EXISTS FK_tipo_npc_TO_npc;
-ALTER TABLE npc
-  ADD CONSTRAINT FK_tipo_npc_TO_npc
-    FOREIGN KEY (id_tipo_npc)
-    REFERENCES tipo_npc (id);
+CREATE TABLE npc
+(
+  id          SERIAL PRIMARY KEY,
+  recompensa  INT          NOT NULL DEFAULT 100 CHECK (recompensa >= 0),
+  nome        VARCHAR(100) NOT NULL,
+  id_tipo_npc INT          NOT NULL REFERENCES tipo_npc (id)
+);
 
-ALTER TABLE pokemon DROP CONSTRAINT IF EXISTS FK_efeito_TO_pokemon;
-ALTER TABLE pokemon
-  ADD CONSTRAINT FK_efeito_TO_pokemon
-    FOREIGN KEY (id_efeito)
-    REFERENCES efeito (id);
+CREATE TABLE produto
+(
+  id              SERIAL PRIMARY KEY,
+  id_item_pokeapi INT           NOT NULL UNIQUE,
+  preco           DECIMAL(10,2) NOT NULL CHECK (preco > 0),
+  estoque         INT           NOT NULL CHECK (estoque >= 0),
+  loja_id         INT           NOT NULL REFERENCES loja (id)
+);
 
-ALTER TABLE treinador DROP CONSTRAINT IF EXISTS FK_npc_TO_treinador;
-ALTER TABLE treinador
-  ADD CONSTRAINT FK_npc_TO_treinador
-    FOREIGN KEY (id_npc)
-    REFERENCES npc (id);
+CREATE TABLE log_usuario
+(
+  id         SERIAL PRIMARY KEY,
+  usuario_id INT          NOT NULL REFERENCES usuario (id),
+  acao       VARCHAR(12)  NOT NULL CHECK (acao IN ('CADASTRO', 'LOGIN', 'LOGOUT')),
+  mensagem   VARCHAR(200) NOT NULL,
+  criado_em  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
-ALTER TABLE treinador DROP CONSTRAINT IF EXISTS FK_usuario_TO_treinador;
-ALTER TABLE treinador
-  ADD CONSTRAINT FK_usuario_TO_treinador
-    FOREIGN KEY (id_usuario)
-    REFERENCES usuario (id);
+CREATE TABLE treinador
+(
+  id         SERIAL PRIMARY KEY,
+  id_npc     INT REFERENCES npc (id),
+  id_usuario INT REFERENCES usuario (id),
+  CHECK ((id_npc IS NULL) <> (id_usuario IS NULL))
+);
 
-ALTER TABLE inventario DROP CONSTRAINT IF EXISTS FK_treinador_TO_inventario;
-ALTER TABLE inventario
-  ADD CONSTRAINT FK_treinador_TO_inventario
-    FOREIGN KEY (id_treinador)
-    REFERENCES treinador (id);
+CREATE TABLE itens_compra
+(
+  id         SERIAL PRIMARY KEY,
+  quantidade INT NOT NULL CHECK (quantidade > 0),
+  id_produto INT NOT NULL REFERENCES produto (id),
+  id_usuario INT NOT NULL REFERENCES usuario (id)
+);
 
-ALTER TABLE itens_compra DROP CONSTRAINT IF EXISTS FK_produto_TO_itens_compra;
-ALTER TABLE itens_compra
-  ADD CONSTRAINT FK_produto_TO_itens_compra
-    FOREIGN KEY (id_produto)
-    REFERENCES produto (id);
+CREATE TABLE inventario
+(
+  id              SERIAL PRIMARY KEY,
+  id_item_pokeapi INT NOT NULL,
+  id_treinador    INT NOT NULL REFERENCES treinador (id),
+  quantidade      INT NOT NULL DEFAULT 1 CHECK (quantidade > 0)
+);
 
-ALTER TABLE itens_compra DROP CONSTRAINT IF EXISTS FK_usuario_TO_itens_compra;
-ALTER TABLE itens_compra
-  ADD CONSTRAINT FK_usuario_TO_itens_compra
-    FOREIGN KEY (id_usuario)
-    REFERENCES usuario (id);
+CREATE TABLE log_batalha
+(
+  id             SERIAL PRIMARY KEY,
+  recompensa     INT       NOT NULL CHECK (recompensa >= 0),
+  criado_em      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  id_treinador_1 INT       NOT NULL REFERENCES treinador (id),
+  id_treinador_2 INT       NOT NULL REFERENCES treinador (id),
+  id_vencedor    INT       REFERENCES treinador (id),
+  CHECK (id_treinador_1 <> id_treinador_2),
+  CHECK (id_vencedor IS NULL OR id_vencedor IN (id_treinador_1, id_treinador_2))
+);
 
-ALTER TABLE log_usuario DROP CONSTRAINT IF EXISTS FK_usuario_TO_log_usuario;
-ALTER TABLE log_usuario
-  ADD CONSTRAINT FK_usuario_TO_log_usuario
-    FOREIGN KEY (usuario_id)
-    REFERENCES usuario (id);
+CREATE TABLE pokemon
+(
+  id              SERIAL PRIMARY KEY,
+  id_pokeapi      INT NOT NULL,
+  hp              INT NOT NULL DEFAULT 0 CHECK (hp >= 0),
+  hp_atual        INT NOT NULL DEFAULT 0 CHECK (hp_atual >= 0),
+  ataque          INT NOT NULL DEFAULT 0 CHECK (ataque >= 0),
+  defesa          INT NOT NULL DEFAULT 0 CHECK (defesa >= 0),
+  ataque_especial INT NOT NULL DEFAULT 0 CHECK (ataque_especial >= 0),
+  defesa_especial INT NOT NULL DEFAULT 0 CHECK (defesa_especial >= 0),
+  velocidade      INT NOT NULL DEFAULT 0 CHECK (velocidade >= 0),
+  id_efeito       INT REFERENCES efeito (id),
+  id_treinador    INT NOT NULL REFERENCES treinador (id),
+  CHECK (hp_atual <= hp)
+);
 
-ALTER TABLE pokemon DROP CONSTRAINT IF EXISTS FK_treinador_TO_pokemon;
-ALTER TABLE pokemon
-  ADD CONSTRAINT FK_treinador_TO_pokemon
-    FOREIGN KEY (id_treinador)
-    REFERENCES treinador (id);
+CREATE TABLE time
+(
+  id           SERIAL PRIMARY KEY,
+  posicao      INT NOT NULL CHECK (posicao BETWEEN 1 AND 6),
+  id_treinador INT NOT NULL REFERENCES treinador (id),
+  id_pokemon   INT NOT NULL REFERENCES pokemon (id)
+);
 
-ALTER TABLE time DROP CONSTRAINT IF EXISTS FK_treinador_TO_time;
-ALTER TABLE time
-  ADD CONSTRAINT FK_treinador_TO_time
-    FOREIGN KEY (id_treinador)
-    REFERENCES treinador (id);
+CREATE TABLE ataque
+(
+  id         SERIAL PRIMARY KEY,
+  poke_api   INT NOT NULL,
+  pokemon_id INT NOT NULL REFERENCES pokemon (id),
+  tipo_id    INT NOT NULL REFERENCES tipo (id)
+);
 
-ALTER TABLE time DROP CONSTRAINT IF EXISTS FK_pokemon_TO_time;
-ALTER TABLE time
-  ADD CONSTRAINT FK_pokemon_TO_time
-    FOREIGN KEY (id_pokemon)
-    REFERENCES pokemon (id);
-
-ALTER TABLE produto DROP CONSTRAINT IF EXISTS FK_loja_TO_produto;
-ALTER TABLE produto
-  ADD CONSTRAINT FK_loja_TO_produto
-    FOREIGN KEY (loja_id)
-    REFERENCES loja (id);
-
-ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_pokemon_TO_ataque;
-ALTER TABLE ataque
-  ADD CONSTRAINT FK_pokemon_TO_ataque
-    FOREIGN KEY (pokemon_id)
-    REFERENCES pokemon (id);
-
-ALTER TABLE ataque DROP CONSTRAINT IF EXISTS FK_tipo_TO_ataque;
-ALTER TABLE ataque
-  ADD CONSTRAINT FK_tipo_TO_ataque
-    FOREIGN KEY (tipo_id)
-    REFERENCES tipo (id);
-
-ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_tipo_TO_tipo_pokemon;
-ALTER TABLE tipo_pokemon
-  ADD CONSTRAINT FK_tipo_TO_tipo_pokemon
-    FOREIGN KEY (tipo_id)
-    REFERENCES tipo (id);
-
-ALTER TABLE tipo_pokemon DROP CONSTRAINT IF EXISTS FK_pokemon_TO_tipo_pokemon;
-ALTER TABLE tipo_pokemon
-  ADD CONSTRAINT FK_pokemon_TO_tipo_pokemon
-    FOREIGN KEY (pokemon_id)
-    REFERENCES pokemon (id);
-
-ALTER TABLE log_batalha DROP CONSTRAINT IF EXISTS FK_treinador_TO_log_batalha;
-ALTER TABLE log_batalha
-  ADD CONSTRAINT FK_treinador_TO_log_batalha
-    FOREIGN KEY (id_treinador_1)
-    REFERENCES treinador (id);
-
-ALTER TABLE log_batalha DROP CONSTRAINT IF EXISTS FK_treinador_TO_log_batalha1;
-ALTER TABLE log_batalha
-  ADD CONSTRAINT FK_treinador_TO_log_batalha1
-    FOREIGN KEY (id_treinador_2)
-    REFERENCES treinador (id);
-
-ALTER TABLE log_batalha DROP CONSTRAINT IF EXISTS FK_treinador_TO_log_batalha2;
-ALTER TABLE log_batalha
-  ADD CONSTRAINT FK_treinador_TO_log_batalha2
-    FOREIGN KEY (id_vencedor)
-    REFERENCES treinador (id);
+CREATE TABLE tipo_pokemon
+(
+  id         SERIAL PRIMARY KEY,
+  tipo_id    INT NOT NULL REFERENCES tipo (id),
+  pokemon_id INT NOT NULL REFERENCES pokemon (id)
+);
