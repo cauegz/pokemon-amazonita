@@ -14,7 +14,7 @@ class ControladorUpload extends ControladorGeral
 
         $arquivo = $_FILES['arquivo'];
 
-        if ($arquivo['size'] > 1024 * 1024 * 5) {
+        if ($arquivo['size'] > 1024 * 1024 * 2) {
             $this->responseError("a imagem deve ter no mínimo 5 MB", 400);
         }
 
