@@ -49,12 +49,17 @@ botaoSalvar.addEventListener("click", async () => {
         const resposta = await Api.enviarFoto(dados);
 
         if (!resposta.ok) {
-            throw new Error(resultado.mensagem);
+            const erro = await resposta.json().catch(() => null);
+            if(!erro){
+                throw new Error(`Erro HTTP ${resposta.status}`);
+            }
+            throw new Error(erro.mensagem);
         }
 
         alert("foto salva com sucesso")
     } catch (erro) {
-        console.error(erro.message);
+        console.error(erro);
+        alert(erro.message);
     } finally {
         botaoSalvar.disabled = false;
     }

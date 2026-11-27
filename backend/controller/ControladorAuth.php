@@ -45,6 +45,7 @@ class ControladorAuth extends ControladorGeral {
         session_regenerate_id(true);
         $_SESSION['usuario_id']   = $usuario->id;
         $_SESSION['usuario_nome'] = $usuario->nome;
+        $_SESSION['treinador'] = $treinador->id;
         
         LogUsuario::save($usuario->id, "CADASTRO", "O usuario {$usuario->login} se cadastrou no sistema");
         

@@ -29,6 +29,10 @@ class ControladorLoja extends ControladorGeral{
         try {
             $resultado = Loja::comprar($idUsuario, $itens);
             $this->responseJSON($resultado);
+        } catch (SemDinheiroException $e){
+            $this->responseError('Voce nao tem dinheiro para realizar a compra', 400);
+        } catch (SemEstoqueException $e){
+            $this->responseError('Nao tem estoque para realizar a compra', 400);
         } catch (Throwable $e) {
             $this->responseError('Erro ao realizar a compra', 500);
         }

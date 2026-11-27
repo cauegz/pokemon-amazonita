@@ -1,6 +1,5 @@
 import Api from "../APIs/Api.js";
 import Pokemon from "./Pokemon.js";
-import Time from "./Time.js"
 class CalculadoraStats{
     static cura = new Map([
         ["potion", 20],
@@ -23,12 +22,24 @@ class CalculadoraStats{
     static async usarItem(pokemon, item, idTreinador = null){
         if(item.categoria == "healing"){
            const quantidadeCura = CalculadoraStats.cura.get(item.nome);
+           if(item.nome == "max-potion"){
+                pokemon.hpAtual = pokemon.hp;
+           }
+           if(item.nome == "full-restore"){
+                pokemon.hpAtual = pokemon.hp;
+                pokemon.efeito = null;      
+           }
+          
            pokemon.hpAtual += quantidadeCura ;
            if(pokemon.hpAtual>pokemon.hp) pokemon.hpAtual= pokemon.hp;
         }
         if(item.categoria == "status-cures"){
             const efeitoCura = CalculadoraStats.statusCures.get(item.nome);
-            if(pokemon.efeito == efeitoCura) pokemon.efeito = null;
+            if(item.nome == "full-heal"){
+                pokemon.efeito = null;   
+            }else{
+                if(pokemon.efeito == efeitoCura) pokemon.efeito = null;
+            }
         }
         if(item.categoria == "revival"){
             if (pokemon.hpAtual > 0) return false;
@@ -38,11 +49,9 @@ class CalculadoraStats{
         }
         if(item.categoria == "evolution"){
             pokemon.pokeApi += 1;
-            console.log( pokemon.pokeApi)
-          
+
             pokemon = await Pokemon.carregaPokemon(pokemon.id, pokemon.pokeApi);
-            console.log(pokemon)
-            Api.evoluirPokemon(pokemon.id,
+            await Api.evoluirPokemon(pokemon.id,
                 {
                     treinador: idTreinador,
                     idPokeApi: pokemon.pokeApi,

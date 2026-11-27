@@ -36,19 +36,27 @@ export default class LojaView {
             this.limparCarrinho()
         })
 
-        document.querySelector("#botaoComprar button").addEventListener("click", () => {
+        document.querySelector("#botaoComprar button").addEventListener("click", async () => {
+            if (this.#carrinho.length == 0) {
+                alert("Selecione pelo menos um item antes de comprar.");
+                return;
+            }
             if(this.#valorCarrinho > this.#dinheiroUsuario){
-                //document.querySelector('#valorCarrinho span').style.backgroundColor = 'red';
                 document.getElementById('valorCarrinho').classList.add('animacaoPagamentoNegado');
                 setTimeout(()=>{
                     document.getElementById('valorCarrinho').classList.remove('animacaoPagamentoNegado');
                 }, 3000)
             }
             else {
-                Produto.comprar(this.#carrinho);
-                this.#dinheiroUsuario -= this.#valorCarrinho;
-                this.limparCarrinho();
-                document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario
+                try {
+                    await Produto.comprar(this.#carrinho);
+                    this.#dinheiroUsuario -= this.#valorCarrinho;
+                    this.limparCarrinho();
+                    document.getElementById('dinheiro').innerHTML = this.#dinheiroUsuario;
+                } catch (erro) {
+                    console.error("Erro na compra:", erro);
+                    alert(erro.message);
+                }
             }
         })
 

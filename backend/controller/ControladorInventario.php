@@ -13,9 +13,8 @@ class ControladorInventario extends ControladorGeral{
     }
 
     public function getAllInventarioItems(){
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start();
+        
         if(!isset($_SESSION['treinador'])){
             $this->responseError("usuario nao logado", 404);
         }
@@ -27,6 +26,12 @@ class ControladorInventario extends ControladorGeral{
     }
 
     public function deleteInventarioItem(){
+        session_start();
+        
+        if(!isset($_SESSION['treinador'])){
+            $this->responseError("usuario nao logado", 404);
+        }
+
         if(!isset($_GET['id'])){
             $this->responseError("item nao enviado", 400);
         }
@@ -34,15 +39,28 @@ class ControladorInventario extends ControladorGeral{
         
         $inventario = Inventario::find($id);
 
-        if($inventario->quantidade <= 1){
-            Inventario::delete($id);
-            $restante = 0;
-        } else {
-            $inventario->quantidade -= 1;
-            $restante = $inventario->quantidade;
-            $inventario->save();
+        if(!$inventario || $inventario->idTreinador != $_SESSION['treinador']){
+            $this->responseError("erro ao buscar item no inventario", 400);
         }
 
-        $this->responseJSON(["restante" => $restante]);
+        try{
+            if($inventario->quantidade <= 1){
+                Inventario::delete($id);
+                $restante = 0;
+            } else {
+                $inventario->quantidade -= 1;
+                $restante = $inventario->quantidade;
+                $inventario->save();
+            }
+        }catch(Throwable $t){
+            $this->responseError("erro ao deletar item", 500);
+        }
+
+        //botei essa validacao so porque o intelephense tava 
+        //reclamando que a varivel podia nao estar definida,
+        //mas nao faz sentido porque o responseError da exit
+        if(isset($restante)){
+            $this->responseJSON(["restante" => $restante]);
+        }
     }
 }

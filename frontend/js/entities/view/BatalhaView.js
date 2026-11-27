@@ -117,7 +117,15 @@ export default class BatalhaView{
         const time = this.#time;
         const container = document.getElementById('time');
         const items = inventario.items;
-        const revive = items.find(i => i.categoria == 'revival'); //dentro dos itens, procurar o que tem categoria revival
+        let revive; 
+
+        //dentro dos itens, procurar o que tem categoria revival
+        for (const item of items){
+            if(item && item.categoria == 'revival'){
+                revive = item;
+                break;
+            }
+        }
 
         // Limpa a tela antes de montar os cards de novo
         container.innerHTML = '';
