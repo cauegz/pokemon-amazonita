@@ -1,20 +1,20 @@
 @import url(./globals.css);
-html, body {
+
+html,
+body {
     margin: 0;
     padding: 0;
     border: none;
     width: 100%;
     background-color: #1f5711;
     display: flex;
-    justify-content: center; 
-    align-items: center;     
+    justify-content: center;
+    align-items: center;
     height: 100vh;
 }
 
 
-
-
-    #container{
+#container {
     position: relative;
     width: 1020px;
     height: 586px;
@@ -27,59 +27,61 @@ html, body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
 }
-#opcoes{
+
+#opcoes {
     position: absolute;
-    right: 20%; 
+    right: 20%;
     bottom: 70%;
     top: 75%;
 
     font-family: var(--fonte-principal);
 }
 
-#opcoes ul{
+#opcoes ul {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    
+
 }
 
-#opcoes li{
+#opcoes li {
     position: relative;
     margin-left: 30px;
 
 }
 
-#opcoes a{
+#opcoes a {
     color: white;
     text-decoration: none;
     font-size: 30px;
     font-weight: bold;
     transition: .3s;
     gap: 100px;
-    
+
 }
 
-#opcoes a:hover{
+#opcoes a:hover {
     text-shadow: 0 0 8px rgb(18, 18, 18);
     cursor: pointer;
 }
 
 
-#opcoes ul ul{
+#opcoes ul ul {
     display: none;
     position: absolute;
     top: 100%;
     flex-direction: column;
     margin-top: 0;
-    min-width: 180px;     
+    min-width: 180px;
 }
 
 
-#opcoes li:hover > ul{
+#opcoes li:hover>ul {
     display: flex;
     flex-direction: inline;
 }
-ul ul a{
-    white-space: nowrap; 
+
+ul ul a {
+    white-space: nowrap;
 }

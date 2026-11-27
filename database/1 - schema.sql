@@ -61,8 +61,8 @@ CREATE TABLE log_usuario
 CREATE TABLE treinador
 (
   id         SERIAL PRIMARY KEY,
-  id_npc     INT REFERENCES npc (id),
-  id_usuario INT REFERENCES usuario (id),
+  id_npc     INT REFERENCES npc(id),
+  id_usuario INT REFERENCES usuario(id),
   CHECK ((id_npc IS NULL) <> (id_usuario IS NULL))
 );
 
@@ -70,8 +70,9 @@ CREATE TABLE itens_compra
 (
   id         SERIAL PRIMARY KEY,
   quantidade INT NOT NULL CHECK (quantidade > 0),
-  id_produto INT NOT NULL REFERENCES produto (id),
-  id_usuario INT NOT NULL REFERENCES usuario (id)
+  id_produto INT NOT NULL REFERENCES produto(id),
+  id_usuario INT NOT NULL REFERENCES usuario(id),
+  comprado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE inventario
@@ -130,5 +131,5 @@ CREATE TABLE tipo_pokemon
 (
   id         SERIAL PRIMARY KEY,
   tipo_id    INT NOT NULL REFERENCES tipo (id),
-  pokemon_id INT NOT NULL REFERENCES pokemon (id)
+  pokemon_id INT NOT NULL REFERENCES pokemon (id) 
 );

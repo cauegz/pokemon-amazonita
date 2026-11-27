@@ -54,7 +54,7 @@ window.addEventListener('load', async function () {
             htmlItem.innerHTML += `
                 <button type="button" class="item-inventario" data-item-id="${item.id}">
                     <img src="${item.urlImagem}" alt="${item.nome}">
-                    <span>${item.nome}</span>
+                    <span>${item.nomeFormatado}</span>
                 </button>
             `;
         }
