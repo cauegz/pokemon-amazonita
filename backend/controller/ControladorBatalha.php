@@ -1,0 +1,111 @@
+<?php
+
+class ControladorBatalha extends ControladorGeral {
+    /**
+     * Retorna um array com 4 posições, que são os ataque do pokemon, espera
+     * o id do pokemon em uma variável $_GET['id']
+     * 
+     * @return: joga um array com os ataques na tela
+     */
+    public function ataque(){
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
+        }
+        $id = $_GET['id'];
+
+        $this->responseJSON(Ataque::findByPokemon($id));
+    }
+
+    /**
+     * Retorna as informações do efeito com base no id
+     */
+    public function efeito(){
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
+        }
+        $id = $_GET['id'];
+
+        $this->responseJSON(Efeito::find($id));
+    }
+
+    /**
+     * Retorna as informações do tipo com base no id
+     */
+    public function tipo(){
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
+        }
+        $id = $_GET['id'];
+
+        $this->responseJSON(Tipo::findByPokeApi($id)[0]);
+    }
+
+    /**
+     * Retorna um npc do banco com base no nome
+     */
+    public function npc(){
+        if(!isset($_GET['id'])){
+            $this->responseError("id não informado", 400);
+        }
+        $id = $_GET['id'];
+
+        $this->responseJSON(Npc::find($id));
+    }
+
+    /**
+     * Retorna um treinador com base no id do npc
+     */
+    public function treinador() {
+        if(!isset($_GET['idNpc'])){
+            $this->responseError("id não informado", 400);
+        }
+        $idNpc = $_GET['idNpc'];
+
+        $this->responseJSON(Treinador::findByNpc($idNpc));
+    }
+
+    /**
+     * Aumenta o dinheiro do jogador
+     */
+    public function recompensa(){
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+        $idUsuario = $_SESSION['usuario_id'];
+        $usuario = Usuario::find($idUsuario);
+
+        $usuario->dinheiro += $_GET['dinheiro'];
+        $usuario->save();
+        $this->responseJSON($usuario);
+    }
+
+    /**
+     * Salva o resultado da batalha no banco
+     * 
+     * Espera isso: 
+     * {
+     *    idTreinador1: (int),
+     *    idTreinador2: (int),
+     *    idVencedor: (int),
+     *    recompensa: (int)
+     * }
+     */
+    public function salvarLog(){
+        $dados = $this->receiveJSON();
+
+        $log = new LogBatalha();
+        $log->idTreinador1 = $dados['idTreinador1'];
+        $log->idTreinador2 = $dados['idTreinador2'];
+        $log->idVencedor = $dados['idVencedor'];
+        $log->recompensa = $dados['recompensa'];
+
+        try{
+            $log->save();
+        } catch(Exception $e){
+            $this->responseError("erro ao salvar o log da batalha", 500);
+        }
+
+        $this->responseJSON(["ok" => true, "mensagem" => "salvo com sucesso"]);
+    }
+}

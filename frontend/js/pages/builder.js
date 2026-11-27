@@ -1,0 +1,74 @@
+
+import verificarSessao from "../services/verificarSessao.js";
+import Time from "../entities/Time.js";
+import Api from "../APIs/Api.js";
+import BuilderView from "../entities/view/BuilderView.js";
+import { mostrarLoading, esconderLoading } from "../services/loading.js";
+
+async function iniciarBuilder() {
+    try {
+        //sessao
+        const usuario = await verificarSessao();
+        if (!usuario) return;
+        
+        // Carrega o time 
+        const objTime = await Time.carregarTime(usuario.treinador);
+        console.log("time: ")
+        console.log(objTime)
+
+        new BuilderView(objTime, usuario);
+
+        document.getElementById("enviar")
+            .addEventListener("click", async () => {
+
+                //verifica se o time inteiro é completamente nulo
+                if (objTime.pokemon.every((pokemon) => pokemon == null)) {
+                    alert("Você deve selecionar pokémons para o seu time");
+                    return;
+                }
+
+                const botao = document.getElementById("enviar");
+                botao.disabled = true;
+                mostrarLoading();
+
+                try {
+                    await Api.enviarTime(objTime);
+                    // Os atributos e a vida são calculados pelo backend ao salvar.
+                    // O objeto usado pelo builder ainda não contém esses dados.
+                    localStorage.removeItem("time-" + usuario.treinador);
+                    window.location.href = "game.html";
+                } catch (erro) {
+                    console.error("erro ao enviar o time:", erro);
+                    esconderLoading();
+                    botao.disabled = false;
+                    alert("Não foi possível salvar o time. Tente novamente.");
+                }
+            });
+
+    } catch (erro) {
+        console.error("erro ao iniciar o builder:", erro);
+    }
+}
+
+iniciarBuilder();
+
+const botaoEditarFoto = document.getElementById("upload-player-photo");
+const preview = document.getElementById("foto-preview");
+const placeholder = document.getElementById("avatar-placeholder");
+
+botaoEditarFoto.addEventListener("click", () => {
+    window.location.href = "upload.html";
+});
+
+async function carregarFotoPerfil() {
+    const urlFotoServidor = "http://localhost:8080/api/fotoPerfil";
+
+    preview.onload = () => {
+        preview.hidden = false;
+        placeholder.hidden = true;
+    };
+
+    preview.src = urlFotoServidor;
+}
+
+carregarFotoPerfil();

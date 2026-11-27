@@ -1,9 +1,64 @@
 <?php
-require_once __DIR__ . '/../Autoload.php';
 
-$url = $_SERVER['REQUEST_URI'];
+require_once __DIR__ . '/../backend/config/autoload.php';
+
+error_reporting(0);
+ini_set('display_errors', 0);
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: *");
+
+$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $router = new Roteador();
-$router->add("/teste", "Geral@teste");
 
-$router->executar($url);
+// Autenticação
+$router->add("/api/cadastro", "Auth@cadastro");
+$router->add("/api/login",    "Auth@login");
+$router->add("/api/me",       "Auth@me");
+$router->add("/api/logout",   "Auth@logout");
+
+// Time e Pokémon
+$router->add("/api/builder",    "Time@criarTime");
+$router->add("/api/builder/atualiza", "Time@atualizarTime");
+$router->add("/api/treinador/time",    "Time@time");
+$router->add("/api/pokemon",    "Pokemon@pokemonById");
+$router->add("/api/efeito", "Batalha@efeito");
+$router->add("/api/tipo", "Batalha@tipo");
+$router->add("/api/ataques",  "Batalha@ataque");
+$router->add("/api/pokemon/evoluir", "Pokemon@evoluir");
+$router->add("/api/time/curar", "Time@curarTime");
+
+// Batalha
+$router->add("/api/treinador",  "Batalha@treinador");
+$router->add("/api/npc",  "Batalha@npc");
+$router->add("/api/usuario/recompensa", "Batalha@recompensa");
+$router->add("/api/batalha/log", "Batalha@salvarLog");
+
+// Loja e inventário
+$router->add("/api/loja/comprar", "Loja@comprar");
+$router->add("/api/loja/listarProdutos",  "Loja@listarProdutosByLojaId");
+$router->add("/api/produto/criar", "Loja@criarProduto");
+$router->add("/api/inventario",  "Inventario@getAllInventarioItems");
+$router->add("/api/inventario/remover", "Inventario@deleteInventarioItem");
+$router->add("/api/item",  "Inventario@getInventarioItem");
+
+
+// Foto de perfil
+$router->add("/api/upload", "Upload@uploadArquivo");
+$router->add("/api/removerFoto", "Upload@deletarArquivo");
+$router->add("/api/fotoPerfil", "Upload@fotoPerfil");
+
+try {
+    $router->executar($url);
+} catch (\Throwable $erro) {
+    header("Content-Type: application/json; charset=utf-8");
+    http_response_code(500);
+
+    echo json_encode([
+        "ok" => false,
+        "mensagem" => $erro->getMessage(),
+        "arquivo" => $erro->getFile(),
+        "linha" => $erro->getLine()
+    ]);
+}

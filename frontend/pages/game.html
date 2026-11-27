@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Monstrobolso</title>
+        <link rel="stylesheet" href="../css/style.css" />
+        <link rel="stylesheet" href="../css/bruxish.css">
+    </head>
+    <body>
+        <canvas class="game-container" id="gameCanvas"></canvas>
+        <img
+            id="player"
+            src="../images/sprites/player-sprites.png"
+            alt="Player Sprite"
+        />
+
+        <div id="menu-time">
+
+        </div>
+        <div class="camada-interface">
+            <div id="loading" style="display: none;">
+                <div>
+                    <img src="../images/loading-pokeball.png" alt="">
+                    <h2>Carregando...</h2>
+                </div>
+            </div>
+
+            <div id="player-info">
+                <span id="foto-perfil"></span>
+                <span id="dinheiro"></span>
+                <span id="nome-usuario"></span>
+                <button id="sair">Sair</button>
+            </div>
+
+            <div id="menu">
+                <a href="/pages/builder.html" class="btn-menu" id="team-builder">
+                    <img src="../images/Pokeball.png" />
+                </a>
+                <a class="btn-menu" id="mochila">
+                    <img src="../images/bag.png" />
+                </a>
+            </div>
+
+            <dialog id="abreMochila">
+                <button id="fechaMochila">X</button>
+                <span id="mochilaItems"></span>
+            </dialog>
+
+            <div class="interface-mapa" data-mapa-id="2">
+                <h1 class="nome-area">Pokemart e Centro Pokemon</h1>
+                <div class="interface-bruxish" id="mapa" popover="manual">
+                    <img src="../images/brushish.png" alt="bruxish o maioral">
+                    <div class="caixa-dialogo">
+                        Bem-vindo bravo treinador, nesse lugar você irá encontrar o Centro Pokemon, ao clicar no
+                        Zé Gotinha, e a loja, ao cliar em mim ali ao lado, ande com  ←, ↑, ↓ e →, para explorar as
+                        outras áreas
+                        <div class="div-botao-fechar">
+                            <button popovertarget="mapa" popovertargetaction="hide" class="botao-fechar-bruxish">
+                                Ok, continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/pages/loja.html" class="npc" id="poke-mart">
+                    <img src="../images/brushish-mc.png" />
+                </a>
+                <a href="/pages/centro.html" class="npc" id="centro-pokemon">
+                    <img src="../images/ze_gotinha.png" />
+                </a>
+            </div>
+
+            <div class="interface-mapa" data-mapa-id="0" hidden>
+                <div class="interface-bruxish" id="ribeirinhos" popover="manual">
+                    <img src="../images/brushish.png" alt="bruxish o maioral">
+                    <div class="caixa-dialogo">
+                        Nesse lugar perigoso e de difícil acesso, tal qual o laboratório D6, você encontra o Marcio
+                        Bigolin em seu ambiente natural, clique nele para iniciar a batalha, te desejo sorte! Pois irá
+                        precisar
+                        <div class="div-botao-fechar">
+                            <button popovertarget="ribeirinhos" popovertargetaction="hide" class="botao-fechar-bruxish">
+                                Ok, continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h1 class="nome-area">
+                    Ribeirinhos
+                    <p class="mensagem-missao">
+                        <i class="fa-solid fa-compass"></i>Batalhe com Marcio
+                        Bigolin
+                    </p>
+                </h1>
+                <button data-id="1" class="btn-escolher">
+                    <img src="../images/npcs/sprite-bigolin.png" />
+                </button>
+            </div>
+
+            <div class="interface-mapa" data-mapa-id="1" hidden>
+
+                <div class="interface-bruxish" id="museu" popover="manual">
+                    <img src="../images/brushish.png" alt="bruxish o maioral">
+                    <div class="caixa-dialogo">
+                        Aqui você encontrará a treinadora Raissa, uma implacável mestra pokemon, que vai tentar de
+                        tudo para te derrotar, inclusive a própria orientação a objetos.
+                        <div class="div-botao-fechar">
+                            <button popovertarget="museu" popovertargetaction="hide" class="botao-fechar-bruxish">
+                                Ok, continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h1 class="nome-area">
+                    Teatro de Manaus
+                    <p class="mensagem-missao">
+                        <i class="fa-solid fa-compass"></i>Batalhe com Raissa
+                        Scheeren
+                    </p>
+                </h1>
+                <button data-id="2" class="btn-escolher">
+                    <img src="../images/npcs/sprite-raissa.png" />
+                </button>
+            </div>
+
+            <div class="interface-mapa" data-mapa-id="3" hidden>
+
+                <div class="interface-bruxish" id="lago" popover="manual">
+                    <img src="../images/brushish.png" alt="bruxish o maioral">
+                    <div class="caixa-dialogo">
+                        Aqui nesse rio, você encontrará a Jacqueline Akazaki, uma incrível doutora Pokemon, e, se
+                         você bobear, todos os seus dados irão deixar de existir
+                        <div class="div-botao-fechar">
+                            <button popovertarget="lago" popovertargetaction="hide" class="botao-fechar-bruxish">
+                                Ok, continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h1 class="nome-area">
+                    Praia da Ponta Negra
+                    <p class="mensagem-missao">
+                        <i class="fa-solid fa-compass"></i>Batalhe com
+                        Jacqueline Akazaki
+                    </p>
+                </h1>
+                <button data-id="3" class="btn-escolher">
+                    <img src="../images/npcs/sprite-jaque.png" />
+                </button>
+            </div>
+        </div>
+
+        <div id="tela-final">
+            <img src="../images/background/final.png" />
+        </div>
+
+        <script type="module" src="../js/pages/main.js"></script>
+        <script type="module" src="../js/pages/mapa.js"></script>
+        <script type="module" src="../js/services/bruxish.js"></script>
+        <script
+            src="https://kit.fontawesome.com/20f8a440c6.js"
+            crossorigin="anonymous"
+        ></script>
+        <script type="module">
+            let usuario;
+            import verificarSessao from "../js/services/verificarSessao.js";
+            usuario = await verificarSessao();
+
+            const spanNome = document.getElementById("nome-usuario");
+            spanNome.innerHTML = usuario.nome;
+
+            const btnSair = document.getElementById("sair");
+            btnSair.addEventListener("click", async () => {
+                await fetch("/api/logout", {
+                    method: "POST",
+                    credentials: "include",
+                });
+                window.location.href = "/pages/login.html";
+            });
+        </script>
+    </body>
+</html>

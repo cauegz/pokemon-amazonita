@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+:root{
+    --cor-menus: #f0e6a4;
+    --cor-fontes: #4a4530;
+    --cor-input-text:  #fffbea;
+    --cor-borda-input-text: #d6c95e;
+    --cor-btn-menus: #f52323;
+    --cor-hover-btn-menus: #d91414;
+    --cor-fonte-btns: white;
+    --cor-card-pokemon: #1268be;
+    --cor-card-pokemon-popup:#fffdf5;
+    --cor-card-pokemon-hover: #d9edc2;
+
+    --main-width: 1020px;
+    --main-height: 586px;
+
+    --fonte-principal: 'Pixelify Sans', sans-serif;
+    --cor-fudndo: #1f5711;
+}
+body{
+    background-image: url(../images/background/fundo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #1f5711;
+}
+.game-container{
+    border: 4px solid #293d37;
+    border-radius: 12px;
+}

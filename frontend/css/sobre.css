@@ -1,0 +1,100 @@
+@import url(./globals.css);
+html, body {
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 100%;
+    background-color: #1f5711;
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    height: 100vh;
+}
+
+
+#container {
+    position: relative;
+    width: 1020px;
+    height: 586px;
+    background-image: url("../images/background/fundo-sobre.png");
+    background-color: rgba(83, 113, 30, 0.831);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: 1020px 586px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+h1 {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--fonte-principal);
+    color: rgb(30, 62, 5);
+    font-size: 40px;
+}
+#opcoes{
+    position: absolute;
+    right: 10%; 
+    bottom: 60%;
+    top: 85%;
+
+    font-family: var(--fonte-principal);
+}
+
+#opcoes ul{
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+}
+
+#opcoes li{
+    position: relative;
+    margin-left: 40px;
+
+}
+
+#opcoes a{
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    transition: .3s;
+    gap: 100px;
+    
+}
+
+#opcoes a:hover{
+    text-shadow: 0 0 8px rgb(18, 18, 18);
+    cursor: pointer;
+}
+.texto{
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 70%;
+    height: 65%;
+
+    overflow-y: auto;
+
+    font-family: var(--fonte-principal);
+    font-size: 16px;
+    line-height: 1.8;
+    color: #1e3e05;
+
+    text-align: justify;
+}
+p, a{
+    text-decoration: none;
+    color: #1e3e05;
+}
+p a:hover{
+    text-decoration: underline;
+    color: #1e3e05;
+    text-shadow: 0 0 8px rgb(18, 18, 18);
+}

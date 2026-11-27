@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja</title>
+    <link rel="stylesheet" href="../css/loja.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+    <main>
+        <div id="loading">
+            <div>
+                <img src="../images/loading-pokeball.png">
+                <h2>Carregando jogo...</h2>
+            </div>
+        </div>
+        <div id="jogo" class="game-container">
+            <div id="menuLateral">
+                <a href="/pages/game.html">
+                    <button type="button">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </a>
+                <div id="menuCima">
+                <div id="placa">
+                    <img src="../images/placa.png" alt="Placa" id="placaImg">
+                </div>
+            </div>
+            <div id="menuBaixo">
+                <img src="../images/sprites/bruxish.png" alt="Loja" id="lojaImg">
+            </div>
+            </div>
+            <div id="principal">
+                <div id="dinheiroContainer">
+                    <p id="dinheiro"></p>
+                    <img src="../../../images/moeda.png" class="moedaIcon" alt="Moedas">
+                </div>
+                <div id="mesa"></div>
+            </div>
+            <div id="valorCarrinho">
+                Carrinho:<span>0</span>
+                <img src="../../../images/moeda.png" class="moedaIcon" alt="Moedas">
+            </div>
+        </div>
+    </main>
+    <script type="module" src="../js/pages/loja.js"></script>
+</body>
+</html>

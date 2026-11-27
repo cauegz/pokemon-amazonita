@@ -1,0 +1,92 @@
+<?php
+class Produto extends ModelGeral implements JsonSerializable{
+    protected float $preco;
+    protected int  $estoque;
+    protected int $loja_id;
+    protected int $id_item_pokeapi;
+
+    public static function find($id)
+    {
+        $sql = "SELECT * FROM public.produto WHERE id = :id";
+        $result = self::getPDO()->prepare($sql);
+        $result->bindParam(":id", $id);
+        $result->execute();
+
+        return $result->fetchObject(self::class);
+    }
+
+    public static function all($filter = null)
+    {
+        $sql = "SELECT * FROM public.produto";
+
+        if ($filter) {
+            $sql .= " WHERE " . $filter;
+        }
+
+        $result = self::getPDO()->prepare($sql);
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+    // procura produtos disponíveis de uma loja específica, com estoque maior que 0
+    public static function findByLojaId($loja_id)
+    {
+        $sql = "SELECT p.id, id_item_pokeapi, preco, estoque, loja_id
+                FROM public.produto p INNER JOIN public.loja l ON p.loja_id = l.id 
+                WHERE p.estoque > 0 AND p.loja_id = :loja_id
+                ORDER BY p.id;";
+        $result = self::getPDO()->prepare($sql);
+        $result->bindParam(":loja_id", $loja_id);
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+    
+    public static function delete(int $id)
+    {
+        $sql = "DELETE FROM public.produto WHERE id = :id";
+        $result = self::getPDO()->prepare($sql);
+        $result->bindParam(":id", $id);
+        $result->execute();
+    }
+
+    public function isNovo(): bool
+    {
+        return $this->id === null;
+    }
+
+    public function save()
+    {
+        if ($this->isNovo()) {
+            $sql = "INSERT INTO public.produto (id_item_pokeapi, preco, estoque, loja_id) VALUES (:id_item_pokeapi, :preco, :estoque, :loja_id)";
+            $result = self::getPDO()->prepare($sql);
+            $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
+            $result->bindParam(":preco", $this->preco);
+            $result->bindParam(":estoque", $this->estoque);
+            $result->bindParam(":loja_id", $this->loja_id);
+            $result->execute();
+
+            $this->id = (int)self::getPDO()->lastInsertId();
+        } else {
+            $sql = "UPDATE public.produto SET id_item_pokeapi = :id_item_pokeapi, preco = :preco, estoque = :estoque, loja_id = :loja_id WHERE id = :id";
+            $result = self::getPDO()->prepare($sql);
+            $result->bindParam(":id_item_pokeapi", $this->id_item_pokeapi);
+            $result->bindParam(":preco", $this->preco);
+            $result->bindParam(":estoque", $this->estoque);
+            $result->bindParam(":loja_id", $this->loja_id);
+            $result->bindParam(":id", $this->id);
+            $result->execute();
+        }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id'   => $this->id,
+            'preco' => $this->preco,
+            'estoque' => $this->estoque,
+            'loja_id' => $this->loja_id,
+            'id_item_pokeapi' => $this->id_item_pokeapi
+        ];
+    }
+}

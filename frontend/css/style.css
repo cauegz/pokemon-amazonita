@@ -1,0 +1,490 @@
+@import url(globals.css);
+@import url(loading.css);
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#gameCanvas, .camada-interface{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#gameCanvas,
+.camada-interface{
+    width: min(1020px, 100vw, calc((100vh - 16px) * 1.74));
+    aspect-ratio: 1020 / 586;
+}
+
+.camada-interface{
+    z-index: 2;
+}
+
+.interface-mapa{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.interface-mapa{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}   
+
+#player-info{
+    position: absolute;
+    top: 2.5%;
+    right: 2%;
+    z-index: 10;
+    width: 35%;
+    min-height: 66px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 7px 52px 7px 66px;
+    border: 4px solid #293d37;
+    border-radius: 9px;
+    background: #f5efd2;
+    box-shadow: 0 5px 0 rgb(35 48 43 / 60%);
+    font-family: var(--fonte-principal);
+}
+#foto-perfil{
+    position: absolute;
+    top: 50%;
+    left: 7px;
+    display: block;
+    overflow: hidden;
+    width: 55px;
+    height: 55px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    border: 2px solid #1f5711;
+}
+#nome-usuario{
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.player-photo{
+    display: block;
+    border-radius: 100%;
+    object-fit: cover;
+    width:100%;
+    height: 100%;
+}
+#dinheiro{
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+#moeda{
+    width: 20%;
+    height: 90%;
+    display: block;
+    object-fit: contain;
+}
+#sair{
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    padding: 6px;
+    border-color: #8e4035;
+    background: #dc6955;
+    color: white;
+    border-radius: 20%;
+    transform: translateY(-50%);
+    transition: 0.2s;
+    font-family: var(--fonte-principal);
+}
+#sair:hover{
+    border-color: #dc6955;
+    background: #db8879;
+    font-size: 1.1rem;
+}
+.btn-menu, .npc{
+    display: block;
+    width: 15%;
+    height: 15%;
+    position: absolute;
+}
+.btn-menu > img, .npc > img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+#centro-pokemon{
+    top:50%;
+    left:5%;
+}
+#poke-mart{
+    top:40%;
+    right:13%;
+}
+
+#menu {
+    position: absolute;
+    top: 16%;
+    right: 12%;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+}
+
+#team-builder, #mochila {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+#team-builder > img, #mochila > img {
+    width: 100%;
+    height: 100%;
+}
+.nome-area{
+    margin:12px;
+    font-family: var(--fonte-principal);
+    color: white;
+    width: 40%;
+    text-shadow:
+    -1px -1px 0 #000000,
+     1px -1px 0 #000000,
+    -1px  1px 0 #000000,
+     1px  1px 0 #000000;
+}
+.mensagem-missao{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    background-color: rgba(0, 0, 0, 0.432);
+    border-radius: 10px;
+    width: 60%;
+    padding: 5px;
+}
+#player{
+    display: none;
+}
+body{
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.btn-escolher{
+    all: unset;
+    position: absolute;
+    z-index: 3;
+    width: 15%;
+    height: 15%;
+    top: 65%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+.btn-escolher >img{
+    display: block;
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    transition: transform 0.2s;
+    transform-origin: center bottom;
+}
+
+.btn-escolher:hover > img{
+    animation: balancar 0.8s ease-in-out infinite;
+}
+.npc:hover{
+    animation: balancar 0.8s ease-in-out infinite;
+}
+@keyframes balancar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+#abreMochila{
+    width: min(58%, 620px);
+    height: min(76%, 470px);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: url("../images/dentro_bag.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: #233d35;
+}
+#abreMochila[open]{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#abreMochila::backdrop{
+    background: rgb(18 27 25 / 68%);
+}
+#mochilaItems {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 42%;
+    height: 54%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(56px, auto);
+    align-content: start;
+    align-items: stretch;
+    padding: 6px;
+    gap: 4px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border: 0;
+    background: transparent;
+}
+
+#mochilaItems::-webkit-scrollbar {
+    display: none;
+}
+
+.item-inventario,
+.pokemon-inventario {
+    appearance: none;
+    all: unset;
+    min-width: 0;
+    min-height: 56px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #fff2d0;
+    font: 600 0.9rem/1.2 var(--fonte-principal, "Segoe UI", sans-serif);
+    text-align: left;
+    text-shadow: 0 1px 3px #24140f, 1px 1px 2px #24140f;
+    transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+.item-inventario span,
+.pokemon-inventario span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-inventario img,
+.pokemon-inventario img {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.pokemon-inventario small {
+    flex: 0 0 auto;
+    color: #d7edaa;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    text-shadow: 0 1px 3px #24140f;
+}
+#fechaMochila{
+    background-color: #c94f48;
+    color: white;
+    border: 2px solid #fff4d2;
+    border-radius: 8px;
+    position: absolute;
+    top: 17%;
+    right: 16%;
+    width: 30px;
+    height: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#fechaMochila:hover{
+    transform: scale(1.1);
+}
+
+.item-inventario:hover,
+.pokemon-inventario:hover,
+.item-inventario:focus-visible,
+.pokemon-inventario:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgb(255 242 208 / 75%);
+    background: rgb(255 242 208 / 16%);
+    outline: 0;
+}
+
+#mochilaItems > p {
+    grid-column: 1 / -1;
+    align-self: center;
+    color: #fff2d0;
+    font: 600 0.95rem/1.4 var(--fonte-principal, "Segoe UI", sans-serif);
+    text-align: center;
+    text-shadow: 0 1px 3px #24140f, 1px 1px 2px #24140f;
+}
+
+@media (max-width: 600px) {
+    #abreMochila {
+        width: 88%;
+        height: 84%;
+    }
+
+    #mochilaItems {
+        width: 42%;
+        height: 54%;
+    }
+
+    .item-inventario,
+    .pokemon-inventario {
+        min-height: 52px;
+    }
+
+    .item-inventario img,
+    .pokemon-inventario img {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+    }
+
+    #fechaMochila {
+        top: 15%;
+        right: 14%;
+    }
+}
+
+#menu-time {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    width: 20vw;
+    min-width: 180px;
+    max-width: 220px;
+    transform: translateY(-50%);
+    display: flex;
+    background-color: #0000006c;
+    padding:10px;
+    border-radius: 12px;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-pokemon {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    transition: all 0.2s ease;
+
+    border: 4px solid #293d37;
+    border-radius: 9px;
+    background: #f5efd2;
+    box-shadow: 0 5px 0 rgb(35 48 43 / 60%);
+    font-family: var(--fonte-principal);
+}
+
+.card-pokemon:hover {
+    background-color: var(--cor-card-pokemon-hover);
+    border-color: #667b4c;
+    transform: translateX(3px);
+}
+
+.card-pokemon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+    padding: 4px;
+}
+
+.card-pokemon p {
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.info-pokemon {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+
+.info-pokemon .efeito {
+    overflow: hidden;
+    color: #71805a;
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.barra-hp {
+    display: block;
+    width: 100%;
+    height: 8px;
+    background-color: #14171d;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #3c4352;
+}
+
+.hp-preenchimento {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.hp-verde {
+    background-color: #22c55e;
+}
+
+.hp-laranja {
+    background-color: #f59e0b;
+}
+
+.hp-vermelho {
+    background-color: #ef4444;
+}
+
+#tela-final{
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+}
+
+#tela-final > img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain
+}

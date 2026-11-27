@@ -1,0 +1,203 @@
+<?php
+class ControladorTime extends ControladorGeral{
+    /**
+     * Cria um time recebendo um json com os ids dos pokemon que o usuário escolheu
+     * Espera o seguinte POST
+     * {
+     *     "pokemon": [
+     *          -- id1,
+     *          -- id2, etc...
+     *      ]
+     * }
+     */
+    public function criarTime(){
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+        $idTreinador = $_SESSION['treinador'];
+
+        $ids = $this->receiveJSON()['pokemon'];
+        
+        $indice = 0;
+        try{
+            foreach ($ids as $id) {
+                $posicao = $indice + 1;
+                if($id == null || !$id){
+                    $time = Time::findByTreinadorAndPosicao($idTreinador, $posicao);
+                    if($time)
+                        Time::delete($time->id);
+                    $indice++;
+                    continue;
+                }
+            
+                //puxa os dados da api para salvar os status base no banco
+                $pokeApi = json_decode(file_get_contents("https://pokeapi.co/api/v2/pokemon/$id"));
+                
+                $pokemon = new Pokemon();
+
+                $pokemon->treinador = $idTreinador;
+                $pokemon->pokeApi = $id;
+
+                foreach ($pokeApi->stats as $stat) {
+                    $nomeStatApi = $stat->stat->name;
+
+                    //os nomes vem em inglês, por isso precisa "traduzir" para o nosso objeto
+                    switch ($nomeStatApi) {
+                        case 'attack':
+                            $pokemon->ataque = $stat->base_stat;
+                            break;
+                        
+                        case 'defense':
+                            $pokemon->defesa = $stat->base_stat;
+                            break;
+
+                        case 'special-attack':
+                            $pokemon->ataqueEspecial = $stat->base_stat;
+                            break;
+                        
+                        case 'special-defense':
+                            $pokemon->defesaEspecial = $stat->base_stat;
+                            break;
+
+                        case 'hp':
+                            $pokemon->hp = $stat->base_stat;
+                            break;
+
+                        case 'speed':
+                            $pokemon->velocidade = $stat->base_stat;
+                            break;
+                    }
+                }
+                $pokemon->hpAtual = $pokemon->hp;
+                $pokemon->save();
+
+                $ataques = $pokeApi->moves;
+                
+                $max = 0;
+                foreach ($ataques as $ataque) {
+                    $detalhes = $ataque->version_group_details;
+                    foreach ($detalhes as $detalhe) {
+                        if (
+                            $detalhe->move_learn_method->name == "level-up" &&
+                            $detalhe->level_learned_at == 1 &&
+                            $max < 4 
+                        ) {
+                            $objAtaque = new Ataque();
+                            $objAtaque->pokemonId = $pokemon->id;
+                            $url = $ataque->move->url;
+                            $ataqueApi = json_decode(file_get_contents($url));
+
+                            if($ataqueApi->damage_class->name !== "physical" && $ataqueApi->damage_class->name !== "special"){
+                                continue 2;
+                            }
+
+                            $id = $ataqueApi->id;
+
+                            $objAtaque->pokeApi = $id;
+                            $idTipo = $this->extraiIdUrl($ataqueApi->type->url);
+                            $objAtaque->tipoId = $idTipo;
+
+                            $objAtaque->save();
+                            $max++;
+                            //como o pokemon tem varios campos nesse version_group_details, assim que acha um ataque
+                            //possivel de se aprender no nivel 1 (temporario), ele pula para o proximo ataque
+                            break;
+                        }
+                    }
+                }
+
+                $time = Time::findByTreinadorAndPosicao($pokemon->treinador, $indice+1);
+                
+                if ($time) {
+                    $time->pokemon = $pokemon->id;
+                } else {
+                    $time = new Time();
+                    $time->treinador = $idTreinador;
+                    $time->pokemon = $pokemon->id;
+                    $time->posicao = $indice + 1;
+                }
+
+                $time->save();
+
+                $indice++;
+            }
+        }catch(Exception $e){
+            $this->responseError($e->getMessage(), 500);
+        }
+
+        $this->responseJSON(["ok" => true]);
+    }
+
+    /**
+     * método para fazer o time persistir no banco
+     */
+    public function atualizarTime() {
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+
+        $idTreinador = $_SESSION['treinador'];
+
+        $dados = json_decode(file_get_contents("php://input"), true);
+
+        $time = $dados['pokemon'];
+        
+        for ($i=0; $i < 6; $i++) {
+            if(!$time[$i]){
+                continue;
+            }
+            $pokemonTime = Time::findByTreinadorAndPosicao($idTreinador, $i+1);
+            $pokeBanco = Pokemon::find($pokemonTime->pokemon);
+            $pokeBanco->hpAtual = $time[$i]['hpAtual'];
+            $pokeBanco->save();
+        }
+
+        $this->responseJSON(["ok" => true]);
+    }
+
+    public function curarTime(){
+        session_start();
+        if(!isset($_SESSION['usuario_id'])){
+            $this->responseError("rota nao encontrada", 404); //certo seria 401, mas para não expor a rota dei 404
+        }
+
+        $idTreinador = $_SESSION['treinador'];
+
+        $time = Time::findByTreinador($idTreinador);
+
+        try{
+            foreach($time as $pokemon){
+                $pokemonObj = Pokemon::find($pokemon->pokemon);
+                $pokemonObj->hpAtual = $pokemonObj->hp;
+                $pokemonObj->save();
+            }
+        }catch(Exception $e){
+            $this->responseError("Erro ao curar", 500);
+        }
+
+        $this->responseJSON(["ok" => true, "mensagem" => "pokemons curados com sucesso"]);
+
+    }
+
+    /**
+     * retorna o time atual do usuário no parametro get id
+     */
+    public function time(){
+        session_start();
+        
+        if(!isset($_GET['id'])){
+            $this->responseError("id do treinador vazio", 400);
+        }
+
+        $treinador = $_GET['id'];
+        $posicao = 1;
+        $time = [];
+        while($posicao <= 6){
+            $time[] = Time::findByTreinadorAndPosicao($treinador, $posicao);
+            $posicao++;
+        }
+        $this->responseJSON($time);
+    }
+}
