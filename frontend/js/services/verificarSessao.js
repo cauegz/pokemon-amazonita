@@ -4,6 +4,7 @@ async function verificarSessao() {
         const user = await response.json();
         if (!(response.ok && user.ok)) {
             window.location.href = '/pages/login.html';
+            localStorage.setItem("primeiraVezTela", "true");
         } 
         return user;
     } catch (e) {
