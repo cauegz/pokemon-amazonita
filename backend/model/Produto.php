@@ -33,7 +33,8 @@ class Produto extends ModelGeral implements JsonSerializable{
     {
         $sql = "SELECT p.id, id_item_pokeapi, preco, estoque, loja_id
                 FROM public.produto p INNER JOIN public.loja l ON p.loja_id = l.id 
-                WHERE p.estoque > 0 AND p.loja_id = :loja_id";
+                WHERE p.estoque > 0 AND p.loja_id = :loja_id
+                ORDER BY p.id;";
         $result = self::getPDO()->prepare($sql);
         $result->bindParam(":loja_id", $loja_id);
         $result->execute();

@@ -1,3 +1,5 @@
+@import url(./globals.css);
+
 #jogo {
     display: none;
 }
@@ -7,7 +9,7 @@
     background-repeat: no-repeat;
     z-index: 5;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     margin: 0 auto;
     background-image: url(../images/background/bigolin-bg.jpg);
@@ -16,11 +18,12 @@
     transition: all 1s;
 }
 
-#loading > div {
+#loading>div {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     color: white;
+    font-family: var(--fonte-principal);
     -webkit-text-stroke-width: 0.75px;
     /* Espessura do contorno */
     -webkit-text-stroke-color: black;
@@ -29,7 +32,7 @@
     animation: FadeIn 1s, ZoomIn 1s;
 }
 
-#loading > div img {
+#loading>div img {
     height: 64px;
     width: auto;
     animation: loadingRotate 1s infinite;
@@ -41,6 +44,7 @@
     0% {
         rotate: 0deg;
     }
+
     100% {
         rotate: 360deg;
     }
@@ -52,6 +56,7 @@
     from {
         transform: scale(0);
     }
+
     to {
         transform: scale(1);
     }
@@ -63,6 +68,7 @@
     from {
         transform: scale(1);
     }
+
     to {
         transform: scale(0);
     }
@@ -74,6 +80,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
