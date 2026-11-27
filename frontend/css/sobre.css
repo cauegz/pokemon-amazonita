@@ -89,3 +89,12 @@ h1 {
 
     text-align: justify;
 }
+p, a{
+    text-decoration: none;
+    color: #1e3e05;
+}
+p a:hover{
+    text-decoration: underline;
+    color: #1e3e05;
+    text-shadow: 0 0 8px rgb(18, 18, 18);
+}
